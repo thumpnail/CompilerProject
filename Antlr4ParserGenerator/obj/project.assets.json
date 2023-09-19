@@ -1,0 +1,143 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "Antlr4.Runtime.Standard/4.11.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Antlr4.Runtime.Standard.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Antlr4.Runtime.Standard.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Antlr4Ast/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Antlr4.Runtime.Standard": "4.11.1"
+        },
+        "compile": {
+          "lib/net6.0/Antlr4Ast.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Antlr4Ast.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Antlr4.Runtime.Standard/4.11.1": {
+      "sha512": "d/zCFRgSpumVrmF11Z6gIRLfgVioTxWjE4BxLwxISPhGfjhNbNn7inIwjWJvNlk2BXhyFBu/sk7oWeANk2Rc7Q==",
+      "type": "package",
+      "path": "antlr4.runtime.standard/4.11.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "antlr4.runtime.standard.4.11.1.nupkg.sha512",
+        "antlr4.runtime.standard.nuspec",
+        "lib/net45/Antlr4.Runtime.Standard.dll",
+        "lib/net45/Antlr4.Runtime.Standard.xml",
+        "lib/netstandard2.0/Antlr4.Runtime.Standard.dll",
+        "lib/netstandard2.0/Antlr4.Runtime.Standard.xml"
+      ]
+    },
+    "Antlr4Ast/2.0.0": {
+      "sha512": "fTIYVhaDRD7yYdyqIawINdz93Msfw+vF7diEvcxpUmsQ2XowZtJz9HUhwjl8zGFZPZtVaIhqXZczXmKnuc9dvw==",
+      "type": "package",
+      "path": "antlr4ast/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "antlr4ast.2.0.0.nupkg.sha512",
+        "antlr4ast.nuspec",
+        "antlr4ast.png",
+        "lib/net6.0/Antlr4Ast.dll",
+        "lib/net6.0/Antlr4Ast.xml",
+        "readme.md"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "Antlr4Ast >= 2.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\fried\\.nuget\\packages\\": {},
+    "M:\\_programm daten\\Microsoft\\VisualStudio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\fried\\OneDrive\\Dokumente\\Code\\Rider Projects\\CompilerProject\\Antlr4ParserGenerator\\Antlr4ParserGenerator.csproj",
+      "projectName": "Antlr4ParserGenerator",
+      "projectPath": "C:\\Users\\fried\\OneDrive\\Dokumente\\Code\\Rider Projects\\CompilerProject\\Antlr4ParserGenerator\\Antlr4ParserGenerator.csproj",
+      "packagesPath": "C:\\Users\\fried\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\fried\\OneDrive\\Dokumente\\Code\\Rider Projects\\CompilerProject\\Antlr4ParserGenerator\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "M:\\_programm daten\\Microsoft\\VisualStudio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\fried\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "dependencies": {
+          "Antlr4Ast": {
+            "target": "Package",
+            "version": "[2.0.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

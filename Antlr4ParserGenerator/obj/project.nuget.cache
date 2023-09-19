@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "l+2Gh2PeeI5Q42quMBS64AvPgOj3UZ9eiNnptpeTH9qKMe3xVeoQlwNfFaEiOjENsSbIeVbxojoBrP6CtMf3RQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\fried\\OneDrive\\Dokumente\\Code\\Rider Projects\\CompilerProject\\Antlr4ParserGenerator\\Antlr4ParserGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\fried\\.nuget\\packages\\antlr4.runtime.standard\\4.11.1\\antlr4.runtime.standard.4.11.1.nupkg.sha512",
+    "C:\\Users\\fried\\.nuget\\packages\\antlr4ast\\2.0.0\\antlr4ast.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

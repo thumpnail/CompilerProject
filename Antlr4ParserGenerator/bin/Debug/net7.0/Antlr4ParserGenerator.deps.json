@@ -1,0 +1,59 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Antlr4ParserGenerator/1.0.0": {
+        "dependencies": {
+          "Antlr4Ast": "2.0.0"
+        },
+        "runtime": {
+          "Antlr4ParserGenerator.dll": {}
+        }
+      },
+      "Antlr4.Runtime.Standard/4.11.1": {
+        "runtime": {
+          "lib/netstandard2.0/Antlr4.Runtime.Standard.dll": {
+            "assemblyVersion": "4.11.1.0",
+            "fileVersion": "4.11.1.0"
+          }
+        }
+      },
+      "Antlr4Ast/2.0.0": {
+        "dependencies": {
+          "Antlr4.Runtime.Standard": "4.11.1"
+        },
+        "runtime": {
+          "lib/net6.0/Antlr4Ast.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Antlr4ParserGenerator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Antlr4.Runtime.Standard/4.11.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-d/zCFRgSpumVrmF11Z6gIRLfgVioTxWjE4BxLwxISPhGfjhNbNn7inIwjWJvNlk2BXhyFBu/sk7oWeANk2Rc7Q==",
+      "path": "antlr4.runtime.standard/4.11.1",
+      "hashPath": "antlr4.runtime.standard.4.11.1.nupkg.sha512"
+    },
+    "Antlr4Ast/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fTIYVhaDRD7yYdyqIawINdz93Msfw+vF7diEvcxpUmsQ2XowZtJz9HUhwjl8zGFZPZtVaIhqXZczXmKnuc9dvw==",
+      "path": "antlr4ast/2.0.0",
+      "hashPath": "antlr4ast.2.0.0.nupkg.sha512"
+    }
+  }
+}
