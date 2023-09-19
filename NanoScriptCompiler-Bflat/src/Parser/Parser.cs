@@ -99,5 +99,5 @@ public partial class Parser {
 //    | 'size' '(' exp ')'
 //    | 'str' '(' exp ')'
 //    ;
-    //identifier: WORD ('.' WORD)* (':' WORD);
+    //identifier: WORD ('.' WORD)* (':' WORD) ('[' (exp | exp '..' exp) ']')?;
 }

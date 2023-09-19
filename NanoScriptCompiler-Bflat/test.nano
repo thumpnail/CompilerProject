@@ -1,3 +1,3 @@
 mod test.main
     // the minus gets detected as a unary operator instead of a arithmetic operator
-let val = a + func(12)
+let val = 12 + 32 * 4 + 5

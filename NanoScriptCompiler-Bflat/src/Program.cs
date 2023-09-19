@@ -11,9 +11,9 @@ namespace NanoScript {
             @DEFAULT, @CONTINUE, @EXPORT, @FNC, @MATCH, @IS, @SIZE, @STR, @FOR, @IN,
             
             LEFTBRACE, RIGHTBRACE, DOT, DOUBLELEFT, DOUBLERIGHT, PLUSEQUALS, MINUSEQUALS, TIMESEQUALS, SLASHEQUALS, 
-            COLON, EQUAL, SEMICOLON, LEFTPAREN, COMMA, RIGHTPAREN, DOUBLECOLON, BIGGER, LEFTBRACKET, RIGHTBRACKET, 
-            DOUBLEBRACES, DOUBLEARROWRIGHT, PIPE, AND, PLUS, MINUS, SLASH, STAR, DOUBLEPIPE, DOUBLEAND, DOUBLEEQUAL, 
-            NOTEQUAL, LESSEQUAL, LESS, BIGGEREQUALS, DOUBLEDOT, CIRCUMFLEX, TILDE, EXLEMATIONMARK, DOUBLEPLUS, DOUBLEMINUS
+            COLON, EQUAL, SEMICOLON, LEFTPAREN, COMMA, RIGHTPAREN, DOUBLECOLON, GREATER, LEFTBRACKET, RIGHTBRACKET, 
+            DOUBLEBRACES, DOUBLEARROWRIGHT, PIPE, AND, PLUS, MINUS, PERCENT, SLASH, DOUBLESTAR, STAR, DOUBLEPIPE, DOUBLEAND, DOUBLEEQUAL, 
+            NOTEQUAL, LESSEQUAL, LESS, GREATEREQUALS, DOUBLEDOT, CIRCUMFLEX, TILDE, EXLEMATIONMARK, DOUBLEPLUS, DOUBLEMINUS
         }
 
         public static void Main(string[] args) {
@@ -101,7 +101,7 @@ namespace NanoScript {
                     .child(Token.COMMA, ",")
                     .child(Token.RIGHTPAREN, "\\)")
                     //.child(Token.NONE, " ")
-                    .child(Token.BIGGER, ">")
+                    .child(Token.GREATER, ">")
                     .child(Token.LEFTBRACKET, "\\[")
                     .child(Token.RIGHTBRACKET, "\\]")
                     .child(Token.DOUBLEBRACES, "\\{\\}")
@@ -113,13 +113,15 @@ namespace NanoScript {
                     .child(Token.PLUS, "\\+")
                     .child(Token.MINUS, "-")
                     .child(Token.SLASH, "/")
+                    .child(Token.DOUBLESTAR, "\\*\\*")
                     .child(Token.STAR, "\\*")
+                    .child(Token.PERCENT, "%")
                     .child(Token.DOUBLEEQUAL, "==")
                     .child(Token.NOTEQUAL, "\\!=")
                     .child(Token.LESSEQUAL, "<=")
                     .child(Token.DOUBLELEFT, "<<")
                     .child(Token.LESS, "<")
-                    .child(Token.BIGGEREQUALS, ">=")
+                    .child(Token.GREATEREQUALS, ">=")
                     .child(Token.EQUAL, "=")
                     .child(Token.DOUBLEDOT, "\\.\\.")
                     .child(Token.CIRCUMFLEX, "^")

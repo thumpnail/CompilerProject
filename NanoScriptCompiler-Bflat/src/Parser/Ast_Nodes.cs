@@ -304,6 +304,8 @@ public enum BinaryOperatorType {
     sub, // -
     div, // /
     mul,    // *
+    mod,    // %
+    pow,    // **
     
     doubleOr, // ||
     doubleAnd, // &&
@@ -346,6 +348,9 @@ public class UnaryExpression : Expression {
     public bool isBefore;
     public Expression exp;
     public UnaryOperatorType operatorType;
+}
+public class ExpressionList : Expression {
+    public List<Expression> expressions = new();
 }
 //    //Pointer or Reference Expressions: Expressions that deal with memory addresses (in languages like C and C++).
 //    | '&' exp

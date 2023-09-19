@@ -29,7 +29,7 @@ public class ParserContext {
     //    return new Program(this);
     //}
     // functions for treversing the TokenList
-
+    //TODO: Convert all to throwing dunctions and add try function that dont throw
     public bool boundCheck(int i) {
         return i >= 0 && i < tokens.Count;
     }
@@ -130,9 +130,11 @@ public class ParserContext {
         }
         return Token.NONE;
     }
-    public bool Peek_tk(Token token) {
+    public bool Peek_tk(params Token[] token) {
         if (boundCheck(idx)) {
-            return tokens[idx].token == token;
+            foreach (var item in token) {
+                if (item == tokens[idx].token) return true;
+            }
         }
         return false;
     }
@@ -168,7 +170,7 @@ public class ParserContext {
     }
     public bool Consume_tk(Token token) {
         if (boundCheck(idx) && tokens[idx].token == token) {
-            idx++; // Remove the consumed token from the list
+            idx++;
             return true;
         }
         return false;
