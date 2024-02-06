@@ -8,7 +8,7 @@ enum StateType {
 
 public class ParserContext {
     private StateType state;
-    private List<NanoScript.Lexer.TokenElement<Token>> tokens;
+    private List<Parseus.Lexer.TokenElement<Token>> tokens;
     private Stack<int> frameStack;
 
     public int idx { get; private set; }
@@ -18,7 +18,7 @@ public class ParserContext {
         idx = 0;
         frameStack = new();
     }
-    public ParserContext(List<NanoScript.Lexer.TokenElement<Token>> tokens) {
+    public ParserContext(List<Parseus.Lexer.TokenElement<Token>> tokens) {
         this.tokens = tokens;
         frameStack = new();
         state = StateType.None;

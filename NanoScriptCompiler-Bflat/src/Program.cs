@@ -1,4 +1,4 @@
-﻿using NanoScript.Lexer;
+﻿using Parseus.Lexer;
 using NanoScript.Parser;
 using Newtonsoft.Json;
 
