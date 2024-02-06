@@ -117,7 +117,7 @@ exp
    //Array Creation Expressions: Expressions for creating new arrays or collections.
    | '[' exp (',' exp) ']'
    //Array Creation Expression
-   | '{' ( identifier type_decl? ('=' exp)? )* '}'
+   | identifier '{' <exprlist> '}'
    //Function Creation Expression
    | 'fnc' '(' (identifier type_decl? (',' identifier type_decl? )* )? ')' type_decl? '{' statement* '}'
    // internal functions
@@ -129,7 +129,7 @@ exp
 string: '"' ANY '"';
 ANY: [.];
 identifier: WORD ('.' WORD)* (':' WORD);
-WORD: [a-zA-Z_]*;
+WORD: [a-zA-Z_]+;
 number: DIGIT* decimal?;
 decimal: '.' DIGIT*;
 DIGIT: [0-9];

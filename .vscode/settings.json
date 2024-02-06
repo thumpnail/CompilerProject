@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"*.sh": "shellscript",
+		"*.asm": "asm-collection",
+		"*.c": "c",
+		"*.teal": "teal",
+		"*.cst": "csharp",
+		"stdio.h": "c",
+		"type_traits": "c"
+	}
+}

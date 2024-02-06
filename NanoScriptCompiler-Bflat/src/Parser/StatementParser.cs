@@ -1,4 +1,6 @@
-﻿namespace NanoScript.Parser;
+﻿using static NanoScript.Program.Token;
+
+namespace NanoScript.Parser;
 
 public partial class Parser {
     private ModuleStatement ParseModuleStatement() {
@@ -29,11 +31,18 @@ public partial class Parser {
         }
         return res;
     }
-    private List<Statement> ParseStatements() {
+    private List<Statement> ParseStatements(NanoScript.Program.Token delimiter = NONE) {
         var res = new List<Statement>();
-        Statement tmp;
-        while ((tmp = ParseStatement()) != null) {
-            res.Add(tmp);
+        if (delimiter == NONE) {
+            Statement tmp;
+            while ((tmp = ParseStatement()) != null) {
+                res.Add(tmp);
+            }
+        } else {
+            Statement tmp;
+            while ((tmp = ParseStatement()) != null && !ctx.Peek_tk(delimiter)) {
+                res.Add(tmp);
+            }
         }
         return res;
     }
@@ -86,12 +95,31 @@ public partial class Parser {
                     default: break;
                 }
                 break;
-            case NanoScript.Program.Token.CONST:
             case NanoScript.Program.Token.VAR:
+            case NanoScript.Program.Token.CONST:
             case NanoScript.Program.Token.LET:
                 return ParseVariableDeclarationStatement();
-            case NanoScript.Program.Token.NONE:
-                return null;
+            case NanoScript.Program.Token.CLASS:
+                return ParseClassDeclarationStatement();
+            case NanoScript.Program.Token.ENUM:
+                return ParseEnumDeclarationStatement();
+            case NanoScript.Program.Token.STRUCT:
+                return ParseStructDeclarationStatement();
+            case NanoScript.Program.Token.INTERFACE:
+                return ParseInterfaceStatement();
+            case NanoScript.Program.Token.UNION:
+                return ParseUnionStatement();
+            case NanoScript.Program.Token.FNC:
+                return ParseFunctionDeclarationStatement();
+            case NanoScript.Program.Token.IDENTIFIER:
+                switch (ctx.PeekNext_tk()) {
+                    case NanoScript.Program.Token.EQUAL:
+                        return ParseAssignmentStatement();
+                    case NanoScript.Program.Token.LEFTPAREN:
+                        return ParseFunctionCallStatement();
+                    default: throw new NotImplementedException();
+                }
+            default: return null;
         }
         return null;
     }
@@ -122,67 +150,459 @@ public partial class Parser {
         return res;
     }
     private StructDeclarationStatement? ParseStructDeclarationStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        StructDeclarationStatement res = new();
+        TypeDeclarationStatement type;
+        if (ctx.Consume_tk(PUB))
+            res.isPublic = true;
+        if (ctx.Consume_tk(STRUCT)) {
+            var ident = ParseIdentifierExpression();
+            if ((type = ParseTypeDeclarationStatement()) is not null)
+                res.typeDeclarationStatement = type;
+            else type = null;
+            ctx.Consume_tk(LEFTBRACE);
+            res.typeDeclarationStatement = type;
+            res.identifier = ident;
+            res.statements = ParseStatements();
+            ctx.Consume_tk(RIGHTBRACE);
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
     private ClassDeclarationStatement? ParseClassDeclarationStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        ClassDeclarationStatement res;
+        if (ctx.Consume_tk(CLASS)) {
+            var ident = ParseIdentifierExpression();
+            ctx.Consume_tk(LEFTBRACE);
+            res = new ClassDeclarationStatement() {
+                identifier = ident,
+                statements = ParseStatements()
+            };
+            ctx.Consume_tk(RIGHTBRACE);
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //    | 'export'? 'pub'? 'fnc' '.'? identifier'(' (<ParseParameterList>)? ')' ':' type_decl '{' statement* '}'
     private FunctionDeclarationStatement? ParseFunctionDeclarationStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new FunctionDeclarationStatement();
+        TypeDeclarationStatement returnType;
+        if (ctx.Consume_tk(EXPORT)) res.isExport = true;
+        if (ctx.Consume_tk(PUB)) res.isPublic = true;
+        if (ctx.Consume_tk(FNC)) {
+            res.identifier = ParseIdentifierExpression();
+            ctx.Consume_tk(LEFTPAREN);
+            res.parameters = ParseParameterDeclarationList();
+            ctx.Consume_tk(RIGHTPAREN);
+
+            if ((returnType = ParseTypeDeclarationStatement()) is not null) {
+                res.returnType = returnType;
+            }
+            ctx.Consume_tk(LEFTBRACE);
+            res.statements = ParseStatements();
+            ctx.Consume_tk(RIGHTBRACE);
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
+    }
+    //(identifier type_decl? (',' identifier type_decl? )* )?
+    private List<ParameterDeclaration>? ParseParameterDeclarationList() {
+        ctx.CreateFrame();
+        var res = new List<ParameterDeclaration>();
+        if (ctx.Peek_tk(IDENTIFIER)) {
+            var tmp = new ParameterDeclaration();
+            while ((tmp.identifier = ParseIdentifierExpression()) != null) {
+                if (ctx.Peek_tk(COLON))
+                    tmp.typeDeclarationStatement = ParseTypeDeclarationStatement();
+                res.Add(tmp);
+                tmp = new ParameterDeclaration();
+                if (ctx.Peek_tk(COMMA))
+                    ctx.Consume_tk(COMMA);
+            }
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
     private FunctionCallStatement? ParseFunctionCallStatement() {
         ctx.CreateFrame();
         var res = new FunctionCallStatement();
-        if (ctx.Peek_tk(NanoScript.Program.Token.IDENTIFIER)) {
-
+        if (ctx.Peek_tk(IDENTIFIER)) {
+            res.identifier = ParseIdentifierExpression();
+            ctx.Consume_tk(LEFTPAREN);
+            Expression exp;
+            if ((exp = ParseListExpression()) is not null) {
+                res.parameters = ((ExpressionList)exp).expressions;
+            }
+            ctx.Consume_tk(RIGHTPAREN);
         } else {
+            ctx.PopFrame();
             return null;
         }
-        ctx.PopFrame();
+        ctx.ClearFrame();
         return res;
     }
     private ReturnStatement? ParseReturnStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new ReturnStatement();
+        if (ctx.Peek_tk(RETURN)) {
+            ctx.Consume_tk(RETURN);
+            res.exp = ParseExpression();
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
     private EnumDeclarationStatement? ParseEnumDeclarationStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new EnumDeclarationStatement();
+        if (ctx.Consume_tk(PUB))
+            res.isPublic = true;
+        if (ctx.Peek_tk(ENUM)) {
+            ctx.Consume_tk(ENUM);
+            if (ctx.Peek_tk(IDENTIFIER))
+                res.identifier = ParseIdentifierExpression();
+            if (ctx.Peek_tk(COLON))
+                res.typeDeclarationStatement = ParseTypeDeclarationStatement();
+            ctx.Consume_tk(LEFTBRACE);
+            EnumValueDeclaration tmp;
+            while ((tmp = ParseEnumValueDeclaration()) is not null) {
+                res.enumValueDeclarations.Add(tmp);
+                if (ctx.Peek_tk(COMMA)) {
+                    ctx.Consume_tk(COMMA);
+                }
+            }
+            ctx.Consume_tk(RIGHTBRACE);
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    private EnumValueDeclaration? ParseEnumValueDeclaration() {
+        ctx.CreateFrame();
+        var res = new EnumValueDeclaration();
+        if (ctx.Peek_tk(IDENTIFIER)) {
+            res.identifier = ParseIdentifierExpression();
+            if (ctx.Consume_tk(COLON)) {
+                res.exp = ParseExpression();
+            }
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
+    }
+    //   | '.'? identifier type_decl? ('=' exp | '<<' exp | '>>' exp | '+=' exp | '-=' exp | '*=' exp | '/=' exp)?
     private AssignmentStatement? ParseAssignmentStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new AssignmentStatement();
+        if (ctx.Peek_tk(DOT)) {
+            ctx.Consume_tk(DOT);
+            res.isSelf = true;
+        } else if (ctx.Peek_tk(IDENTIFIER)) {
+            res.identifier = ParseIdentifierExpression();
+            if (ctx.Peek_tk(COLON)) {
+                res.typeDeclarationStatement = ParseTypeDeclarationStatement();
+            }
+            res.assignmentType = ctx.Consume_tk() switch {
+                EQUAL => AssignmentType.equal,
+                PLUSEQUALS => AssignmentType.add,
+                MINUSEQUALS => AssignmentType.sub,
+                SLASHEQUALS => AssignmentType.div,
+                DOUBLELEFT => AssignmentType.push,
+                DOUBLERIGHT => AssignmentType.pop,
+                TIMESEQUALS => AssignmentType.mul,
+                _ => throw new NotImplementedException(),
+            };
+            res.exp = ParseExpression();
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'if' exp '{' statement* '}' ('else' 'if' '{' statement* '}')* ('else' '{' statement* '}')?
     private ConditionalStatement? ParseConditionalStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new ConditionalStatement();
+        if (ctx.Peek_tk(IF)) {
+            ctx.Consume_tk(IF);
+            res.ifConditionalStatement = new SubConditionalStatement() { isIf = true };
+            res.ifConditionalStatement.exp = ParseExpression();
+            ctx.Consume_tk(LEFTBRACE);
+            res.ifConditionalStatement.statements = ParseStatements(RIGHTBRACE);
+            ctx.Consume_tk(RIGHTBRACE);
+            
+            
+            while (ctx.Peek_tk(ELSE) && ctx.PeekNext_tk(IF)) {
+                ctx.Consume_tk(ELSE);
+                ctx.Consume_tk(IF);
+                res.elseConditionalStatement = new SubConditionalStatement() { isIf = true };
+                res.elseConditionalStatement.exp = ParseExpression();
+                ctx.Consume_tk(LEFTBRACE);
+                res.ifConditionalStatement.statements = ParseStatements(RIGHTBRACE);
+                ctx.Consume_tk(RIGHTBRACE);
+            }
+            if (ctx.Peek_tk(ELSE)) {
+                ctx.Consume_tk(ELSE);
+                ctx.Consume_tk(LEFTBRACE);
+                res.elseConditionalStatement.statements = ParseStatements(RIGHTBRACE);
+                ctx.Consume_tk(RIGHTBRACE);
+            }
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //    | 'switch' exp '{' (identifier ':' statement* 'break'?)* 'default' ':' statement* 'break' '}'
     private SwitchStatement? ParseSwitchStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new SwitchStatement();
+        if (ctx.Peek_tk(SWITCH)) {
+            ctx.Consume_tk(SWITCH);
+            res.exp = ParseExpression();
+            ctx.Consume_tk(LEFTBRACE);
+            res.subSwitchStatements = ParseSubSwitchStatements();
+            if (ctx.Peek_tk(DEFAULT)) {
+                res.defSubSwitchStatement = new();
+                res.defSubSwitchStatement.isDefault = true;
+                ctx.Consume_tk(DEFAULT);
+                ctx.Consume_tk(COLON);
+                res.defSubSwitchStatement.statements = ParseStatements(BREAK);
+                if (ctx.Peek_tk(BREAK)) {
+                    res.defSubSwitchStatement.isBreak = true;
+                    ctx.Consume_tk(BREAK);
+                }
+            }
+            ctx.Consume_tk(RIGHTBRACE);
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    private List<SubSwitchStatement> ParseSubSwitchStatements() {
+        var res = new List<SubSwitchStatement>();
+        SubSwitchStatement tmp;
+        while ((tmp = ParseSubSwitchStatement()) is not null) {
+            res.Add(tmp);
+        }
+        return res;
+    }
+    //(identifier ':' statement* 'break'?)*
+    private SubSwitchStatement? ParseSubSwitchStatement() {
+        ctx.CreateFrame();
+        var res = new SubSwitchStatement();
+        if (ctx.Peek_tk(IDENTIFIER)) {
+            res.identifier = ParseIdentifierExpression();
+            ctx.Consume_tk(COLON);
+            res.statements = ParseStatements(BREAK);
+            if (ctx.Peek_tk(BREAK)) {
+                res.isBreak = true;
+                ctx.Consume_tk(BREAK);
+            }
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
+    }
+    //| 'for' (identifier 'in' identifier | identifier '=' exp ';' exp ';' exp | exp) '{' statement* '}'
     private ForStatement? ParseForStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new ForStatement();
+        Expression tmpexpr;
+        if (ctx.Peek_tk(FOR)) {
+            if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(IN)) {
+                res.type = ForType.ForIn;
+                res.elementIdentifier = ParseIdentifierExpression();
+                ctx.Consume_tk(IN);
+                res.listIdentifier = ParseIdentifierExpression();
+                ctx.Consume_tk(LEFTBRACE);
+                res.statements = ParseStatements();
+                ctx.Consume_tk(RIGHTBRACE);
+            } else if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(EQUAL)) {
+                res.type = ForType.For;
+                res.elementIdentifier = ParseIdentifierExpression();
+                ctx.Consume_tk(EQUAL);
+                res.exp_def = ParseExpression();
+                ctx.Consume_tk(SEMICOLON);
+                res.exp_cond = ParseExpression();
+                ctx.Consume_tk(SEMICOLON);
+                res.exp_incr = ParseExpression();
+                ctx.Consume_tk(LEFTBRACE);
+                res.statements = ParseStatements();
+                ctx.Consume_tk(RIGHTBRACE);
+            } else if ((tmpexpr = ParseExpression()) is not null) {
+                res.type = ForType.While;
+                res.exp_cond = tmpexpr;
+                ctx.Consume_tk(LEFTBRACE);
+                res.statements = ParseStatements();
+                ctx.Consume_tk(RIGHTBRACE);
+            } else {
+                ctx.PopFrame();
+                return null;
+            }
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'error' exp
     private ErrorStatement? ParseErrorStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new ErrorStatement();
+        if (ctx.Peek_tk(ERROR)) {
+            ctx.Consume_tk(ERROR);
+            res.exp = ParseExpression();
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'break' | 'continue'
     private BreakContinueStatement? ParseBreakContinueStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new BreakContinueStatement();
+        if (ctx.Peek_tk(BREAK) || ctx.Peek_tk(CONTINUE)) {
+            res.ControlFlowModifierType = 
+                ctx.Peek_tk(BREAK) ? ControlFlowModifierType.@break : ControlFlowModifierType.@continue;
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'interface' identifier type_decl? '{' statement '}'
     private InterfaceStatement? ParseInterfaceStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new InterfaceStatement();
+        if (ctx.Peek_tk(INTERFACE)) {
+            ctx.Consume_tk(INTERFACE);
+            res.identifier = ParseIdentifierExpression();
+            res.typeDeclarationStatement = ParseTypeDeclarationStatement();
+            ctx.Consume_tk(LEFTBRACE);
+            res.statements = ParseStatements();
+            res.statements = ParseStatements(RIGHTBRACE);
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'union' type_decl? '{' statement* '}'
     private UnionStatement? ParseUnionStatement() {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
+        ctx.CreateFrame();
+        var res = new UnionStatement();
+        if (ctx.Peek_tk(UNION)) {
+            ctx.Consume_tk(UNION);
+            res.typeDeclarationStatement = ParseTypeDeclarationStatement();
+            ctx.Consume_tk(LEFTBRACE);
+            res.statements = ParseStatements();
+            ctx.Consume_tk(RIGHTBRACE);
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| ('def'|'type') identifier ('=' exp)?
     private DeclarationStatement? ParseDeclarationStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new DeclarationStatement();
+        if (ctx.Peek_tk(DEF) || ctx.Peek_tk(TYPE)) {
+            res.declarationType = ctx.Peek_tk() switch {
+                DEF => DeclarationType.def,
+                TYPE => DeclarationType.type,
+                _ => throw new Exception("Unknown Error type", new("Error A100")),
+            };
+            ctx.Consume_tk(IDENTIFIER);
+            if (ctx.Peek_tk(EQUAL)) {
+                ctx.Consume_tk(EQUAL);
+                res.exp = ParseExpression();
+            }
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'assert' exp
     private AssertionStatement? ParseAssertionStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new AssertionStatement();
+        if (ctx.Peek_tk(ASSERT)) {
+            ctx.Consume_tk();
+            res.exp = ParseExpression();
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| '::' identifier
     private LabelStatement? ParseLabelStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new LabelStatement();
+        if (ctx.Peek_tk(DOUBLECOLON)) {
+            ctx.Consume_tk();
+            res.identifier = ParseIdentifierExpression();
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'goto' identifier
     private GotoStatement? ParseGotoStatement() {
-        throw new NotImplementedException();
+        ctx.CreateFrame();
+        var res = new GotoStatement();
+        if (ctx.Peek_tk(GOTO)) {
+            ctx.Consume_tk(GOTO);
+            res.identifier = ParseIdentifierExpression();
+        } else {
+            ctx.PopFrame();
+            return null;
+        }
+        ctx.ClearFrame();
+        return res;
     }
+    //| 'type' identifier '=' exp
+    //| ':' identifier
     private TypeDeclarationStatement? ParseTypeDeclarationStatement() {
         ctx.CreateFrame();
         var res = new TypeDeclarationStatement();
@@ -192,14 +612,16 @@ public partial class Parser {
                 if (!ctx.Peek_tk(NanoScript.Program.Token.RIGHTBRACKET))
                     res.exp = ParseFullExpression();
                 ctx.Consume_tk(NanoScript.Program.Token.RIGHTBRACKET);
-                // } else if(ctx.Consume_tk(LEFTBRACE)) {
-                //     res.typeDeclarationType = TypeDeclarationType.table;
-                //     ctx.Consume_tk(RIGHTBRACE);
+                res.identifier = ParseIdentifierExpression();
+            } else if (ctx.Consume_tk(NanoScript.Program.Token.LEFTBRACE)) {
+                res.typeDeclarationType = TypeDeclarationType.table;
+                ctx.Consume_tk(NanoScript.Program.Token.RIGHTBRACE);
+            } else if (ctx.Consume_tk(NanoScript.Program.Token.DOUBLEBRACES)) {
+                res.typeDeclarationType = TypeDeclarationType.table;
             } else {
                 res.typeDeclarationType = TypeDeclarationType.value;
                 res.identifier = ParseIdentifierExpression();
             }
-            res.identifier = ParseIdentifierExpression();
         } else {
             ctx.PopFrame();
             return null;

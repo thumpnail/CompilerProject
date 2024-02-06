@@ -7,4 +7,7 @@ public static class Helper {
         }
         return true;
     }
+    public static void ToConsole(this object obj) {
+        Console.WriteLine(obj);
+    }
 }

@@ -13,4 +13,8 @@
       <PackageReference Include="xunit" Version="2.5.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus\Parseus.csproj" />
+    </ItemGroup>
+
 </Project>

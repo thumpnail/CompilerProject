@@ -34,6 +34,8 @@ namespace NanoScript {
             var ctx = new ParserContext(lexerResult.result);
             var res = new Parser.Parser(ctx).Parse();
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(res, Formatting.Indented));
+            var code = res.TranspileToBflat();
+            code.ToConsole();
         }
         public static Lexer<Token> CreateLexer() {
             const string ANY = "[.]";
@@ -131,7 +133,7 @@ namespace NanoScript {
                     .skipable(Token.EOL, Environment.NewLine)
                     .child(Token.IDENTIFIER, WORD)
                     .child(Token.STRING, @"'(\\.|[^'\\])*'", "\"" + @"(\\.|[^" + "\"" + @"\\])*" + "\"")
-                    .child(Token.NUMBER, @"-?(0[xX][0-9a-fA-F]+|\d*[,.]\d+([eE][+-]?\d+)?|\d+([,.]\d*)?([eE][+-]?\d+)?)");
+                    .child(Token.NUMBER, @"-?(0[xX][0-9a-fA-F]+|\d*[.]\d+([eE][+-]?\d+)?|\d+([.]\d*)?([eE][+-]?\d+)?)");
             return lexer;
         }
     }

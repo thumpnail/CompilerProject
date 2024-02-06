@@ -1,4 +1,5 @@
-﻿using static NanoScript.Program.Token;
+﻿using System.Linq.Expressions;
+using static NanoScript.Program.Token;
 
 namespace NanoScript.Parser;
 
@@ -13,7 +14,6 @@ public partial class Parser {
     //    // 'match' '(' exp ')' '{' exp '=>' exp ('|' exp '=>' exp)* '}'
     private Expression? ParseFullExpression() {
         Expression res = null;
-        //TODO: bound check
         if (!ctx.boundCheck(ctx.idx)) {
             return null;
         }
@@ -22,16 +22,29 @@ public partial class Parser {
 
         return res;
     }
-    //<literal> := <number> | <string> | <boolean>
+    //<literal> := <number> | <string> | <boolean> | <identifier> | <functionCall> | <arrayIndexing>
     private Expression? ParseLiteralExpression() {
         ctx.CreateFrame();
         Expression res = null;
-        if (ctx.Peek_tk(NUMBER) || ctx.Peek_tk(STRING) || ctx.Peek_tk(TRUE) || ctx.Peek_tk(FALSE)) {
-
-        } else {
-            ctx.PopFrame();
-            return null;
+        switch (ctx.Peek_tk()) {
+            case IDENTIFIER:
+                res = ParseIdentifierExpression();
+                break;
+            case NUMBER:
+                res = ParseNumberExpression();
+                break;
+            case STRING:
+                res = ParseStringExpression();
+                break;
+            case TRUE:
+            case FALSE:
+                res = ParseBooleanExpression();
+                break;
+            default:
+                ctx.PopFrame();
+                return null;
         }
+        
         ctx.ClearFrame();
         return res;
     }
@@ -40,7 +53,11 @@ public partial class Parser {
         ctx.CreateFrame();
         Expression res = null;
         if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(1) == LEFTBRACKET) {
-
+            //TODO: Implement Array Indexing
+            var ident = ParseIdentifierExpression();
+            ctx.Consume_tk(LEFTBRACKET);
+            var expr = ParseExpression();
+            ctx.Consume_tk(RIGHTBRACKET);
         } else {
             ctx.PopFrame();
             return null;
@@ -53,6 +70,11 @@ public partial class Parser {
         ctx.CreateFrame();
         Expression res = null;
         if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(1) == LEFTPAREN) {
+            //TODO: Implement Function Call
+            var ident = ParseIdentifierExpression();
+            ctx.Consume_tk(LEFTPAREN);
+            var exprlist = ParseListExpression();
+            ctx.Consume_tk(RIGHTPAREN);
         } else {
             ctx.PopFrame();
             return null;
@@ -96,6 +118,7 @@ public partial class Parser {
         } else if (ctx.Peek_tk(TRUE, FALSE)) {
             res = ParseBooleanExpression();
         } else if (ctx.Peek_tk(LEFTPAREN)) {
+            //TODO: Implement Expression Grouping
             ctx.Consume_tk(LEFTPAREN);
             res = ParseExpression();
             ctx.Consume_tk(RIGHTPAREN);
@@ -153,15 +176,12 @@ public partial class Parser {
         Expression exp = null;
 
         if ((exp = ParsePowerExpression()) is not null) {
-            while ((op = GetBinOp(ctx.Peek_tk())) == BinaryOperatorType.pow) {
+            if ((op = GetBinOp(ctx.Peek_tk())) == BinaryOperatorType.pow) {
                 ctx.Consume_tk();
-                res = new BinaryExpression() {
-                    left = exp,
-                    operatorType = op,
-                    right = ParsePowerExpression()
-                };
+                res = new BinaryExpression(exp, op, ParseFactorExpression());
+            } else {
+                res = exp;
             }
-            if (op != BinaryOperatorType.pow) res = exp;
         } else {
             ctx.PopFrame();
             return null;
@@ -176,17 +196,12 @@ public partial class Parser {
         Expression res = null;
         Expression exp = null;
         if ((exp = ParseFactorExpression()) is not null) {
-            while ((op = GetBinOp(ctx.Peek_tk())) != BinaryOperatorType.none) {
+            if ((op = GetBinOp(ctx.Peek_tk())) != BinaryOperatorType.none) {
                 ctx.Consume_tk();
-                res = new BinaryExpression() {
-                    left = exp,
-                    operatorType = op,
-                    right = ParseFactorExpression()
-                };
+                res = new BinaryExpression(exp, op, ParseTermExpression());
+            } else {
+                res = exp;
             }
-            // if(op == BinaryOperatorType.none) {
-            //     res = exp;
-            // }
         } else {
             ctx.PopFrame();
             return null;
@@ -194,7 +209,7 @@ public partial class Parser {
         ctx.ClearFrame();
         return res;
     }
-    //<exp> := <term> { ('+' | '-' | '&&' | '||') <term> } | '[' <list> ']' | '{' <list> '}'
+    //<exp> := <term> { ('+' | '-' | '&&' | '||') <term> } | '[' <list> ']' | identifier '{' <list> '}'
     private Expression? ParseExpression() {
         ctx.CreateFrame();
         Expression res = null;
@@ -206,26 +221,25 @@ public partial class Parser {
                     expressions = ((ExpressionList)exp).expressions
                 };
             }
-        } else if (ctx.Peek_tk(LEFTBRACE)) {
+        } else if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(LEFTBRACE)) {
+            var ident = ParseIdentifierExpression();
             ctx.Consume_tk(LEFTBRACE);
             if ((exp = ParseListExpression()) is not null) {
-                //TODO: res = Table;
-                throw new NotImplementedException();
-                res = new ArrayCreationExpression() {
+                res = new InstanceInitializationExpression() {
+                    identifier = ident,
                     expressions = ((ExpressionList)exp).expressions
                 };
             }
+            ctx.Consume_tk(RIGHTBRACE);
         } else if ((exp = ParseTermExpression()) is not null) {
-            BinaryOperatorType op = BinaryOperatorType.none;
-            while ((op = GetBinOp(ctx.Peek_tk())) != BinaryOperatorType.none) {
-                ctx.Consume_tk();
-                res = new BinaryExpression() {
-                    left = exp,
-                    operatorType = op,
-                    right = ParseTermExpression()
-                };
+            BinaryOperatorType? op;
+            if ((op = GetBinOp(ctx.Peek_tk())) == BinaryOperatorType.add || op == BinaryOperatorType.sub ||
+                op == BinaryOperatorType.and || op == BinaryOperatorType.or) {
+                ctx.Consume_tk(); //consume operator
+                res = new BinaryExpression(exp, op ?? throw new NullReferenceException(), ParseExpression());
+            } else {
+                res = exp;
             }
-            if (op == BinaryOperatorType.none) res = exp;
         } else {
             ctx.PopFrame();
             return null;
@@ -235,11 +249,19 @@ public partial class Parser {
     }
     //<list> := <exp> {',' <exp>}
     private Expression? ParseListExpression() {
-        ExpressionList expLi = null;
+        ExpressionList expLi = new();
         ctx.CreateFrame();
         Expression res = null;
         Expression exp = null;
-        if ((exp = ParseExpression()) is not null) {
+        if (ctx.PeekNext_tk(COLON)) {
+            Expression indexExpr;
+            Expression valueExpr;
+            //custom index array workaround
+            while ((indexExpr = ParseLiteralExpression()) is not null && ctx.Consume_tk(COLON) && (valueExpr = ParseExpression())is not null) {
+                ctx.Consume_tk(COMMA);
+                expLi.expressions.Add(new IndexExpression(indexExpr, valueExpr));
+            }
+        } else if ((exp = ParseExpression()) is not null) {
             expLi.expressions.Add(exp);
             while (ctx.Consume_tk(COMMA)) {
                 if ((exp = ParseExpression()) is not null) {
@@ -251,7 +273,7 @@ public partial class Parser {
             return null;
         }
         ctx.ClearFrame();
-        return res;
+        return expLi;
     }
 
 
@@ -425,7 +447,7 @@ public partial class Parser {
             while (ctx.Consume_tk(NanoScript.Program.Token.DOT)) {
                 res.identifiers.Add(ctx.Consume());
             }
-            if (ctx.Consume_tk(NanoScript.Program.Token.COLON)) {
+            if (ctx.Consume_tk(NanoScript.Program.Token.DOUBLECOLON)) {
                 res.isExtension = true;
                 res.lastIdentifier = ctx.Consume();
             }

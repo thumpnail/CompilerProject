@@ -1,3 +1,19 @@
-mod test.main
-    // the minus gets detected as a unary operator instead of a arithmetic operator
-let val = 12 + 32 * 4 + 5
+mod main
+//try import System Module by looking 
+//for a folder 'System' in the current folder or in the stdlib dir
+import System
+//Explicit import System.nano
+import "System.nano"
+import "System.Console" as bla
+
+class Program {
+    let somevalue: int
+    pub fnc Main(agrs: []string) {
+        somevalue = 12
+        println("Hello World");
+        return 1
+    }
+    pub fnc someclass() {
+        self.bla = 4
+    }
+}

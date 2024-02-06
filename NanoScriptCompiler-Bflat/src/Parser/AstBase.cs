@@ -18,14 +18,37 @@ public abstract class Node {
             else return null;
         }
     }*/
+    public string source { get; set; }
 
-    public string Transpile() {
-        return "<NODE>";
-    }
+    public abstract string TranspileToC();
+    public abstract string TranspileToBflat();
+    public abstract string TranspileToByteCode();
+    
     public int[] Compile() {
         return new int[0];
     }
 }
 
-public abstract class Statement : Node {}
-public abstract class Expression : Node {}
+public abstract class Statement : Node {
+    public override string TranspileToC() {
+        return "<EMPTYNODE>";
+    }
+    public override string TranspileToBflat() {
+        return "<EMPTYNODE>";
+    }
+    public override string TranspileToByteCode() {
+        return "<EMPTYNODE>";
+    }
+}
+
+public abstract class Expression : Node {
+    public override string TranspileToC() {
+        return "<EMPTYNODE>";
+    }
+    public override string TranspileToBflat() {
+        return "<EMPTYNODE>";
+    }
+    public override string TranspileToByteCode() {
+        return "<EMPTYNODE>";
+    }
+}
