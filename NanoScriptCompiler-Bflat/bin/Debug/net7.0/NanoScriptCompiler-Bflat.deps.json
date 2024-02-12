@@ -9,7 +9,8 @@
       "NanoScriptCompiler-Bflat/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
-          "xunit": "2.5.1"
+          "xunit": "2.5.1",
+          "Parseus": "1.0.0.0"
         },
         "runtime": {
           "NanoScriptCompiler-Bflat.dll": {}
@@ -745,6 +746,14 @@
             "fileVersion": "2.5.1.0"
           }
         }
+      },
+      "Parseus/1.0.0.0": {
+        "runtime": {
+          "Parseus.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -1320,6 +1329,11 @@
       "sha512": "sha512-I5IUervdZoKLD66TUcqsJDXcB3ui9RxzKe0MQGzEi4Hsxkaoz0YylmvwqW2nd3nilyqqIAs0OUaZf/faKPxY6w==",
       "path": "xunit.extensibility.execution/2.5.1",
       "hashPath": "xunit.extensibility.execution.2.5.1.nupkg.sha512"
+    },
+    "Parseus/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

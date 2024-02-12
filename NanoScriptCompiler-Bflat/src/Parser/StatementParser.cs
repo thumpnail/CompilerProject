@@ -92,7 +92,9 @@ public partial class Parser {
                         return ParseUnionStatement();
                     case NanoScript.Program.Token.FNC:
                         return ParseFunctionDeclarationStatement();
-                    default: break;
+                    default:
+                        Console.WriteLine($"Parser ERROR[0/2]: {ctx.Peek_tk()}:{ctx.Peek()}, {ctx.PeekNext_tk()}:{ctx.PeekNext()}");
+                        return null;
                 }
                 break;
             case NanoScript.Program.Token.VAR:
@@ -103,23 +105,55 @@ public partial class Parser {
                 return ParseClassDeclarationStatement();
             case NanoScript.Program.Token.ENUM:
                 return ParseEnumDeclarationStatement();
-            case NanoScript.Program.Token.STRUCT:
-                return ParseStructDeclarationStatement();
-            case NanoScript.Program.Token.INTERFACE:
-                return ParseInterfaceStatement();
             case NanoScript.Program.Token.UNION:
                 return ParseUnionStatement();
             case NanoScript.Program.Token.FNC:
                 return ParseFunctionDeclarationStatement();
+            case NanoScript.Program.Token.DOT:
+                switch (ctx.PeekNext_tk()) {
+                    case NanoScript.Program.Token.IDENTIFIER:
+                        switch (ctx.PeekNext_tk(2)) {
+                            case NanoScript.Program.Token.EQUAL:
+                                return ParseAssignmentStatement();
+                            case NanoScript.Program.Token.LEFTPAREN:
+                                return ParseFunctionCallStatement();
+                            default: 
+                                Console.WriteLine($"Parser ERROR[1/3]: {ctx.Peek_tk()}:{ctx.Peek()}, {ctx.PeekNext_tk()}:{ctx.PeekNext()}, {ctx.PeekNext_tk(2)}:{ctx.PeekNext(2)}");
+                                return null;
+                        }
+                    default:
+                        Console.WriteLine($"Parser ERROR[1/2]: {ctx.Peek_tk()}:{ctx.Peek()}, {ctx.PeekNext_tk()}:{ctx.PeekNext()}");
+                        return null;
+                }
             case NanoScript.Program.Token.IDENTIFIER:
                 switch (ctx.PeekNext_tk()) {
                     case NanoScript.Program.Token.EQUAL:
                         return ParseAssignmentStatement();
                     case NanoScript.Program.Token.LEFTPAREN:
                         return ParseFunctionCallStatement();
-                    default: throw new NotImplementedException();
+                    default: 
+                        Console.WriteLine($"Parser ERROR[2/2]: {ctx.Peek_tk()}:{ctx.Peek()}, {ctx.PeekNext_tk()}:{ctx.PeekNext()}");
+                        return null;
                 }
-            default: return null;
+            case NanoScript.Program.Token.RETURN:
+                return ParseReturnStatement();
+            case NanoScript.Program.Token.IF:
+            case NanoScript.Program.Token.ELSE:
+            case NanoScript.Program.Token.FOR:
+            case NanoScript.Program.Token.BREAK:
+            case NanoScript.Program.Token.DEF:
+            case NanoScript.Program.Token.ASSERT:
+            case NanoScript.Program.Token.ERROR:
+            case NanoScript.Program.Token.SWITCH:
+            case NanoScript.Program.Token.STRUCT:
+                return ParseStructDeclarationStatement();
+            case NanoScript.Program.Token.INTERFACE:
+                return ParseInterfaceStatement();
+            case NanoScript.Program.Token.DOUBLEPLUS:
+            case NanoScript.Program.Token.DOUBLEMINUS:
+            default:
+                Console.WriteLine($"Parser ERROR[3/1]: {ctx.Peek_tk()}:{ctx.Peek_tk()}");
+                return null;
         }
         return null;
     }
@@ -317,7 +351,8 @@ public partial class Parser {
         if (ctx.Peek_tk(DOT)) {
             ctx.Consume_tk(DOT);
             res.isSelf = true;
-        } else if (ctx.Peek_tk(IDENTIFIER)) {
+        }
+        if (ctx.Peek_tk(IDENTIFIER)) {
             res.identifier = ParseIdentifierExpression();
             if (ctx.Peek_tk(COLON)) {
                 res.typeDeclarationStatement = ParseTypeDeclarationStatement();

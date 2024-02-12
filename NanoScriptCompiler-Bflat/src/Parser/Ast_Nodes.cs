@@ -35,7 +35,7 @@ public class ModuleStatement : Statement {
         foreach (var item in statements) {
             res.Append(item.TranspileToBflat());
         }
-        res.Append("\n}\n");
+        res.Append("\n}");
         return $"{res}";
     }
 }
@@ -155,7 +155,7 @@ public class AssignmentStatement : Statement {
             default:
                 break;
         }
-        return $"{res};\n";
+        return $"{res};";
     }
 }
 
@@ -310,7 +310,7 @@ public class ReturnStatement : Statement {
     public Expression exp;
 
     public override string TranspileToBflat() {
-        return "ReturnStatement:";
+        return $"return {exp.TranspileToBflat()};";
     }
 }
 
@@ -507,7 +507,13 @@ public class FunctionCallStatement : Statement {
     public List<Expression> parameters;
 
     public override string TranspileToBflat() {
-        return "FunctionCallStatement:";
+        var res = $"{identifier.TranspileToBflat()}(";
+        for (var i = 0; i < parameters.Count; i++) {
+            res += parameters[i].TranspileToBflat();
+            if (i < parameters.Count - 1)
+                res += ", ";
+        }
+        return $"{res});";
     }
 }
 

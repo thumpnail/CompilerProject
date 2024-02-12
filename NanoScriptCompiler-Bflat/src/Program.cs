@@ -1,6 +1,9 @@
 ﻿using Parseus.Lexer;
 using NanoScript.Parser;
 using Newtonsoft.Json;
+using System.Linq;
+using Microsoft.Win32.SafeHandles;
+using NanoScriptCompiler_Bflat.Helper;
 
 namespace NanoScript {
     public static class Program {
@@ -15,7 +18,7 @@ namespace NanoScript {
             DOUBLEBRACES, DOUBLEARROWRIGHT, PIPE, AND, PLUS, MINUS, PERCENT, SLASH, DOUBLESTAR, STAR, DOUBLEPIPE, DOUBLEAND, DOUBLEEQUAL, 
             NOTEQUAL, LESSEQUAL, LESS, GREATEREQUALS, DOUBLEDOT, CIRCUMFLEX, TILDE, EXLEMATIONMARK, DOUBLEPLUS, DOUBLEMINUS
         }
-
+        
         public static void Main(string[] args) {
             var lexer = CreateLexer();
             var lexerResult =
@@ -27,15 +30,22 @@ namespace NanoScript {
                     File.ReadAllText(@"C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\test.nano")
                 );
                 
-            lexerResult.result.ForEach(element => {
-                Console.WriteLine($"({element.token}, {element.Value}):({element.index}, {element.length})");
-            });
+            using(StreamWriter writer = new StreamWriter("output_tokens.txt")) {
+                lexerResult.result.ForEach(element => {
+                    writer.WriteLine($"({element.token}, {element.Value}):({element.index}, {element.length})");
+                });
+                writer.Close();
+            }
 
             var ctx = new ParserContext(lexerResult.result);
             var res = new Parser.Parser(ctx).Parse();
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(res, Formatting.Indented));
+            using(StreamWriter writer = new StreamWriter("output_ast.json")) {
+                writer.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(res, Formatting.Indented));
+                writer.Close();
+            }
             var code = res.TranspileToBflat();
             code.ToConsole();
+            code.ToFile("output_bflat.cs");
         }
         public static Lexer<Token> CreateLexer() {
             const string ANY = "[.]";
@@ -67,6 +77,7 @@ namespace NanoScript {
                     .child(Token.AS, "as")
                     .child(Token.FROM, "from")
                     .child(Token.LET, "let")
+         
                     .child(Token.VAR, "var")
                     .child(Token.CONST, "const")
                     .child(Token.IF, "if")

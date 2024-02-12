@@ -7,13 +7,35 @@ import "System.nano"
 import "System.Console" as bla
 
 class Program {
+	enum ctype {
+		a,
+		b,
+		c,
+		d,
+		e
+	}
+    //var decl
     let somevalue: int
-    pub fnc Main(agrs: []string) {
+    pub fnc Main(agrs: []string): int {
+        //simple assing
         somevalue = 12
-        println("Hello World");
+        println("Hello World")
         return 1
     }
-    pub fnc someclass() {
-        self.bla = 4
+    pub fnc loops(): int {
+        .abc = 2
+        for {
+			println("Ping")
+		}
+		
+		return 2
     }
+	pub fnc checks(): int {
+		if true {
+			somevalue = 4
+		} else if abcd {
+			somevalue = 3
+		}
+		return 1
+	}
 }

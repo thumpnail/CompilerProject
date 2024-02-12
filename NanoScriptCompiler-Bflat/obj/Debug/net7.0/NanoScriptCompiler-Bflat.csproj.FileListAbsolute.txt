@@ -20,3 +20,5 @@ C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScript
 C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\xunit.core.dll
 C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\xunit.execution.dotnet.dll
 C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.sourcelink.json
+C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\Parseus.dll
+C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\Parseus.pdb
