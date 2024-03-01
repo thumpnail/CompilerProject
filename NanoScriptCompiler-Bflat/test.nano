@@ -27,7 +27,6 @@ class Program {
         for {
 			println("Ping")
 		}
-		
 		return 2
     }
 	pub fnc checks(): int {

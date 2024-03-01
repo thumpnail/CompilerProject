@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NanoScriptCompiler-Bflat")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5ea458ce637d799032ba6e646856952a3661f1e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9378b39fddb5f630646c736fe62594ecf73735e1")]
 [assembly: System.Reflection.AssemblyProductAttribute("NanoScriptCompiler-Bflat")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NanoScriptCompiler-Bflat")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -138,13 +138,20 @@ public partial class Parser {
             case NanoScript.Program.Token.RETURN:
                 return ParseReturnStatement();
             case NanoScript.Program.Token.IF:
-            case NanoScript.Program.Token.ELSE:
+            //case NanoScript.Program.Token.ELSE:
+                return ParseConditionalStatement();
             case NanoScript.Program.Token.FOR:
+                return ParseForStatement();
             case NanoScript.Program.Token.BREAK:
+            case NanoScript.Program.Token.CONTINUE:
+                return ParseBreakContinueStatement();
             case NanoScript.Program.Token.DEF:
             case NanoScript.Program.Token.ASSERT:
+                return ParseAssertionStatement();
             case NanoScript.Program.Token.ERROR:
+                return ParseErrorStatement();
             case NanoScript.Program.Token.SWITCH:
+                return ParseSwitchStatement();
             case NanoScript.Program.Token.STRUCT:
                 return ParseStructDeclarationStatement();
             case NanoScript.Program.Token.INTERFACE:
@@ -438,14 +445,6 @@ public partial class Parser {
         ctx.ClearFrame();
         return res;
     }
-    private List<SubSwitchStatement> ParseSubSwitchStatements() {
-        var res = new List<SubSwitchStatement>();
-        SubSwitchStatement tmp;
-        while ((tmp = ParseSubSwitchStatement()) is not null) {
-            res.Add(tmp);
-        }
-        return res;
-    }
     //(identifier ':' statement* 'break'?)*
     private SubSwitchStatement? ParseSubSwitchStatement() {
         ctx.CreateFrame();
@@ -465,12 +464,24 @@ public partial class Parser {
         ctx.ClearFrame();
         return res;
     }
+    private List<SubSwitchStatement> ParseSubSwitchStatements() {
+        var res = new List<SubSwitchStatement>();
+        SubSwitchStatement subSwitchStatement;
+        while ((subSwitchStatement = ParseSubSwitchStatement()) != null) {
+            res.Add(subSwitchStatement);
+            if (ctx.Peek_tk(COMMA)) {
+                ctx.Consume_tk(COMMA);
+            }
+        }
+        return res;
+    }
     //| 'for' (identifier 'in' identifier | identifier '=' exp ';' exp ';' exp | exp) '{' statement* '}'
     private ForStatement? ParseForStatement() {
         ctx.CreateFrame();
         var res = new ForStatement();
         Expression tmpexpr;
         if (ctx.Peek_tk(FOR)) {
+            ctx.Consume_tk(FOR);
             if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(IN)) {
                 res.type = ForType.ForIn;
                 res.elementIdentifier = ParseIdentifierExpression();
@@ -496,6 +507,10 @@ public partial class Parser {
                 res.exp_cond = tmpexpr;
                 ctx.Consume_tk(LEFTBRACE);
                 res.statements = ParseStatements();
+                ctx.Consume_tk(RIGHTBRACE);
+            } else if(ctx.Peek_tk(LEFTBRACE)) {
+                ctx.Consume_tk(LEFTBRACE);
+                res.statements = ParseStatements(RIGHTBRACE);
                 ctx.Consume_tk(RIGHTBRACE);
             } else {
                 ctx.PopFrame();
