@@ -8,6 +8,6 @@ typedef struct {
 }TSTR;
 
 int main() {
-    let test = str("Hello World");
-    return 0;
+    str_t test = as_str("hello world");
+    return test.length;
 }

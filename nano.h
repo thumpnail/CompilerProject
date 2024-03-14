@@ -1,12 +1,12 @@
 #define new(item) malloc(sizeof(item))
 
-#define let auto
+#define var auto
 #define const const auto
 
 #define fnc auto
 
-#define str(val) {val, sizeof(val)}
+#define as_str(val) (str_t){val, sizeof(val)}
 typedef struct {
 	char* value;
 	int length;
-}str;
+} str_t;
