@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
-using Newtonsoft.Json;
 using static NanoScript.Program.Token;
 
 namespace NanoScript.Parser;

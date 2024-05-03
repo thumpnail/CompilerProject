@@ -22,3 +22,23 @@ C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScript
 C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.sourcelink.json
 C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\Parseus.dll
 C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\Parseus.pdb
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\NanoScriptCompiler-Bflat.exe
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\NanoScriptCompiler-Bflat.deps.json
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\NanoScriptCompiler-Bflat.runtimeconfig.json
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\NanoScriptCompiler-Bflat.dll
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\NanoScriptCompiler-Bflat.pdb
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\Newtonsoft.Json.dll
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\Parseus.dll
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\bin\Debug\net7.0\Parseus.pdb
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.csproj.AssemblyReference.cache
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.GeneratedMSBuildEditorConfig.editorconfig
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.AssemblyInfoInputs.cache
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.AssemblyInfo.cs
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.csproj.CoreCompileInputs.cache
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.sourcelink.json
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScri.65A08BBB.Up2Date
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.dll
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\refint\NanoScriptCompiler-Bflat.dll
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.pdb
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\NanoScriptCompiler-Bflat.genruntimeconfig.cache
+D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\obj\Debug\net7.0\ref\NanoScriptCompiler-Bflat.dll

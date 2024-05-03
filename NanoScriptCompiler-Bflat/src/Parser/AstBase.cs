@@ -20,35 +20,15 @@ public abstract class Node {
     }*/
     public string source { get; set; }
 
-    public abstract string TranspileToC();
-    public abstract string TranspileToBflat();
-    public abstract string TranspileToByteCode();
+    public abstract string GenBflat();
+    public abstract List<int> TranspileToByteCode();
+    public abstract List<string> TranspileToAsm();
     
     public int[] Compile() {
         return new int[0];
     }
 }
 
-public abstract class Statement : Node {
-    public override string TranspileToC() {
-        return "<EMPTYNODE>";
-    }
-    public override string TranspileToBflat() {
-        return "<EMPTYNODE>";
-    }
-    public override string TranspileToByteCode() {
-        return "<EMPTYNODE>";
-    }
-}
+public abstract class Statement : Node {}
 
-public abstract class Expression : Node {
-    public override string TranspileToC() {
-        return "<EMPTYNODE>";
-    }
-    public override string TranspileToBflat() {
-        return "<EMPTYNODE>";
-    }
-    public override string TranspileToByteCode() {
-        return "<EMPTYNODE>";
-    }
-}
+public abstract class Expression : Node {}

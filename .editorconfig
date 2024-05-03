@@ -2,14 +2,14 @@ root = true
 
 # All files
 [*]
-indent_style = space
+indent_style = tab
 
 # Xml files
 [*.xml]
 indent_size = 2
 
 # C# files
-[*.cs]
+[*.{cs, csx}]
 
 #### Core EditorConfig Options ####
 
@@ -22,7 +22,7 @@ end_of_line = crlf
 insert_final_newline = false
 
 #### .NET Coding Conventions ####
-[*.{cs,vb}]
+[*.{cs, vb}]
 
 # Organize usings
 dotnet_separate_import_directive_groups = true
@@ -75,7 +75,7 @@ dotnet_code_quality_unused_parameters = all:suggestion
 dotnet_remove_unnecessary_suppression_exclusions = none
 
 #### C# Coding Conventions ####
-[*.cs]
+[*.{cs, csx}]
 
 # var preferences
 csharp_style_var_elsewhere = false:silent

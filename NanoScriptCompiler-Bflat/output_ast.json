@@ -1,0 +1,244 @@
+{
+  "moduleStatements": [
+    {
+      "moduleName": {
+        "identifier": "main",
+        "identifiers": [],
+        "isExtension": false,
+        "lastIdentifier": null,
+        "isSelf": false,
+        "source": null
+      },
+      "importStatements": [
+        {
+          "identifier": null,
+          "importString": "System",
+          "isAs": false,
+          "isFrom": true,
+          "source": null
+        },
+        {
+          "identifier": null,
+          "importString": "\"System.nano\"",
+          "isAs": false,
+          "isFrom": true,
+          "source": null
+        },
+        {
+          "identifier": {
+            "identifier": "bla",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": null,
+            "isSelf": false,
+            "source": null
+          },
+          "importString": "\"System.Console\"",
+          "isAs": true,
+          "isFrom": false,
+          "source": null
+        }
+      ],
+      "isSubModule": false,
+      "statements": [
+        {
+          "isPublic": true,
+          "identifier": {
+            "identifier": "Program",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": null,
+            "isSelf": false,
+            "source": null
+          },
+          "typeDeclarationStatement": null,
+          "statements": [
+            {
+              "typeDeclarationStatement": null,
+              "identifier": {
+                "identifier": "ctype",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": null,
+                "isSelf": false,
+                "source": null
+              },
+              "enumValueDeclarations": [
+                {
+                  "identifier": {
+                    "identifier": "a",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "exp": null,
+                  "type": 0,
+                  "source": null
+                },
+                {
+                  "identifier": {
+                    "identifier": "b",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "exp": null,
+                  "type": 0,
+                  "source": null
+                },
+                {
+                  "identifier": {
+                    "identifier": "c",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "exp": null,
+                  "type": 0,
+                  "source": null
+                },
+                {
+                  "identifier": {
+                    "identifier": "d",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "exp": null,
+                  "type": 0,
+                  "source": null
+                },
+                {
+                  "identifier": {
+                    "identifier": "e",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "exp": null,
+                  "type": 0,
+                  "source": null
+                }
+              ],
+              "exp": null,
+              "isPublic": false,
+              "source": null
+            },
+            {
+              "isPublic": false,
+              "prefix": "let",
+              "isSelf": false,
+              "identifier": {
+                "identifier": "somevalue",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": null,
+                "isSelf": false,
+                "source": null
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "int",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": null,
+                  "isSelf": false,
+                  "source": null
+                },
+                "typeDeclarationType": 0,
+                "exp": null,
+                "source": null
+              },
+              "isAssign": false,
+              "exp": null,
+              "source": null
+            },
+            {
+              "isExport": false,
+              "isPublic": true,
+              "isSelf": false,
+              "identifier": {
+                "identifier": "Main",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": null,
+                "isSelf": false,
+                "source": null
+              },
+              "parameters": [
+                {
+                  "identifier": {
+                    "identifier": "agrs",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "typeDeclarationStatement": {
+                    "identifier": {
+                      "identifier": "string",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": null,
+                      "isSelf": false,
+                      "source": null
+                    },
+                    "typeDeclarationType": 1,
+                    "exp": null,
+                    "source": null
+                  },
+                  "source": null
+                }
+              ],
+              "statements": [
+                {
+                  "isSelf": false,
+                  "identifier": {
+                    "identifier": "somevalue",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "typeDeclarationStatement": null,
+                  "assignmentType": 1,
+                  "exp": null,
+                  "source": null
+                }
+              ],
+              "returnType": {
+                "identifier": {
+                  "identifier": "int",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": null,
+                  "isSelf": false,
+                  "source": null
+                },
+                "typeDeclarationType": 0,
+                "exp": null,
+                "source": null
+              },
+              "source": null
+            }
+          ],
+          "source": null
+        }
+      ],
+      "source": null
+    }
+  ],
+  "source": null
+}

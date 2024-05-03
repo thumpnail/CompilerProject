@@ -42,7 +42,7 @@
       "isSubModule": false,
       "statements": [
         {
-          "isPublic": false,
+          "isPublic": true,
           "identifier": {
             "identifier": "Program",
             "identifiers": [],
@@ -130,7 +130,6 @@
                   "source": null
                 }
               ],
-              "exp": null,
               "isPublic": false,
               "source": null
             },
@@ -215,9 +214,25 @@
                   "typeDeclarationStatement": null,
                   "assignmentType": 1,
                   "exp": {
-                    "number": {
-                      "int_number": "12",
-                      "RAW": "12"
+                    "identifier": {
+                      "identifier": "arr",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": null,
+                      "isSelf": false,
+                      "source": null
+                    },
+                    "index": {
+                      "number": {
+                        "int_number": "1",
+                        "RAW": "1"
+                      },
+                      "source": null
+                    },
+                    "isRange": false,
+                    "range": {
+                      "Item1": null,
+                      "Item2": null
                     },
                     "source": null
                   },
@@ -308,7 +323,25 @@
                   "exp_def": null,
                   "exp_cond": null,
                   "exp_incr": null,
-                  "statements": [],
+                  "statements": [
+                    {
+                      "identifier": {
+                        "identifier": "println",
+                        "identifiers": [],
+                        "isExtension": false,
+                        "lastIdentifier": null,
+                        "isSelf": false,
+                        "source": null
+                      },
+                      "parameters": [
+                        {
+                          "str": "\"Ping\"",
+                          "source": null
+                        }
+                      ],
+                      "source": null
+                    }
+                  ],
                   "source": null
                 },
                 {
@@ -349,7 +382,32 @@
                 "isSelf": false,
                 "source": null
               },
-              "parameters": null,
+              "parameters": [
+                {
+                  "identifier": {
+                    "identifier": "bbcd",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": null,
+                    "isSelf": false,
+                    "source": null
+                  },
+                  "typeDeclarationStatement": {
+                    "identifier": {
+                      "identifier": "bool",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": null,
+                      "isSelf": false,
+                      "source": null
+                    },
+                    "typeDeclarationType": 0,
+                    "exp": null,
+                    "source": null
+                  },
+                  "source": null
+                }
+              ],
               "statements": [
                 {
                   "ifConditionalStatement": {
@@ -359,37 +417,61 @@
                       "value": true,
                       "source": null
                     },
-                    "statements": [],
-                    "source": null
-                  },
-                  "elseIfConditionalStatements": [],
-                  "elseConditionalStatement": {
-                    "isElse": false,
-                    "isIf": true,
-                    "exp": {
-                      "identifier": {
-                        "identifier": "abcd",
-                        "identifiers": [],
-                        "isExtension": false,
-                        "lastIdentifier": null,
+                    "statements": [
+                      {
                         "isSelf": false,
-                        "source": null
-                      },
-                      "expressions": [
-                        {
+                        "identifier": {
                           "identifier": "somevalue",
                           "identifiers": [],
                           "isExtension": false,
                           "lastIdentifier": null,
                           "isSelf": false,
                           "source": null
-                        }
-                      ],
-                      "source": null
-                    },
-                    "statements": null,
+                        },
+                        "typeDeclarationStatement": null,
+                        "assignmentType": 1,
+                        "exp": {
+                          "number": {
+                            "int_number": "4",
+                            "RAW": "4"
+                          },
+                          "source": null
+                        },
+                        "source": null
+                      }
+                    ],
                     "source": null
                   },
+                  "elseIfConditionalStatements": [
+                    {
+                      "isElse": true,
+                      "isIf": true,
+                      "exp": {
+                        "identifier": {
+                          "identifier": "abcd",
+                          "identifiers": [],
+                          "isExtension": false,
+                          "lastIdentifier": null,
+                          "isSelf": false,
+                          "source": null
+                        },
+                        "expressions": [
+                          {
+                            "identifier": "somevalue",
+                            "identifiers": [],
+                            "isExtension": false,
+                            "lastIdentifier": null,
+                            "isSelf": false,
+                            "source": null
+                          }
+                        ],
+                        "source": null
+                      },
+                      "statements": [],
+                      "source": null
+                    }
+                  ],
+                  "elseConditionalStatement": null,
                   "source": null
                 }
               ],

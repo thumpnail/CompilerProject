@@ -1,24 +1,24 @@
 ﻿using Parseus.Lexer;
 using NanoScript.Parser;
-using Newtonsoft.Json;
 using System.Linq;
+using Newtonsoft.Json;
 using Microsoft.Win32.SafeHandles;
 using NanoScriptCompiler_Bflat.Helper;
 
 namespace NanoScript {
     public static class Program {
-        public enum Token { 
-            NONE, EOL, IDENTIFIER, STRING, NUMBER, @TRUE, @FALSE, 
-            @PUB, @MOD, @RETURN, @ENUM, @ERROR, @GOTO, @DEF, @TYPE, @STRUCT, 
-            @CLASS, @INTERFACE, @UNION, @ASSERT, @IMPORT, @AS, @FROM, @LET, @VAR, @CONST, @IF, @ELSE, @SWITCH, @BREAK, 
+        public enum Token {
+            NONE, EOL, IDENTIFIER, STRING, NUMBER, @TRUE, @FALSE,
+            @PUB, @MOD, @RETURN, @ENUM, @ERROR, @GOTO, @DEF, @TYPE, @STRUCT,
+            @CLASS, @INTERFACE, @UNION, @ASSERT, @IMPORT, @AS, @FROM, @LET, @VAR, @CONST, @IF, @ELSE, @SWITCH, @BREAK,
             @DEFAULT, @CONTINUE, @EXPORT, @FNC, @MATCH, @IS, @SIZE, @STR, @FOR, @IN,
-            
-            LEFTBRACE, RIGHTBRACE, DOT, DOUBLELEFT, DOUBLERIGHT, PLUSEQUALS, MINUSEQUALS, TIMESEQUALS, SLASHEQUALS, 
-            COLON, EQUAL, SEMICOLON, LEFTPAREN, COMMA, RIGHTPAREN, DOUBLECOLON, GREATER, LEFTBRACKET, RIGHTBRACKET, 
-            DOUBLEBRACES, DOUBLEARROWRIGHT, PIPE, AND, PLUS, MINUS, PERCENT, SLASH, DOUBLESTAR, STAR, DOUBLEPIPE, DOUBLEAND, DOUBLEEQUAL, 
+
+            LEFTBRACE, RIGHTBRACE, DOT, DOUBLELEFT, DOUBLERIGHT, PLUSEQUALS, MINUSEQUALS, TIMESEQUALS, SLASHEQUALS,
+            COLON, EQUAL, SEMICOLON, LEFTPAREN, COMMA, RIGHTPAREN, DOUBLECOLON, GREATER, LEFTBRACKET, RIGHTBRACKET,
+            DOUBLEBRACES, DOUBLEARROWRIGHT, PIPE, AND, PLUS, MINUS, PERCENT, SLASH, DOUBLESTAR, STAR, DOUBLEPIPE, DOUBLEAND, DOUBLEEQUAL,
             NOTEQUAL, LESSEQUAL, LESS, GREATEREQUALS, DOUBLEDOT, CIRCUMFLEX, TILDE, EXLEMATIONMARK, DOUBLEPLUS, DOUBLEMINUS
         }
-        
+
         public static void Main(string[] args) {
             var lexer = CreateLexer();
             var lexerResult =
@@ -27,10 +27,10 @@ namespace NanoScript {
                     //    "//"+"this is a comment" + Environment.NewLine +
                     //    "let somenum = 12.21" + Environment.NewLine
                     //File.ReadAllText("./../../../test.nano")
-                    File.ReadAllText(@"C:\Users\fried\OneDrive\Dokumente\Code\Rider Projects\CompilerProject\NanoScriptCompiler-Bflat\test.nano")
+                    File.ReadAllText(@"D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScriptCompiler-Bflat\test.nano")
                 );
-                
-            using(StreamWriter writer = new StreamWriter("output_tokens.txt")) {
+
+            using (StreamWriter writer = new StreamWriter("output_tokens.txt")) {
                 lexerResult.result.ForEach(element => {
                     writer.WriteLine($"({element.token}, {element.Value}):({element.index}, {element.length})");
                 });
@@ -39,13 +39,13 @@ namespace NanoScript {
 
             var ctx = new ParserContext(lexerResult.result);
             var res = new Parser.Parser(ctx).Parse();
-            using(StreamWriter writer = new StreamWriter("output_ast.json")) {
+            using (StreamWriter writer = new StreamWriter("output_ast.json")) {
                 writer.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(res, Formatting.Indented));
                 writer.Close();
             }
-            var code = res.TranspileToBflat();
+            var code = res.GenBflat();
             code.ToConsole();
-            code.ToFile("output_bflat.cs");
+            code.ToFile("output_bflat.csx");
         }
         public static Lexer<Token> CreateLexer() {
             const string ANY = "[.]";
@@ -77,7 +77,7 @@ namespace NanoScript {
                     .child(Token.AS, "as")
                     .child(Token.FROM, "from")
                     .child(Token.LET, "let")
-         
+
                     .child(Token.VAR, "var")
                     .child(Token.CONST, "const")
                     .child(Token.IF, "if")

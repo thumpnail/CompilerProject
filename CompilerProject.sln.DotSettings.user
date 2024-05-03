@@ -6,4 +6,6 @@
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/FiltersState/=SpellingFilter/@EntryIndexedValue">Off</s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/Roslyn/RoslynEnabled/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/InlayHints/GeneralInlayHintsOptions/EnableInlayHints/@EntryValue">False</s:Boolean>
-	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=81a9b52b_002D4ade_002D488d_002D888e_002De885a381c1de_0023Antlr4ParserGenerator/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=9896cc4d_002D6c92_002D4899_002Db9eb_002D03a71a9e752b_0023NanoScriptCompiler_002DBflat/@EntryIndexedValue">True</s:Boolean>
+	
+	</wpf:ResourceDictionary>

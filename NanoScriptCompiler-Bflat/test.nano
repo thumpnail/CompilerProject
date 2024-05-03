@@ -6,7 +6,7 @@ import System
 import "System.nano"
 import "System.Console" as bla
 
-class Program {
+pub class Program {
 	enum ctype {
 		a,
 		b,
@@ -18,7 +18,7 @@ class Program {
     let somevalue: int
     pub fnc Main(agrs: []string): int {
         //simple assing
-        somevalue = 12
+        somevalue = arr[1]
         println("Hello World")
         return 1
     }
@@ -29,7 +29,7 @@ class Program {
 		}
 		return 2
     }
-	pub fnc checks(): int {
+	pub fnc checks(bbcd: bool): int {
 		if true {
 			somevalue = 4
 		} else if abcd {
@@ -37,4 +37,5 @@ class Program {
 		}
 		return 1
 	}
+
 }

@@ -10,13 +10,15 @@ namespace NanoScript.Parser;
 // program: module_statement*;
 public class Program : Statement {
     public List<ModuleStatement> moduleStatements;
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         foreach (var item in moduleStatements) {
-            res.Append(item.TranspileToBflat());
+            res.Append(item.GenBflat());
         }
         return $"{res}\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 // 
@@ -26,18 +28,20 @@ public class ModuleStatement : Statement {
     public List<ImportStatement> importStatements;
     public bool isSubModule;
     public List<Statement> statements;
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         foreach (var item in importStatements) {
-            res.Append(item.TranspileToBflat());
+            res.Append(item.GenBflat());
         }
-        res.Append($"namespace module_{moduleName.TranspileToBflat()} {{\n");
+        res.Append($"namespace module_{moduleName.GenBflat()} {{\n");
         foreach (var item in statements) {
-            res.Append(item.TranspileToBflat());
+            res.Append(item.GenBflat());
         }
         res.Append("\n}");
         return $"{res}";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 // ImportStatement: 'import' string ('as' identifier)? | 'import' identifier 'from' string;
@@ -52,14 +56,14 @@ public class ImportStatement : Statement {
         set { isAs = !value; }
     }
 
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         if (isAs) {
             if (importString.EndsWith(".nano")) {
                 //TODO: Namepace Magic
             } else {
                 //Guessing that it is a c# namepace
-                res.Append($"using {identifier.TranspileToBflat()} = {importString.Substring(1, importString.Length - 2)};");
+                res.Append($"using {identifier.GenBflat()} = {importString.Substring(1, importString.Length - 2)};");
             }
         } else {
             res.Append($"using {importString};");
@@ -67,6 +71,8 @@ public class ImportStatement : Statement {
         // TODO: parse nano files
         return $"{res}\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 // 
@@ -82,24 +88,26 @@ public class VariableDeclarationStatement : Statement {
     public TypeDeclarationStatement typeDeclarationStatement;
     public bool isAssign;
     public Expression exp;
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         if (isPublic) res.Append("public ");
         if (prefix == "let") res.Append("readonly ");
         else if (prefix == "const") res.Append("const ");
 
         if (typeDeclarationStatement != null) {
-            res.Append($"{typeDeclarationStatement.TranspileToBflat()} ");
+            res.Append($"{typeDeclarationStatement.GenBflat()} ");
         } else {
             res.Append($"var ");
         }
 
-        res.Append($"{identifier.TranspileToBflat()}");
-        if (isAssign) res.Append($" = {exp.TranspileToBflat()}");
+        res.Append($"{identifier.GenBflat()}");
+        if (isAssign) res.Append($" = {exp.GenBflat()}");
         res.Append(";");
 
         return $"{res}\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // assignment Statement
@@ -121,42 +129,44 @@ public class AssignmentStatement : Statement {
     public TypeDeclarationStatement typeDeclarationStatement;
     public AssignmentType assignmentType;
     public Expression exp;
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         if (isSelf) res.Append("this.");
-        res.Append($"{identifier.TranspileToBflat()} ");
+        res.Append($"{identifier.GenBflat()} ");
         if (typeDeclarationStatement != null) {
-            res.Append($"{typeDeclarationStatement.TranspileToBflat()} ");
+            res.Append($"{typeDeclarationStatement.GenBflat()} ");
         }
         switch (assignmentType) {
             case AssignmentType.none:
                 break;
             case AssignmentType.equal:
-                res.Append($" = {exp.TranspileToBflat()}");
+                res.Append($" = {exp.GenBflat()}");
                 break;
             case AssignmentType.push:
-                res.Append($".Add({exp.TranspileToBflat()})");
+                res.Append($".Add({exp.GenBflat()})");
                 break;
             case AssignmentType.pop:
-                res.Append($".Last({exp.TranspileToBflat()})");
+                res.Append($".Last({exp.GenBflat()})");
                 break;
             case AssignmentType.add:
-                res.Append($" += {exp.TranspileToBflat()}");
+                res.Append($" += {exp.GenBflat()}");
                 break;
             case AssignmentType.sub:
-                res.Append($" -= {exp.TranspileToBflat()}");
+                res.Append($" -= {exp.GenBflat()}");
                 break;
             case AssignmentType.mul:
-                res.Append($" *= {exp.TranspileToBflat()}");
+                res.Append($" *= {exp.GenBflat()}");
                 break;
             case AssignmentType.div:
-                res.Append($" /= {exp.TranspileToBflat()}");
+                res.Append($" /= {exp.GenBflat()}");
                 break;
             default:
                 break;
         }
         return $"{res};";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Conditional Statements: Statements that perform different actions based on conditions (e.g., if, else, switch).
@@ -165,19 +175,33 @@ public class ConditionalStatement : Statement {
     public SubConditionalStatement ifConditionalStatement;
     public List<SubConditionalStatement> elseIfConditionalStatements = new();
     public SubConditionalStatement elseConditionalStatement;
-    public override string TranspileToBflat() {
-        return "ConditionalStatement:";
+    public override string GenBflat() {
+        var res = $"{ifConditionalStatement.GenBflat()}";
+        foreach (var statement in elseIfConditionalStatements) {
+            res += $"{statement.GenBflat()}";
+        }
+        res += $"{elseConditionalStatement?.GenBflat()}";
+        return res;
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 public class SubConditionalStatement : Statement {
     public bool isElse;
     public bool isIf;
     public Expression exp;
-    public List<Statement> statements;
-    public override string TranspileToBflat() {
-        return "SubConditionalStatement:";
+    public List<Statement> statements = new();
+    public override string GenBflat() {
+        var res = $"{(isElse ? "else" : "")} {(isIf ? $"if({exp.GenBflat()})" : "")} {{";
+        foreach (var statement in statements) {
+            res += $"{statement.GenBflat()}";
+        }
+        res += "\n}";
+        return $"{res}\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //TODO: Switch identifier with expression
@@ -187,9 +211,11 @@ public class SwitchStatement : Statement {
     public List<SubSwitchStatement> subSwitchStatements = new();
     //default
     public SubSwitchStatement defSubSwitchStatement;
-    public override string TranspileToBflat() {
-        return "SwitchStatement:";
+    public override string GenBflat() {
+        return "//SwitchStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //(identifier ':' statement* 'break'?)*
@@ -198,9 +224,11 @@ public class SubSwitchStatement : Statement {
     public List<Statement> statements = new();
     public bool isBreak = false;
     public bool isDefault = false;
-    public override string TranspileToBflat() {
-        return "SubSwitchStatement:";
+    public override string GenBflat() {
+        return "//SubSwitchStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Control Flow Statements: Statements for altering the flow of execution (e.g., break, continue, goto - though this is less common).
@@ -212,9 +240,11 @@ public enum ControlFlowModifierType {
 
 public class BreakContinueStatement : Statement {
     public ControlFlowModifierType ControlFlowModifierType;
-    public override string TranspileToBflat() {
-        return "BreakContinueStatement:";
+    public override string GenBflat() {
+        return "//BreakContinueStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Looping Statements: Statements that repeat a block of code multiple times (e.g., for, while, do-while).
@@ -237,9 +267,23 @@ public class ForStatement : Statement {
 
     public List<Statement> statements;
 
-    public override string TranspileToBflat() {
-        return "ForStatement:";
+    public override string GenBflat() {
+        var res = "";
+        if (type == ForType.For) {
+            res = $"for(int {exp_def.GenBflat()}; {exp_cond.GenBflat()}; {exp_incr.GenBflat()}) {{\n";
+        } else if (type == ForType.While) {
+            res = $"while({(exp_cond is null? "true" : exp_cond.GenBflat())}) {{\n";
+        } else if (type == ForType.ForIn) {
+            res = $"foreach(var {elementIdentifier.GenBflat()} in {listIdentifier.GenBflat()}) {{\n";
+        }
+        foreach (var statement in statements) {
+            res += $"{statement.GenBflat()};\n";
+        }
+        res += "}";
+        return res;
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Function and Method Declaration: Statements that invoke functions or methods.
@@ -252,18 +296,18 @@ public class FunctionDeclarationStatement : Statement {
     public List<ParameterDeclaration> parameters = new();
     public List<Statement> statements = new();
     public TypeDeclarationStatement returnType;
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         if (isExport) res.Append("export ");
         if (isPublic) res.Append("public ");
         if (!isSelf) res.Append("static ");
-        if (returnType != null) res.Append($"{returnType.TranspileToBflat()} ");
+        if (returnType != null) res.Append($"{returnType.GenBflat()} ");
         else res.Append("void ");
 
         if (identifier.isSelf) {
             res.Append($"{identifier.lastIdentifier} ");
         } else {
-            res.Append($"{identifier.TranspileToBflat()}");
+            res.Append($"{identifier.GenBflat()}");
         }
 
         res.Append("(");
@@ -276,7 +320,7 @@ public class FunctionDeclarationStatement : Statement {
         if (parameters != null)
             for (int i = 0; i < parameters.Count; i++) {
                 var item = parameters[i];
-                res.Append(item.TranspileToBflat());
+                res.Append(item.GenBflat());
                 if (i < parameters.Count - 1) {
                     res.Append(", ");
                 }
@@ -285,23 +329,27 @@ public class FunctionDeclarationStatement : Statement {
         if (statements != null)
             for (int i = 0; i < statements.Count; i++) {
                 var item = statements[i];
-                res.AppendLine(item.TranspileToBflat());
+                res.AppendLine(item.GenBflat());
             }
         res.Append("\n}");
         return $"{res}\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 public class ParameterDeclaration : Statement {
     public IdentifierExpression identifier;
     public TypeDeclarationStatement typeDeclarationStatement;
 
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
-        if (typeDeclarationStatement != null) res.Append($"{typeDeclarationStatement.TranspileToBflat()} ");
-        res.Append($"{identifier.TranspileToBflat()}");
+        if (typeDeclarationStatement != null) res.Append($"{typeDeclarationStatement.GenBflat()} ");
+        res.Append($"{identifier.GenBflat()}");
         return $"{res}";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Return Statements: Statements that return values from functions or methods.
@@ -309,9 +357,11 @@ public class ParameterDeclaration : Statement {
 public class ReturnStatement : Statement {
     public Expression exp;
 
-    public override string TranspileToBflat() {
-        return $"return {exp.TranspileToBflat()};";
+    public override string GenBflat() {
+        return $"return {exp.GenBflat()};";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Enum
@@ -320,12 +370,19 @@ public class EnumDeclarationStatement : Statement {
     public TypeDeclarationStatement typeDeclarationStatement;
     public IdentifierExpression identifier;
     public List<EnumValueDeclaration> enumValueDeclarations = new();
-    public Expression exp;
+    // public Expression exp;
     public bool isPublic;
 
-    public override string TranspileToBflat() {
-        return "EnumDeclarationStatement:";
+    public override string GenBflat() {
+        var res = $"{(isPublic ? "public" : "")} enum {identifier.GenBflat()} {typeDeclarationStatement?.GenBflat()} {{\n";
+        foreach (var item in enumValueDeclarations) {
+            res += $"{item.GenBflat()}\n";
+        }
+        res += "}\n";
+        return res;
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 public enum EnumValueType {
@@ -342,9 +399,11 @@ public class EnumValueDeclaration : Statement {
     public EnumValueType type;
     //public List<ParameterDeclaration> parameters;
 
-    public override string TranspileToBflat() {
-        return "EnumValueDeclaration:";
+    public override string GenBflat() {
+        return $"{identifier.GenBflat()} {(((exp is null? "":"= ")+exp?.GenBflat())??"")},";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Error Handling: Statements for handling errors or exceptions (e.g., try-catch, throw).
@@ -352,9 +411,11 @@ public class EnumValueDeclaration : Statement {
 public class ErrorStatement : Statement {
     public Expression exp;
 
-    public override string TranspileToBflat() {
-        return "ErrorStatement:";
+    public override string GenBflat() {
+        return "//ErrorStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Declaration Statements: Statements for defining types, structures, classes, and interfaces.
@@ -368,9 +429,11 @@ public class DeclarationStatement : Statement {
     public DeclarationType declarationType;
     public IdentifierExpression identifier;
     public Expression exp;
-    public override string TranspileToBflat() {
-        return "DeclarationStatement:";
+    public override string GenBflat() {
+        return "//DeclarationStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //class
@@ -381,9 +444,11 @@ public class StructDeclarationStatement : Statement {
     public TypeDeclarationStatement typeDeclarationStatement;
     public List<Statement> statements;
 
-    public override string TranspileToBflat() {
-        return "StructDeclarationStatement:";
+    public override string GenBflat() {
+        return "//StructDeclarationStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //class
@@ -394,19 +459,22 @@ public class ClassDeclarationStatement : Statement {
     public TypeDeclarationStatement typeDeclarationStatement;
     public List<Statement> statements;
 
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
+        Console.WriteLine($"CLASSDEF: pub:{isPublic}, id:{identifier.GenBflat()}");
         if (isPublic) res.Append("public ");
-        res.Append($"class {identifier.TranspileToBflat()}");
+        res.Append($"class {identifier.GenBflat()}");
         if (typeDeclarationStatement != null)
-            res.Append(typeDeclarationStatement.TranspileToBflat());
+            res.Append(typeDeclarationStatement.GenBflat());
         res.Append(" {\n");
         foreach (var item in statements) {
-            res.Append(item.TranspileToBflat());
+            res.Append(item.GenBflat());
         }
         res.Append("}\n");
         return $"{res}";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //interface
@@ -416,9 +484,11 @@ public class InterfaceStatement : Statement {
     public TypeDeclarationStatement typeDeclarationStatement;
     public List<Statement> statements;
 
-    public override string TranspileToBflat() {
-        return "InterfaceStatement:";
+    public override string GenBflat() {
+        return "//InterfaceStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // union
@@ -428,9 +498,11 @@ public class UnionStatement : Statement {
     public TypeDeclarationStatement typeDeclarationStatement; //???
     public List<Statement> statements;
 
-    public override string TranspileToBflat() {
-        return "UnionStatement:";
+    public override string GenBflat() {
+        return "//UnionStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Expression Statements: Statements that evaluate and execute expressions.
@@ -441,9 +513,11 @@ public class UnionStatement : Statement {
 public class AssertionStatement : Statement {
     public Expression exp;
 
-    public override string TranspileToBflat() {
-        return "AssertionStatement:";
+    public override string GenBflat() {
+        return "//AssertionStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Label Statements: Statements that mark a specific point in the code for jumping or referencing (e.g., break to label).
@@ -451,18 +525,22 @@ public class AssertionStatement : Statement {
 public class LabelStatement : Statement {
     public IdentifierExpression identifier;
 
-    public override string TranspileToBflat() {
-        return "LabelStatement:";
+    public override string GenBflat() {
+        return "//LabelStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    | 'goto' identifier
 public class GotoStatement : Statement {
     public IdentifierExpression identifier;
 
-    public override string TranspileToBflat() {
-        return "GotoStatement:";
+    public override string GenBflat() {
+        return "//GotoStatement:\n";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // Macro and Preprocessor Directives: Special statements used for compile-time code generation (in C and C++).
@@ -482,22 +560,24 @@ public class TypeDeclarationStatement : Statement {
     public TypeDeclarationType typeDeclarationType;
     public Expression exp;
 
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         if (typeDeclarationType == TypeDeclarationType.array) {
-            res.Append($"{identifier.TranspileToBflat()}");
+            res.Append($"{identifier.GenBflat()}");
             res.Append("[");
-            if (exp != null) res.Append(exp.TranspileToBflat());
+            if (exp != null) res.Append(exp.GenBflat());
             res.Append("]");
         } else if (typeDeclarationType == TypeDeclarationType.table) {
             res.Append($"dynamic ");
         } else if (identifier is null) {
             res.Append($"object ");
         } else {
-            res.Append($"{identifier.TranspileToBflat()} ");
+            res.Append($"{identifier.GenBflat()} ");
         }
         return res.ToString();
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 // // Function Call Statement
@@ -506,15 +586,17 @@ public class FunctionCallStatement : Statement {
     public IdentifierExpression identifier;
     public List<Expression> parameters;
 
-    public override string TranspileToBflat() {
-        var res = $"{identifier.TranspileToBflat()}(";
+    public override string GenBflat() {
+        var res = $"{identifier.GenBflat()}(";
         for (var i = 0; i < parameters.Count; i++) {
-            res += parameters[i].TranspileToBflat();
+            res += parameters[i].GenBflat();
             if (i < parameters.Count - 1)
                 res += ", ";
         }
         return $"{res});";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 // 
@@ -530,7 +612,7 @@ public class IdentifierExpression : Expression {
     public bool isExtension;
     public string lastIdentifier;
     public bool isSelf;
-    public override string TranspileToBflat() {
+    public override string GenBflat() {
         var res = new StringBuilder();
         if (isSelf)
             res.Append("this.");
@@ -547,6 +629,8 @@ public class IdentifierExpression : Expression {
 
         return $"{res}";
     }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 public interface INumber {
@@ -581,22 +665,51 @@ public struct FloatExpression : INumber {
 
 public class NumberExpression : Expression {
     public INumber number;
+    public override string ToString() {
+        return number.ToString();
+    }
+    public override string GenBflat() {
+        return $"{this}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    | string
 public class StringExpression : Expression {
     public string str;
+    public override string ToString() {
+        return str;
+    }
+    public override string GenBflat() {
+        return $"{this}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    | ('true'|'false')
 public class BooleanExpression : Expression {
     public bool value;
+    public override string ToString() {
+        return value.ToString();
+    }
+    public override string GenBflat() {
+        return $"{this}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Grouping Expression:
 //    | '(' exp ')'
 public class GroupingExpression : Expression {
     public Expression exp;
+    public override string GenBflat() {
+        return $"({exp.GenBflat()})";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Arithmetic Expressions: Expressions that perform mathematical operations (e.g., addition, subtraction).
@@ -659,6 +772,36 @@ public class BinaryExpression : Expression {
         this.right = right;
         this.operatorType = operatorType;
     }
+    public override string GenBflat() {
+        return $"{left.GenBflat()} {GetBinOp(operatorType)} {right.GenBflat()}";
+    }
+    public string GetBinOp(BinaryOperatorType type) {
+        return type switch {
+            BinaryOperatorType.add => "+",
+            BinaryOperatorType.sub => "-",
+            BinaryOperatorType.div => "/",
+            BinaryOperatorType.mul => "*",
+            BinaryOperatorType.mod => "%",
+            BinaryOperatorType.pow => "**",
+            BinaryOperatorType.doubleOr => "||",
+            BinaryOperatorType.doubleAnd => "&&",
+            BinaryOperatorType.equals => "==",
+            BinaryOperatorType.notEquals => "!=",
+            BinaryOperatorType.lessEquals => "<=",
+            BinaryOperatorType.less => "<",
+            BinaryOperatorType.greaterEquals => ">=",
+            BinaryOperatorType.greater => ">",
+            BinaryOperatorType.and => "&",
+            BinaryOperatorType.or => "|",
+            BinaryOperatorType.xor => "^",
+            BinaryOperatorType.shl => "<<",
+            BinaryOperatorType.shr => ">>",
+            BinaryOperatorType.not => "~",
+            _ => type.ToString()
+        };
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Unary Expressions: Expressions involving a single operand (e.g., negation, logical NOT).
@@ -680,10 +823,27 @@ public class UnaryExpression : Expression {
     public bool isBefore;
     public Expression exp;
     public UnaryOperatorType operatorType;
+    public override string GenBflat() {
+        if(isBefore)
+            return $"{operatorType} {exp.GenBflat()}";
+        return $"{exp.GenBflat()} {operatorType}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 public class ExpressionList : Expression {
     public List<Expression> expressions = new();
+    public override string GenBflat() {
+        var res = "";
+        for (int i = 0; i < expressions.Count(); i++) {
+            res += expressions[i].GenBflat();
+            if(i < expressions.Count()) res += ",";
+        }
+        return res;
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 public class IndexExpression : Expression {
@@ -693,6 +853,11 @@ public class IndexExpression : Expression {
         this.index = index;
         this.identifier = identifier;
     }
+    public override string GenBflat() {
+        return $"{identifier.GenBflat()}[{index.GenBflat()}]";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Pointer or Reference Expressions: Expressions that deal with memory addresses (in languages like C and C++).
@@ -700,14 +865,16 @@ public class IndexExpression : Expression {
 //    | '*' exp
 public class PointerOrReferenceExpression : Expression {
     public bool isPointer = false;
-
-    public bool isReference
-    {
+    public Expression exp;
+    public bool isReference {
         get { return !isPointer; }
         set { isPointer = !value; }
     }
-
-    public Expression exp;
+    public override string GenBflat() {
+        return $"{(isPointer ? "*" : "&")}{exp.GenBflat()}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Function or Method Calls: Expressions that invoke functions or methods.
@@ -715,6 +882,16 @@ public class PointerOrReferenceExpression : Expression {
 public class FunctionCallExpression : Expression {
     public Expression identifier;
     public List<Expression> parameters;
+    public override string GenBflat() {
+        var paras = "";
+        foreach (var item in parameters) {
+            paras += $"{item.GenBflat()},";
+        }
+        paras.Remove(paras.Length-2);
+        return $"{identifier.GenBflat()}({paras})";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Conditional Expressions: Expressions that result in different values based on conditions (e.g., ternary operator).
@@ -725,6 +902,18 @@ public class ArrayIndexingExpression : Expression {
     public Expression index;
     public bool isRange;
     public (Expression, Expression) range;
+    public override string GenBflat() {
+        var res = "";
+        if(!isRange) {
+            res = index.GenBflat();
+        } else {
+            res = $"{range.Item1.GenBflat()} .. {range.Item2.GenBflat()}";
+        }
+
+        return $"{identifier.GenBflat()}[{res}]";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Property Access Expressions: Expressions used to access properties of objects or structures.
@@ -734,6 +923,11 @@ public class ArrayIndexingExpression : Expression {
 public class TypeConversionExpression : Expression {
     public IdentifierExpression identifier;
     public Expression exp;
+    public override string GenBflat() {
+        return $"({identifier.GenBflat()}){exp.GenBflat()}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Lambda or Anonymous Function Expressions: Expressions that define inline functions.
@@ -746,13 +940,16 @@ public class TypeCheckExpression : Expression {
     public Expression exp;
     public bool isAs;
 
-    public bool isIs
-    {
+    public bool isIs {
         get { return !isAs; }
         set { isAs = !value; }
     }
-
     public IdentifierExpression identifier;
+    public override string GenBflat() {
+        return $"{exp.GenBflat()} {(isAs ? "as" : "is")} {identifier.GenBflat()}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Tuple Creation Expression:
@@ -761,12 +958,32 @@ public class TypeCheckExpression : Expression {
 public class TupleCreationExpression : Expression {
     public Expression exp;
     public List<Expression> expressions;
+    public override string GenBflat() {
+        var res = "";
+        foreach(var item in expressions) {
+            res += $"{item.GenBflat()},";
+        }
+        res.Remove(res.Length-2);
+        return $"({res})";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Array Creation Expressions: Expressions for creating new arrays or collections.
 //    | '[' exp (',' exp) ']'
 public class ArrayCreationExpression : Expression {
     public List<Expression> expressions;
+    public override string GenBflat() {
+        var res = "";
+        foreach(var item in expressions) {
+            res += $"{item.GenBflat()},";
+        }
+        res.Remove(res.Length-2);
+        return $"[{res}]";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Array Creation Expression
@@ -774,6 +991,11 @@ public class ArrayCreationExpression : Expression {
 public class InstanceInitializationExpression : Expression {
     public IdentifierExpression identifier;
     public List<Expression> expressions;
+    public override string GenBflat() {
+        return "WHY JUST WHY";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    //Function Creation Expression
@@ -782,6 +1004,14 @@ public class FunctionCreationExpression : Expression {
     public List<ParameterDeclaration> parameters;
     public TypeDeclarationStatement typeDeclarationStatement;
     public List<Statement> statements;
+    public override string GenBflat() {
+        // ((Func<string>)item.GenBflat).Invoke(); <- this is valid c#
+        var paras = "";
+        var block = "";
+        return $"({paras}) => {{\n{block}\n}}";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
 
 //    // internal functions
@@ -794,5 +1024,16 @@ public class FunctionCreationExpression : Expression {
 public class InternalFunctionCallExpression : Expression {
     public string functionName;
     public List<Expression> parameters;
+    public override string GenBflat() {
+        var paras = "";
+        foreach(var item in parameters) {
+            paras += item.GenBflat()+",";
+        }
+        paras.Remove(paras.Length-2);
+        return $"{functionName}()";
+    }
+    public override List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public override List<string> TranspileToAsm() {throw new NotImplementedException();}
 }
-//    ;
+//    ; ANOMALY
+//      Ylamona.AiE

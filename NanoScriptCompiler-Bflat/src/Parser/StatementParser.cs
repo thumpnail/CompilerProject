@@ -40,7 +40,7 @@ public partial class Parser {
             }
         } else {
             Statement tmp;
-            while ((tmp = ParseStatement()) != null && !ctx.Peek_tk(delimiter)) {
+            while (!ctx.Peek_tk(delimiter) && (tmp = ParseStatement()) != null) {
                 res.Add(tmp);
             }
         }
@@ -215,13 +215,16 @@ public partial class Parser {
     }
     private ClassDeclarationStatement? ParseClassDeclarationStatement() {
         ctx.CreateFrame();
+        var isPublic = false;
         ClassDeclarationStatement res;
+        if (ctx.Consume_tk(PUB)) isPublic = true;
         if (ctx.Consume_tk(CLASS)) {
             var ident = ParseIdentifierExpression();
             ctx.Consume_tk(LEFTBRACE);
             res = new ClassDeclarationStatement() {
                 identifier = ident,
-                statements = ParseStatements()
+                statements = ParseStatements(),
+                isPublic = isPublic
             };
             ctx.Consume_tk(RIGHTBRACE);
         } else {
@@ -393,16 +396,20 @@ public partial class Parser {
             ctx.Consume_tk(LEFTBRACE);
             res.ifConditionalStatement.statements = ParseStatements(RIGHTBRACE);
             ctx.Consume_tk(RIGHTBRACE);
-            
-            
+
+            if (ctx.Peek_tk(ELSE) && ctx.PeekNext_tk(IF))
+                res.elseIfConditionalStatements = new();
             while (ctx.Peek_tk(ELSE) && ctx.PeekNext_tk(IF)) {
+                var tmp = new SubConditionalStatement();
                 ctx.Consume_tk(ELSE);
+                tmp.isElse = true;
                 ctx.Consume_tk(IF);
-                res.elseConditionalStatement = new SubConditionalStatement() { isIf = true };
-                res.elseConditionalStatement.exp = ParseExpression();
+                tmp.isIf = true;
+                tmp.exp = ParseExpression();
                 ctx.Consume_tk(LEFTBRACE);
-                res.ifConditionalStatement.statements = ParseStatements(RIGHTBRACE);
+                tmp.statements = ParseStatements(RIGHTBRACE);
                 ctx.Consume_tk(RIGHTBRACE);
+                res.elseIfConditionalStatements.Add(tmp);
             }
             if (ctx.Peek_tk(ELSE)) {
                 ctx.Consume_tk(ELSE);

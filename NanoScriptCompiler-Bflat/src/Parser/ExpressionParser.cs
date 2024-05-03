@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Globalization;
+using System.Linq.Expressions;
 using static NanoScript.Program.Token;
 
 namespace NanoScript.Parser;
@@ -49,15 +50,19 @@ public partial class Parser {
         return res;
     }
     //<arrayIndexing> := <identifier> '[' <exp> ']'
+    //FIX: Might not get parsed correctly
     private Expression? ParseArrayIndexingExpression() {
         ctx.CreateFrame();
-        Expression res = null;
+        ArrayIndexingExpression res = null;
         if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(1) == LEFTBRACKET) {
             //TODO: Implement Array Indexing
             var ident = ParseIdentifierExpression();
             ctx.Consume_tk(LEFTBRACKET);
-            var expr = ParseExpression();
+            var index = ParseExpression();
             ctx.Consume_tk(RIGHTBRACKET);
+            res = new() {
+                identifier = ident, index = index
+            };
         } else {
             ctx.PopFrame();
             return null;
