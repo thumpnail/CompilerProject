@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace NanoScript.Lexer;
+// super heftig token struct für lexer
 public struct TokenElement<T> where T : Enum {
     public T token;
     public string Value;
