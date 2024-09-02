@@ -1,0 +1,735 @@
+{
+  "moduleStatements": [
+    {
+      "moduleName": {
+        "identifier": "main",
+        "identifiers": [],
+        "isExtension": false,
+        "lastIdentifier": "",
+        "isSelf": false
+      },
+      "importStatements": [
+        {
+          "identifier": {
+            "identifier": null,
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "importString": "\"../../../sample/mymodule.nano\"",
+          "isAs": false,
+          "isFrom": true
+        }
+      ],
+      "isSubModule": false,
+      "statements": [
+        {
+          "isExport": false,
+          "isPublic": true,
+          "isSelf": false,
+          "identifier": {
+            "identifier": "main",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "parameters": null,
+          "statements": [
+            {
+              "identifier": {
+                "identifier": "print",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "parameters": [
+                {
+                  "str": "\"Hello World\""
+                }
+              ]
+            }
+          ],
+          "returnType": null
+        }
+      ]
+    },
+    {
+      "moduleName": {
+        "identifier": "myModule",
+        "identifiers": [],
+        "isExtension": false,
+        "lastIdentifier": "",
+        "isSelf": false
+      },
+      "importStatements": [],
+      "isSubModule": false,
+      "statements": [
+        {
+          "isPublic": true,
+          "prefix": "const",
+          "isSelf": false,
+          "identifier": {
+            "identifier": "PI",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": {
+            "identifier": {
+              "identifier": "float",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "typeDeclarationType": 0,
+            "exp": null
+          },
+          "isAssign": true,
+          "exp": {
+            "number": {
+              "double_number": 314.0,
+              "RAW": "3.14"
+            }
+          }
+        },
+        {
+          "isPublic": true,
+          "prefix": "var",
+          "isSelf": false,
+          "identifier": {
+            "identifier": "radius",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": {
+            "identifier": {
+              "identifier": "float",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "typeDeclarationType": 0,
+            "exp": null
+          },
+          "isAssign": true,
+          "exp": {
+            "number": {
+              "int_number": "5",
+              "RAW": "5"
+            }
+          }
+        },
+        {
+          "isPublic": true,
+          "prefix": "let",
+          "isSelf": false,
+          "identifier": {
+            "identifier": "diameter",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": {
+            "identifier": {
+              "identifier": "float",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "typeDeclarationType": 0,
+            "exp": null
+          },
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "radius",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "number": {
+                "int_number": "2",
+                "RAW": "2"
+              }
+            },
+            "operatorType": 2
+          }
+        },
+        {
+          "isPublic": true,
+          "identifier": {
+            "identifier": "Point",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "statements": [
+            {
+              "isPublic": true,
+              "prefix": "let",
+              "isSelf": false,
+              "identifier": {
+                "identifier": "x",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "float",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              },
+              "isAssign": false,
+              "exp": null
+            },
+            {
+              "isPublic": true,
+              "prefix": "let",
+              "isSelf": false,
+              "identifier": {
+                "identifier": "y",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "float",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              },
+              "isAssign": false,
+              "exp": null
+            }
+          ]
+        },
+        {
+          "isPublic": true,
+          "identifier": {
+            "identifier": "Circle",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "statements": [
+            {
+              "isPublic": true,
+              "prefix": "let",
+              "isSelf": false,
+              "identifier": {
+                "identifier": "center",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "Point",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              },
+              "isAssign": false,
+              "exp": null
+            },
+            {
+              "isPublic": true,
+              "prefix": "let",
+              "isSelf": false,
+              "identifier": {
+                "identifier": "radius",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "float",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              },
+              "isAssign": false,
+              "exp": null
+            },
+            {
+              "isExport": false,
+              "isPublic": true,
+              "isSelf": false,
+              "identifier": {
+                "identifier": "init",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "parameters": [
+                {
+                  "identifier": {
+                    "identifier": "center",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "typeDeclarationStatement": {
+                    "identifier": {
+                      "identifier": "Point",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": "",
+                      "isSelf": false
+                    },
+                    "typeDeclarationType": 0,
+                    "exp": null
+                  }
+                },
+                {
+                  "identifier": {
+                    "identifier": "radius",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "typeDeclarationStatement": {
+                    "identifier": {
+                      "identifier": "float",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": "",
+                      "isSelf": false
+                    },
+                    "typeDeclarationType": 0,
+                    "exp": null
+                  }
+                }
+              ],
+              "statements": [
+                {
+                  "isSelf": false,
+                  "identifier": {
+                    "identifier": "",
+                    "identifiers": [
+                      "center"
+                    ],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "typeDeclarationStatement": null,
+                  "assignmentType": 1,
+                  "exp": {
+                    "identifier": "center",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  }
+                },
+                {
+                  "isSelf": false,
+                  "identifier": {
+                    "identifier": "",
+                    "identifiers": [
+                      "radius"
+                    ],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "typeDeclarationStatement": null,
+                  "assignmentType": 1,
+                  "exp": {
+                    "identifier": "radius",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  }
+                }
+              ],
+              "returnType": null
+            },
+            {
+              "isExport": false,
+              "isPublic": true,
+              "isSelf": false,
+              "identifier": {
+                "identifier": "area",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "parameters": null,
+              "statements": [
+                {
+                  "exp": {
+                    "left": {
+                      "identifier": "math",
+                      "identifiers": [
+                        "PI"
+                      ],
+                      "isExtension": false,
+                      "lastIdentifier": "",
+                      "isSelf": false
+                    },
+                    "right": {
+                      "left": {
+                        "identifier": "",
+                        "identifiers": [
+                          "radius"
+                        ],
+                        "isExtension": false,
+                        "lastIdentifier": "",
+                        "isSelf": false
+                      },
+                      "right": {
+                        "identifier": "",
+                        "identifiers": [
+                          "radius"
+                        ],
+                        "isExtension": false,
+                        "lastIdentifier": "",
+                        "isSelf": false
+                      },
+                      "operatorType": 3
+                    },
+                    "operatorType": 3
+                  }
+                }
+              ],
+              "returnType": {
+                "identifier": {
+                  "identifier": "float",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              }
+            }
+          ]
+        },
+        {
+          "typeDeclarationStatement": null,
+          "identifier": {
+            "identifier": "Color",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "enumValueDeclarations": [
+            {
+              "identifier": {
+                "identifier": "Red",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "exp": null,
+              "type": 0
+            },
+            {
+              "identifier": {
+                "identifier": "Green",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "exp": null,
+              "type": 0
+            },
+            {
+              "identifier": {
+                "identifier": "Blue",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "exp": null,
+              "type": 0
+            }
+          ],
+          "isPublic": true
+        },
+        {
+          "isExport": false,
+          "isPublic": true,
+          "isSelf": false,
+          "identifier": {
+            "identifier": "calculateDistance",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "parameters": [
+            {
+              "identifier": {
+                "identifier": "p1",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "Point",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              }
+            },
+            {
+              "identifier": {
+                "identifier": "p2",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "Point",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              }
+            }
+          ],
+          "statements": [
+            {
+              "isPublic": false,
+              "prefix": "let",
+              "isSelf": false,
+              "identifier": {
+                "identifier": "dx",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "float",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              },
+              "isAssign": true,
+              "exp": {
+                "left": {
+                  "identifier": "p2",
+                  "identifiers": [
+                    "x"
+                  ],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "right": {
+                  "identifier": "p1",
+                  "identifiers": [
+                    "x"
+                  ],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "operatorType": 1
+              }
+            },
+            {
+              "isPublic": false,
+              "prefix": "let",
+              "isSelf": false,
+              "identifier": {
+                "identifier": "dy",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "float",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              },
+              "isAssign": true,
+              "exp": {
+                "left": {
+                  "identifier": "p2",
+                  "identifiers": [
+                    "y"
+                  ],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "right": {
+                  "identifier": "p1",
+                  "identifiers": [
+                    "y"
+                  ],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "operatorType": 1
+              }
+            },
+            {
+              "exp": {
+                "identifier": {
+                  "identifier": "math",
+                  "identifiers": [
+                    "sqrt"
+                  ],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "parameters": {
+                  "expressions": [
+                    {
+                      "left": {
+                        "identifier": "dx",
+                        "identifiers": [],
+                        "isExtension": false,
+                        "lastIdentifier": "",
+                        "isSelf": false
+                      },
+                      "right": {
+                        "left": {
+                          "identifier": "dx",
+                          "identifiers": [],
+                          "isExtension": false,
+                          "lastIdentifier": "",
+                          "isSelf": false
+                        },
+                        "right": {
+                          "left": {
+                            "identifier": "dy",
+                            "identifiers": [],
+                            "isExtension": false,
+                            "lastIdentifier": "",
+                            "isSelf": false
+                          },
+                          "right": {
+                            "identifier": "dy",
+                            "identifiers": [],
+                            "isExtension": false,
+                            "lastIdentifier": "",
+                            "isSelf": false
+                          },
+                          "operatorType": 3
+                        },
+                        "operatorType": 0
+                      },
+                      "operatorType": 3
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "returnType": {
+            "identifier": {
+              "identifier": "float",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "typeDeclarationType": 0,
+            "exp": null
+          }
+        },
+        {
+          "isExport": false,
+          "isPublic": true,
+          "isSelf": false,
+          "identifier": {
+            "identifier": "getPoint",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "parameters": null,
+          "statements": [],
+          "returnType": {
+            "identifier": null,
+            "typeDeclarationType": 0,
+            "exp": null
+          }
+        }
+      ]
+    }
+  ]
+}

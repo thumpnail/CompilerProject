@@ -1,0 +1,10 @@
+mod main
+import System
+
+pub class Program {
+    pub fnc Main(agrs: []string): int {
+        somevalue = arr[1]
+        println("Hello World")
+        return 1
+    }
+}

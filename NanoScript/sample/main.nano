@@ -1,0 +1,7 @@
+﻿// Another module
+mod main
+import "../../../sample/mymodule.nano"
+
+pub fnc main() {
+    print("Hello World")
+}

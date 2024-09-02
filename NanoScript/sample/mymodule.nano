@@ -1,0 +1,169 @@
+﻿// Module declaration
+mod myModule
+// Import statement
+//import "math.nano" as math
+
+// Constant declaration
+pub const PI: float = 3.14
+
+// Variable declaration
+pub var radius: float = 5
+pub let diameter: float = radius/ 2
+
+// Struct declaration
+pub struct Point {
+    pub let x: float
+    pub let y: float
+}
+
+// Class declaration
+pub class Circle {
+    pub let center: Point
+    pub let radius: float
+    
+    // Constructor
+    pub fnc init(center: Point, radius: float) {
+        .center = center
+        .radius = radius
+    }
+    
+    // Method
+    pub fnc area(): float {
+        return math.PI * .radius * .radius
+    }
+}
+
+// Enum declaration
+pub enum Color {
+    Red
+    Green
+    Blue
+}
+
+// Function declaration
+pub fnc calculateDistance(p1: Point, p2: Point): float {
+    let dx: float = p2.x - p1.x
+    let dy: float = p2.y - p1.y
+    return math.sqrt(dx * dx + dy * dy)
+}
+
+// Function with multiple return types
+pub fnc getPoint(): (float, float) {
+    return (1, 2)
+}
+
+// Function with variable float of arguments
+pub fnc sum(...args: float[]): float {
+    let result: float = 0
+    for arg in args {
+        result += arg
+    }
+    return result
+}
+
+// Lambda function
+pub let add: (float, float) => float = (x, y) => { return x + y }
+
+// Type alias
+pub type Int = float
+
+// Interface declaration
+pub interface Printable {
+    pub fnc print(): void
+}
+
+// Union declaration
+pub union Value {
+    float
+    string
+}
+
+// Array declaration
+pub let floats: float[] = [1, 2, 3, 4, 5]
+
+// Dictionary declaration
+pub let person: { name: string, age: float } = { name: "John", age: 30 }
+
+// Control flow statements
+pub fnc main() {
+    // If statement
+    if radius > 10 {
+        print("Radius is greater than 10")
+    } else {
+        print("Radius is less than or equal to 10")
+    }
+    // Switch statement
+    switch Color.Red {
+        case Color.Red:
+            print("Color is Red")
+            break
+        case Color.Green:
+            print("Color is Green")
+            break
+        case Color.Blue:
+            print("Color is Blue")
+            break
+        default:
+            print("Unknown color")
+            break
+    }
+
+    // For loop
+    for i in floats {
+        print(i)
+    }
+
+    // While loop
+    let i: float = 0
+    while i < 5 {
+        print(i)
+        i += 1
+    }
+
+    // Do-while loop
+    i = 0
+    do {
+        print(i)
+        i += 1
+    } while i < 5
+
+    // Break statement
+    for i in floats {
+        if i == 3 {
+            break
+        }
+        print(i)
+    }
+
+    // Continue statement
+    for i in floats {
+        if i == 3 {
+            continue
+        }
+        print(i)
+    }
+
+    // Goto statement
+    ::label
+    print("Goto statement")
+
+    // Error handling
+    try {
+        // Code that may throw an error
+    } catch error {
+        print("Error occurred:", error)
+    }
+
+    // Assertion statement
+    assert radius > 0
+
+    // Label statement
+    label:
+    print("Label statement")
+
+    // Macro and preprocessor directives
+    #include <math.h>
+
+    // Concurrency and synchronization statements
+    // Not implemented in this example
+}
