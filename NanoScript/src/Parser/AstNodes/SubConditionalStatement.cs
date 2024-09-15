@@ -5,7 +5,7 @@ public class SubConditionalStatement : IStatement {
 	public bool isIf;
 	public IExpression? exp;
 	public List<IStatement> statements = new();
-	public string GenCS() {
+	public  string GenCS() {
 		var res = $"{(isElse ? "else" : "")} {(isIf ? $"if({exp?.GenCS()})" : "")} {{";
 		foreach (var statement in statements) {
 			res += $"{statement.GenCS()}";
@@ -13,6 +13,9 @@ public class SubConditionalStatement : IStatement {
 		res += "\n}";
 		return $"{res}";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

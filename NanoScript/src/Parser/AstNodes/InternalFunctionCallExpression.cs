@@ -10,7 +10,7 @@
 public class InternalFunctionCallExpression : IExpression {
 	public string functionName = String.Empty;
 	public List<IExpression> parameters = new();
-	public string GenCS() {
+	public  string GenCS() {
 		var paras = "";
 		foreach(var item in parameters) {
 			paras += item.GenCS()+",";
@@ -18,6 +18,9 @@ public class InternalFunctionCallExpression : IExpression {
 		paras.Remove(paras.Length-2);
 		return $"{functionName}()";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

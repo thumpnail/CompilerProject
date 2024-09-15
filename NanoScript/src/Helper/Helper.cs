@@ -1,3 +1,6 @@
+using System.Xml;
+
+using Newtonsoft.Json;
 namespace NanoScript.Helper;
 public static class Helper {
 	private static StreamWriter? logWriter;
@@ -15,10 +18,17 @@ public static class Helper {
         Console.WriteLine(obj);
     }
     public static void ToFile(this object obj, string filename) {
-        using(StreamWriter writer = new StreamWriter(filename)) {
+        using(StreamWriter writer = new StreamWriter(filename, Encoding.Default, new FileStreamOptions() {
+	              Access = FileAccess.Write,
+	              Mode = FileMode.OpenOrCreate
+              })) {
             writer.WriteLine(obj);
             writer.Close();
         }
+    }
+    public static string ToXml(this string obj) {
+	    var doc = JsonConvert.DeserializeXNode(obj, "root");
+	    return doc?.ToString() ?? "<null>";
     }
     public static void ToLog(this object obj, string from = "[system]", bool ctime = false, string pre = "", string post = "") {
 	    var time = DateTime.Now.ToString("O");

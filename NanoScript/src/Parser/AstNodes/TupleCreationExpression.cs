@@ -5,7 +5,7 @@
 public class TupleCreationExpression : IExpression {
 	public IExpression? exp;
 	private List<IExpression> expressions = new();
-	public string GenCS() {
+	public  string GenCS() {
 		var res = new StringBuilder();
 		List<string> explist = new();
 		foreach(var item in expressions) {
@@ -14,6 +14,9 @@ public class TupleCreationExpression : IExpression {
 		res.Append(string.Join(',', explist));
 		return $"({res})";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

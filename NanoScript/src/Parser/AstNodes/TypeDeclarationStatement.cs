@@ -16,7 +16,7 @@ public class TypeDeclarationStatement : IStatement {
 	public TypeDeclarationType typeDeclarationType;
 	public IExpression? exp;
 
-	public string GenCS() {
+	public  string GenCS() {
 		var res = new StringBuilder();
 		if (typeDeclarationType == TypeDeclarationType.array) {
 			res.Append($"{identifier?.GenCS()}");
@@ -32,6 +32,9 @@ public class TypeDeclarationStatement : IStatement {
 		}
 		return res.ToString();
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

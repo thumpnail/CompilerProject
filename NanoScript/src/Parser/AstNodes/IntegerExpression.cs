@@ -1,7 +1,7 @@
 ﻿namespace NanoScript.Parser.AstNodes;
 
 //    | number
-public struct IntegerExpression : INumber {
+public class IntegerExpression : INumber {
 	public Int128 int_number;
 	public string RAW;
 	public IntegerExpression(string val) {

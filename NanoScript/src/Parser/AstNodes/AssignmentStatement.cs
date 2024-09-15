@@ -19,11 +19,23 @@ public class AssignmentStatement : IStatement {
 	public TypeDeclarationStatement? typeDeclarationStatement;
 	public AssignmentType? assignmentType;
 	public IExpression? exp;
-	public string GenCS() {
-		var res = new StringBuilder("//TODO: AssignmentStatement:");
-        
+	public  string GenCS() {
+		var res = $"{typeDeclarationStatement?.GenCS()} {(isSelf ? "this." : "")}{identifier?.GenCS()} {assignmentType switch {
+			AssignmentType.equal => "=",
+			AssignmentType.add => "+=",
+			AssignmentType.sub => "-=",
+			AssignmentType.mul => "*=",
+			AssignmentType.div => "/=",
+			AssignmentType.push => "<<",
+			AssignmentType.pop => ">>",
+			AssignmentType.none => "",
+			_ => ""
+		}} {exp?.GenCS()};";
 		return $"{res};";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		return $"<AssignmentStatement isSelf=\"{isSelf}\" assignmentType=\"{assignmentType.ToString()}\">{identifier?.ToXml()}{typeDeclarationStatement?.ToXml()}{exp?.ToXml()}</AssignmentStatement>";
+	}
 }

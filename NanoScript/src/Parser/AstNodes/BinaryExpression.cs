@@ -60,7 +60,7 @@ public class BinaryExpression : IExpression {
         this.right = right;
         this.operatorType = operatorType;
     }
-    public string GenCS() {
+    public  string GenCS() {
         return $"{left.GenCS()} {GetBinOp(operatorType)} {right.GenCS()}";
     }
     public string GetBinOp(BinaryOperatorType type) {
@@ -88,6 +88,9 @@ public class BinaryExpression : IExpression {
             _ => type.ToString()
         };
     }
-    public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-    public List<string> TranspileToAsm() {throw new NotImplementedException();}
+    public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+    public string ToXml() {
+	    throw new NotImplementedException();
+    }
 }

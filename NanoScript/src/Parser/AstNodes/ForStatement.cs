@@ -20,7 +20,7 @@ public class ForStatement : IStatement {
 
 	public List<IStatement> statements = new();
 
-	public string GenCS() {
+	public  string GenCS() {
 		var res = "";
 		if (type == ForType.For) {
 			res = $"for(int {exp_def?.GenCS()}; {exp_cond?.GenCS()}; {exp_incr?.GenCS()}) {{\n";
@@ -35,6 +35,9 @@ public class ForStatement : IStatement {
 		res += "}";
 		return res;
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

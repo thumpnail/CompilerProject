@@ -6,6 +6,7 @@ public interface INode {
     public string GenCS();
     public List<int> TranspileToByteCode();
     public List<string> TranspileToAsm();
+    public string ToXml();
     
     public int[] Compile() {
         return new int[0];

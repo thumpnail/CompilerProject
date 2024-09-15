@@ -4,59 +4,82 @@ namespace module_main
 {
     public static void main()
     {
-        System.Console.Write(NanoScript.Parser.AstNodes.StringExpression);
+        System.Console.Write("Hello World");
 
     }
 
 }
 namespace module_myModule
 {
-    //TODO: VariableDeclarationStatement:
-    public const float PI = 3.14;
-    //TODO: VariableDeclarationStatement:
-    public float radius = 5;
-    //TODO: VariableDeclarationStatement:
-    public readonly float diameter = radius / 2;
-    //TODO: StructDeclarationStatement:
-    public class Circle
+    public static void main()
     {
-        //TODO: VariableDeclarationStatement:
-        public readonly Point center;
-        //TODO: VariableDeclarationStatement:
-        public readonly float radius;
-        public static void init(Point center, float radius)
+        if (radius > 10)
         {
-            //TODO: AssignmentStatement:;
-            //TODO: AssignmentStatement:;
-
+            System.Console.Write("Radius is greater than 10");
         }
-        public static float area()
+        else
         {
-            return math.PI * .radius * .radius;
-
+            System.Console.Write("Radius is less than or equal to 10");
         }
-    }
-    public enum Color
-    {
-        Red,
-        Green,
-        Blue,
-    }
-    public static float calculateDistance(Point p1, Point p2)
-    {
-//TODO: VariableDeclarationStatement:
-private readonly float dx = p2.x - p1.x;
+        //TODO: SwitchStatement:
+        //TODO: SubSwitchStatement:
+        System.Console.Write("Unknown color");
 
-    //TODO: VariableDeclarationStatement:
-    private readonly float dy = p2.y - p1.y;
+        //TODO: SubSwitchStatement:
+        System.Console.Write("Color is Red");
 
-return math.sqrt(dx* dx + dy* dy,);
+        //TODO: SubSwitchStatement:
+
+        //TODO: SubSwitchStatement:
+        System.Console.Write("Color is Green");
+
+        //TODO: SubSwitchStatement:
+
+        //TODO: SubSwitchStatement:
+        System.Console.Write("Color is Blue");
+
+
+        foreach (var i in floats)
+        {
+            System.Console.Write(i); ;
+        }
+        //TODO: VariableDeclarationStatement:
+        readonly float i = 0;
+
+
+    }
 
 }
-public static object getPoint()
+//TODO: SubSwitchStatement:
+System.Console.Write("Color is Blue");
+
+
+foreach (var i in floats)
 {
+    System.Console.Write(i); ;
+}
+//TODO: VariableDeclarationStatement:
+readonly float i = 0;
+
+
+    }
+
+}
+tchStatement:
+System.Console.Write("Color is Blue");
+
+
+foreach (var i in floats)
+{
+    System.Console.Write(i); ;
+}
+//TODO: VariableDeclarationStatement:
+readonly float i = 0;
+
+
+    }
 
 }
 
-}
+
 

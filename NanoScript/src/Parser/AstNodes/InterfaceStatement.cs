@@ -7,9 +7,12 @@ public class InterfaceStatement : IStatement {
 	public TypeDeclarationStatement? typeDeclarationStatement;
 	public List<IStatement> statements = new ();
 
-	public string GenCS() {
+	public  string GenCS() {
 		return "//TODO: InterfaceStatement:\n";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		return $"<InterfaceStatement>{identifier.ToXml()}</InterfaceStatement>";
+	}
 }

@@ -74,11 +74,11 @@ public partial class Parser {
 	        
 	        if (ctx.Peek_tk(Token.AS)) {
 		        res.isAs = ctx.Consume_tk(Token.AS);
-		        res.identifier = ParseIdentifierExpression() ?? new IdentifierExpression();
+		        res.Identifier = ParseIdentifierExpression() ?? new IdentifierExpression();
 	        }
         } else if (ctx.Peek_tk(Token.IMPORT) && ctx.PeekNext_tk(Token.IDENTIFIER)) {
 	        ctx.Consume_tk(Token.IMPORT);
-	        res.identifier = ParseIdentifierExpression() ?? new();
+	        res.Identifier = ParseIdentifierExpression() ?? new();
 	        if (ctx.Peek_tk(Token.FROM)) {
 		        //todo: parse the given file and add to lexer result
 		        res.isFrom = ctx.Consume_tk(Token.FROM);
@@ -96,8 +96,8 @@ public partial class Parser {
             case Token.PUB:
                 //TODO: add keywordless varible statement
                 switch (ctx.PeekNext_tk()) {
-                    case Token.VAR:
-                    case Token.CONST:
+	                case Token.VAR:
+	                case Token.CONST:
                     case Token.LET:
                         return ParseVariableDeclarationStatement();
                     case Token.CLASS:
@@ -191,14 +191,13 @@ public partial class Parser {
 	        ctx.Consume_tk(PUB);
 	        res.isPublic = true;
         }
-        if (ctx.Peek_tk(Token.LET) || ctx.Peek_tk(Token.VAR) ||
-            ctx.Peek_tk(Token.CONST)) {
+        if (ctx.Peek_tk(Token.LET) || ctx.Peek_tk(Token.VAR) || ctx.Peek_tk(Token.CONST)) {
             res.prefix = ctx.Consume();
             if (ctx.Consume_tk(Token.DOT)) {
                 res.isSelf = true;
-                res.identifier = ParseIdentifierExpression();
+                res.Identifier = ParseIdentifierExpression();
             } else {
-                res.identifier = ParseIdentifierExpression();
+                res.Identifier = ParseIdentifierExpression();
             }
             if (ctx.Peek_tk(Token.COLON))
                 res.typeDeclarationStatement = ParseTypeDeclarationStatement();
@@ -436,7 +435,9 @@ public partial class Parser {
                 res.elseIfConditionalStatements.Add(tmp);
             }
             if (ctx.Peek_tk(ELSE)) {
+	            res.elseConditionalStatement = new();
                 ctx.Consume_tk(ELSE);
+                res.elseConditionalStatement.isElse = true;
                 ctx.Consume_tk(LEFTBRACE);
                 res.elseConditionalStatement.statements = ParseStatements(RIGHTBRACE);
                 ctx.Consume_tk(RIGHTBRACE);

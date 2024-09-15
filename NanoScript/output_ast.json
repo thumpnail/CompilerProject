@@ -10,7 +10,7 @@
       },
       "importStatements": [
         {
-          "identifier": {
+          "Identifier": {
             "identifier": null,
             "identifiers": [],
             "isExtension": false,
@@ -68,319 +68,313 @@
       "isSubModule": false,
       "statements": [
         {
+          "isExport": false,
           "isPublic": true,
-          "prefix": "const",
           "isSelf": false,
           "identifier": {
-            "identifier": "PI",
+            "identifier": "main",
             "identifiers": [],
             "isExtension": false,
             "lastIdentifier": "",
             "isSelf": false
           },
-          "typeDeclarationStatement": {
-            "identifier": {
-              "identifier": "float",
-              "identifiers": [],
-              "isExtension": false,
-              "lastIdentifier": "",
-              "isSelf": false
-            },
-            "typeDeclarationType": 0,
-            "exp": null
-          },
-          "isAssign": true,
-          "exp": {
-            "number": {
-              "double_number": 314.0,
-              "RAW": "3.14"
-            }
-          }
-        },
-        {
-          "isPublic": true,
-          "prefix": "var",
-          "isSelf": false,
-          "identifier": {
-            "identifier": "radius",
-            "identifiers": [],
-            "isExtension": false,
-            "lastIdentifier": "",
-            "isSelf": false
-          },
-          "typeDeclarationStatement": {
-            "identifier": {
-              "identifier": "float",
-              "identifiers": [],
-              "isExtension": false,
-              "lastIdentifier": "",
-              "isSelf": false
-            },
-            "typeDeclarationType": 0,
-            "exp": null
-          },
-          "isAssign": true,
-          "exp": {
-            "number": {
-              "int_number": "5",
-              "RAW": "5"
-            }
-          }
-        },
-        {
-          "isPublic": true,
-          "prefix": "let",
-          "isSelf": false,
-          "identifier": {
-            "identifier": "diameter",
-            "identifiers": [],
-            "isExtension": false,
-            "lastIdentifier": "",
-            "isSelf": false
-          },
-          "typeDeclarationStatement": {
-            "identifier": {
-              "identifier": "float",
-              "identifiers": [],
-              "isExtension": false,
-              "lastIdentifier": "",
-              "isSelf": false
-            },
-            "typeDeclarationType": 0,
-            "exp": null
-          },
-          "isAssign": true,
-          "exp": {
-            "left": {
-              "identifier": "radius",
-              "identifiers": [],
-              "isExtension": false,
-              "lastIdentifier": "",
-              "isSelf": false
-            },
-            "right": {
-              "number": {
-                "int_number": "2",
-                "RAW": "2"
+          "parameters": null,
+          "statements": [
+            {
+              "ifConditionalStatement": {
+                "isElse": false,
+                "isIf": true,
+                "exp": {
+                  "left": {
+                    "identifier": "radius",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "right": {
+                    "number": {
+                      "int_number": "10",
+                      "RAW": "10"
+                    }
+                  },
+                  "operatorType": 13
+                },
+                "statements": [
+                  {
+                    "identifier": {
+                      "identifier": "print",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": "",
+                      "isSelf": false
+                    },
+                    "parameters": [
+                      {
+                        "str": "\"Radius is greater than 10\""
+                      }
+                    ]
+                  }
+                ]
+              },
+              "elseIfConditionalStatements": [],
+              "elseConditionalStatement": {
+                "isElse": true,
+                "isIf": false,
+                "exp": null,
+                "statements": [
+                  {
+                    "identifier": {
+                      "identifier": "print",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": "",
+                      "isSelf": false
+                    },
+                    "parameters": [
+                      {
+                        "str": "\"Radius is less than or equal to 10\""
+                      }
+                    ]
+                  }
+                ]
               }
             },
-            "operatorType": 2
-          }
-        },
-        {
-          "isPublic": true,
-          "identifier": {
-            "identifier": "Point",
-            "identifiers": [],
-            "isExtension": false,
-            "lastIdentifier": "",
-            "isSelf": false
-          },
-          "typeDeclarationStatement": null,
-          "statements": [
             {
-              "isPublic": true,
-              "prefix": "let",
-              "isSelf": false,
-              "identifier": {
-                "identifier": "x",
-                "identifiers": [],
-                "isExtension": false,
-                "lastIdentifier": "",
-                "isSelf": false
-              },
-              "typeDeclarationStatement": {
+              "exp": {
                 "identifier": {
-                  "identifier": "float",
-                  "identifiers": [],
+                  "identifier": "Color",
+                  "identifiers": [
+                    "Red"
+                  ],
                   "isExtension": false,
                   "lastIdentifier": "",
                   "isSelf": false
                 },
-                "typeDeclarationType": 0,
-                "exp": null
+                "expressions": [
+                  {
+                    "identifier": "case",
+                    "identifiers": [],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  }
+                ]
               },
-              "isAssign": false,
-              "exp": null
-            },
-            {
-              "isPublic": true,
-              "prefix": "let",
-              "isSelf": false,
-              "identifier": {
-                "identifier": "y",
-                "identifiers": [],
-                "isExtension": false,
-                "lastIdentifier": "",
-                "isSelf": false
-              },
-              "typeDeclarationStatement": {
-                "identifier": {
-                  "identifier": "float",
-                  "identifiers": [],
-                  "isExtension": false,
-                  "lastIdentifier": "",
-                  "isSelf": false
-                },
-                "typeDeclarationType": 0,
-                "exp": null
-              },
-              "isAssign": false,
-              "exp": null
-            }
-          ]
-        },
-        {
-          "isPublic": true,
-          "identifier": {
-            "identifier": "Circle",
-            "identifiers": [],
-            "isExtension": false,
-            "lastIdentifier": "",
-            "isSelf": false
-          },
-          "typeDeclarationStatement": null,
-          "statements": [
-            {
-              "isPublic": true,
-              "prefix": "let",
-              "isSelf": false,
-              "identifier": {
-                "identifier": "center",
-                "identifiers": [],
-                "isExtension": false,
-                "lastIdentifier": "",
-                "isSelf": false
-              },
-              "typeDeclarationStatement": {
-                "identifier": {
-                  "identifier": "Point",
-                  "identifiers": [],
-                  "isExtension": false,
-                  "lastIdentifier": "",
-                  "isSelf": false
-                },
-                "typeDeclarationType": 0,
-                "exp": null
-              },
-              "isAssign": false,
-              "exp": null
-            },
-            {
-              "isPublic": true,
-              "prefix": "let",
-              "isSelf": false,
-              "identifier": {
-                "identifier": "radius",
-                "identifiers": [],
-                "isExtension": false,
-                "lastIdentifier": "",
-                "isSelf": false
-              },
-              "typeDeclarationStatement": {
-                "identifier": {
-                  "identifier": "float",
-                  "identifiers": [],
-                  "isExtension": false,
-                  "lastIdentifier": "",
-                  "isSelf": false
-                },
-                "typeDeclarationType": 0,
-                "exp": null
-              },
-              "isAssign": false,
-              "exp": null
-            },
-            {
-              "isExport": false,
-              "isPublic": true,
-              "isSelf": false,
-              "identifier": {
-                "identifier": "init",
-                "identifiers": [],
-                "isExtension": false,
-                "lastIdentifier": "",
-                "isSelf": false
-              },
-              "parameters": [
+              "subSwitchStatements": [
                 {
                   "identifier": {
-                    "identifier": "center",
+                    "identifier": "Color",
+                    "identifiers": [
+                      "Red"
+                    ],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "statements": [
+                    {
+                      "identifier": {
+                        "identifier": "print",
+                        "identifiers": [],
+                        "isExtension": false,
+                        "lastIdentifier": "",
+                        "isSelf": false
+                      },
+                      "parameters": [
+                        {
+                          "str": "\"Color is Red\""
+                        }
+                      ]
+                    }
+                  ],
+                  "isBreak": true,
+                  "isDefault": false
+                },
+                {
+                  "identifier": {
+                    "identifier": "case",
                     "identifiers": [],
                     "isExtension": false,
                     "lastIdentifier": "",
                     "isSelf": false
                   },
-                  "typeDeclarationStatement": {
-                    "identifier": {
-                      "identifier": "Point",
-                      "identifiers": [],
-                      "isExtension": false,
-                      "lastIdentifier": "",
-                      "isSelf": false
-                    },
-                    "typeDeclarationType": 0,
-                    "exp": null
-                  }
+                  "statements": [],
+                  "isBreak": false,
+                  "isDefault": false
                 },
                 {
                   "identifier": {
-                    "identifier": "radius",
+                    "identifier": "Color",
+                    "identifiers": [
+                      "Green"
+                    ],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "statements": [
+                    {
+                      "identifier": {
+                        "identifier": "print",
+                        "identifiers": [],
+                        "isExtension": false,
+                        "lastIdentifier": "",
+                        "isSelf": false
+                      },
+                      "parameters": [
+                        {
+                          "str": "\"Color is Green\""
+                        }
+                      ]
+                    }
+                  ],
+                  "isBreak": true,
+                  "isDefault": false
+                },
+                {
+                  "identifier": {
+                    "identifier": "case",
                     "identifiers": [],
                     "isExtension": false,
                     "lastIdentifier": "",
                     "isSelf": false
                   },
-                  "typeDeclarationStatement": {
-                    "identifier": {
-                      "identifier": "float",
-                      "identifiers": [],
-                      "isExtension": false,
-                      "lastIdentifier": "",
-                      "isSelf": false
-                    },
-                    "typeDeclarationType": 0,
-                    "exp": null
-                  }
+                  "statements": [],
+                  "isBreak": false,
+                  "isDefault": false
+                },
+                {
+                  "identifier": {
+                    "identifier": "Color",
+                    "identifiers": [
+                      "Blue"
+                    ],
+                    "isExtension": false,
+                    "lastIdentifier": "",
+                    "isSelf": false
+                  },
+                  "statements": [
+                    {
+                      "identifier": {
+                        "identifier": "print",
+                        "identifiers": [],
+                        "isExtension": false,
+                        "lastIdentifier": "",
+                        "isSelf": false
+                      },
+                      "parameters": [
+                        {
+                          "str": "\"Color is Blue\""
+                        }
+                      ]
+                    }
+                  ],
+                  "isBreak": true,
+                  "isDefault": false
                 }
               ],
+              "defSubSwitchStatement": {
+                "identifier": null,
+                "statements": [
+                  {
+                    "identifier": {
+                      "identifier": "print",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": "",
+                      "isSelf": false
+                    },
+                    "parameters": [
+                      {
+                        "str": "\"Unknown color\""
+                      }
+                    ]
+                  }
+                ],
+                "isBreak": true,
+                "isDefault": true
+              }
+            },
+            {
+              "elementIdentifier": {
+                "identifier": "i",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "listIdentifier": {
+                "identifier": "floats",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "type": 2,
+              "exp_def": null,
+              "exp_cond": null,
+              "exp_incr": null,
               "statements": [
                 {
-                  "isSelf": false,
                   "identifier": {
-                    "identifier": "",
-                    "identifiers": [
-                      "center"
-                    ],
-                    "isExtension": false,
-                    "lastIdentifier": "",
-                    "isSelf": false
-                  },
-                  "typeDeclarationStatement": null,
-                  "assignmentType": 1,
-                  "exp": {
-                    "identifier": "center",
+                    "identifier": "print",
                     "identifiers": [],
                     "isExtension": false,
                     "lastIdentifier": "",
                     "isSelf": false
-                  }
-                },
-                {
-                  "isSelf": false,
-                  "identifier": {
-                    "identifier": "",
-                    "identifiers": [
-                      "radius"
-                    ],
-                    "isExtension": false,
-                    "lastIdentifier": "",
-                    "isSelf": false
                   },
-                  "typeDeclarationStatement": null,
-                  "assignmentType": 1,
-                  "exp": {
-                    "identifier": "radius",
+                  "parameters": [
+                    {
+                      "identifier": "i",
+                      "identifiers": [],
+                      "isExtension": false,
+                      "lastIdentifier": "",
+                      "isSelf": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "isPublic": false,
+              "prefix": "let",
+              "isSelf": false,
+              "Identifier": {
+                "identifier": "i",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              "typeDeclarationStatement": {
+                "identifier": {
+                  "identifier": "float",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                "typeDeclarationType": 0,
+                "exp": null
+              },
+              "isAssign": true,
+              "exp": {
+                "number": {
+                  "int_number": "0",
+                  "RAW": "0"
+                }
+              }
+            }
+          ],
+          "returnType": null
+        }
+      ]
+    }
+  ]
+}
+
+      "identifier": "radius",
                     "identifiers": [],
                     "isExtension": false,
                     "lastIdentifier": "",
@@ -395,8 +389,10 @@
               "isPublic": true,
               "isSelf": false,
               "identifier": {
-                "identifier": "area",
-                "identifiers": [],
+                "identifier": "",
+                "identifiers": [
+                  "area"
+                ],
                 "isExtension": false,
                 "lastIdentifier": "",
                 "isSelf": false
@@ -557,7 +553,7 @@
               "isPublic": false,
               "prefix": "let",
               "isSelf": false,
-              "identifier": {
+              "Identifier": {
                 "identifier": "dx",
                 "identifiers": [],
                 "isExtension": false,
@@ -602,7 +598,7 @@
               "isPublic": false,
               "prefix": "let",
               "isSelf": false,
-              "identifier": {
+              "Identifier": {
                 "identifier": "dy",
                 "identifiers": [],
                 "isExtension": false,
@@ -731,5 +727,8 @@
         }
       ]
     }
+  ]
+}
+
   ]
 }

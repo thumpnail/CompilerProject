@@ -13,7 +13,7 @@ public class IdentifierExpression : IExpression {
 	public bool isExtension;
 	public string lastIdentifier = "";
 	public bool isSelf;
-	public string GenCS() {
+	public  string GenCS() {
 		var res = new StringBuilder();
 		if (isSelf)
 			res.Append("this.");
@@ -30,6 +30,16 @@ public class IdentifierExpression : IExpression {
 
 		return $"{res}";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {
+		throw new NotImplementedException();
+	}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		var id = identifier;
+		foreach (var item in identifiers) {
+			id+="."+item;
+		}
+		id += string.IsNullOrEmpty(lastIdentifier) ? "" : ":"+lastIdentifier;
+		return $"<IdentifierExpression id=\"{id}\" isExt=\"{isExtension}\" isSelf=\"{isSelf}\"/>";
+	}
 }

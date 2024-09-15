@@ -6,7 +6,7 @@ namespace NanoScript.Parser.AstNodes;
 public class FunctionCallExpression : IExpression {
 	public IExpression? identifier;
 	public ExpressionList parameters = new();
-	public string GenCS() {
+	public  string GenCS() {
 		var paras = "";
 		foreach (var item in parameters.expressions) {
 			paras += $"{item.GenCS()},";
@@ -14,6 +14,9 @@ public class FunctionCallExpression : IExpression {
 		paras.Remove(paras.Length-2);
 		return $"{FunctionNameResolver.ResolveFunctionName(identifier?.GenCS() ?? throw new())}({paras})";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

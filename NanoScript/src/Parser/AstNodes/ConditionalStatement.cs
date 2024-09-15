@@ -6,7 +6,7 @@ public class ConditionalStatement : IStatement {
 	public SubConditionalStatement? ifConditionalStatement;
 	public List<SubConditionalStatement> elseIfConditionalStatements = new();
 	public SubConditionalStatement? elseConditionalStatement;
-	public string GenCS() {
+	public  string GenCS() {
 		var res = $"{ifConditionalStatement?.GenCS()}";
 		foreach (var statement in elseIfConditionalStatements) {
 			res += $"{statement.GenCS()}";
@@ -14,6 +14,9 @@ public class ConditionalStatement : IStatement {
 		res += $"{elseConditionalStatement?.GenCS()}";
 		return res;
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

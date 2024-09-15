@@ -10,7 +10,7 @@ public class FunctionDeclarationStatement : IStatement {
     public List<ParameterDeclaration> parameters = new();
     public List<IStatement> statements = new();
     public TypeDeclarationStatement? returnType;
-    public string GenCS() {
+    public  string GenCS() {
         var res = new StringBuilder();
         if (isExport) res.Append("export ");
         if (isPublic) res.Append("public ");
@@ -49,6 +49,9 @@ public class FunctionDeclarationStatement : IStatement {
         res.Append("\n}");
         return $"{res}\n";
     }
-    public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-    public List<string> TranspileToAsm() {throw new NotImplementedException();}
+    public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+    public string ToXml() {
+	    throw new NotImplementedException();
+    }
 }

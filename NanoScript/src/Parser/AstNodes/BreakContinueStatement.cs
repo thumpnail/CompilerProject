@@ -9,9 +9,12 @@ public enum ControlFlowModifierType {
 
 public class BreakContinueStatement : IStatement {
 	public ControlFlowModifierType ControlFlowModifierType;
-	public string GenCS() {
+	public  string GenCS() {
 		return "//TODO: BreakContinueStatement:";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

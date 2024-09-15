@@ -1,4 +1,4 @@
-grammar NanoScript;
+grammar NanoScriptV2;
 
 program: module_statement+;
 
@@ -7,14 +7,11 @@ imoport_statements: 'import' string ('as' identifier)? | 'import' identifier 'fr
 
 statement
    // Variable Declaration and Assignment: Statements to declare and assign values to variables.
-   : 'pub'? ('let' | 'var' | 'const')? '.'? identifier type_decl? ('=' exp)?
+   : ('pub')? 'let' '.'? identifier type_decl? ('=' exp)?
    //struct
-   | 'pub'? 'struct' identifier type_decl? '{' statement '}'
-   //class
-   | 'pub'? 'class' identifier type_decl? '{' statement '}'
+   | ('pub')? 'record' identifier type_decl? '{' statement '}'
    // Function and Method Declaration: Statements that invoke functions or methods.
-   | 'export'? 'pub'? 'fnc' '.'? identifier'('(identifier type_decl? (',' identifier type_decl? )* )?')' '{' statement* '}'
-   | identifier '(' ( exp (',' exp )* )? ')'
+   | ('pub')? 'fnc' '.'? identifier'('(identifier type_decl? (',' identifier type_decl? )* )?')' '{' statement* '}'
    // Return Statements: Statements that return values from functions or methods.
    | 'return' exp
    // Enum
@@ -26,29 +23,20 @@ statement
    | 'switch' exp '{' (identifier ':' statement* 'break'?)* 'default' ':' statement* 'break' '}'
    // Looping Statements: Statements that repeat a block of code multiple times (e.g., for, while, do-while).
    | 'for' (identifier 'in' identifier | identifier '=' exp ';' exp ';' exp | exp) '{' statement* '}'
-   // Error Handling: Statements for handling errors or exceptions (e.g., try-catch, throw).
-   | 'error' exp
+   //// Error Handling: Statements for handling errors or exceptions (e.g., try-catch, throw).
+   //| 'error' exp
    // Control Flow Statements: Statements for altering the flow of execution (e.g., break, continue, goto - though this is less common).
-   | 'break' | 'continue' | 'goto' (identifier | number)
+   | 'break' | 'continue' (identifier | number)
    // Declaration Statements: Statements for defining types, structures, classes, and interfaces.
-   | ('def'|'type') identifier ('=' exp)?
+   | 'def' identifier ('=' exp)?
    //interface
    | 'interface' identifier type_decl? '{' statement '}'
-   // union
-   | 'union' type_decl? '{' statement* '}'
-   // type definition
-   | 'type' identifier '=' exp
-   // Expression Statements: Statements that evaluate and execute expressions.
-   // Input/Output Statements: Statements for interacting with the console or other input/output streams.
    // Memory Management: Statements for memory allocation and deallocation (e.g., malloc, free, new, delete).
-   // Assertion Statements: Statements for specifying conditions that must be true at certain points in the program.
-   | 'assert' exp
    // Label Statements: Statements that mark a specific point in the code for jumping or referencing (e.g., break to label).
    | '::' identifier
    | 'goto' identifier
-   // Macro and Preprocessor Directives: Special statements used for compile-time code generation (in C and C++).
-   | '#include' '<' string '>'
-   // Concurrency and Synchronization Statements: Statements for managing multi-threading and synchronization.
+   // Expression Statements: Statements that evaluate and execute expressions.
+   exp
    ;
 
 type_decl: ':' ('[' (identifier|number)? ']'|'{}')? identifier;

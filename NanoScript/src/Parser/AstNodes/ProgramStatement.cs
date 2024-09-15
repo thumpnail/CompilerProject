@@ -3,7 +3,7 @@
 // program: module_statement*;
 public class ProgramStatement : IStatement {
     public List<ModuleStatement> moduleStatements = new();
-    public string GenCS() {
+    public  string GenCS() {
         var res = new StringBuilder();
         res.AppendLine("//TODO: Program:");
         foreach (var item in moduleStatements) {
@@ -11,8 +11,11 @@ public class ProgramStatement : IStatement {
         }
         return $"{res}";
     }
-    public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-    public List<string> TranspileToAsm() {throw new NotImplementedException();}
+    public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+    public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+    public string ToXml() {
+	    throw new NotImplementedException();
+    }
 }
 
 

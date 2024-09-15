@@ -10,9 +10,12 @@ public class PointerOrReferenceExpression : IExpression {
 		get { return !isPointer; }
 		set { isPointer = !value; }
 	}
-	public string GenCS() {
+	public  string GenCS() {
 		return $"{(isPointer ? "*" : "&")}{exp?.GenCS()}";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

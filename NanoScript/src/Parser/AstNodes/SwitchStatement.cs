@@ -7,7 +7,7 @@ public class SwitchStatement : IStatement {
 	public List<SubSwitchStatement> subSwitchStatements = new();
 	//default
 	public SubSwitchStatement? defSubSwitchStatement;
-	public string GenCS() {
+	public  string GenCS() {
 		var res = new StringBuilder();
 		res.AppendLine("//TODO: SwitchStatement:");
 		res.AppendLine(defSubSwitchStatement?.GenCS());
@@ -16,6 +16,9 @@ public class SwitchStatement : IStatement {
 		}
 		return res.ToString();
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

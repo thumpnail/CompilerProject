@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Xml.Serialization;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using NanoScript.Helper;
 using NanoScript.Parser;
@@ -22,8 +24,8 @@ public enum Token {
 }
 
 public class NanoScript {
-	private const string pathref = @"D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\";
-	public static readonly string CWD = Directory.GetCurrentDirectory();
+	private readonly string pathref = Directory.GetCurrentDirectory() + "\\..\\..\\..\\";
+	public static readonly string CWD = Directory.GetCurrentDirectory() + "\\";
 	private static readonly string stdlibpath = Path.Combine(CWD, "lib");
 	public NanoScript() {}
 	public void RunFile(string path) {
@@ -53,13 +55,20 @@ public class NanoScript {
 
 		ParserContext ctx = new ParserContext(lexerResult);
 		ProgramStatement res = new Parser.Parser(ctx).Parse();
-		using (StreamWriter writer = new($"{pathref}output_ast.json")) {
-			writer.WriteLine(JsonConvert.SerializeObject(res, Formatting.Indented));
-			writer.Close();
-		}
+
+		try {
+			var xml = res.ToXml();
+		} catch (Exception e) {e.ToString().ToConsole();}
+		
+		var json = JsonConvert.SerializeObject(res, Formatting.Indented);
+		json.ToFile($"{pathref}output_ast.json");
+		json.ToXml().ToFile($"{pathref}output_ast.xml");
+		
+		
 		string code = res.GenCS().Trim();
 		code.ToConsole();
 		code.ToFile($"{pathref}output_bflat.csx");
+		"Code Written to file".ToConsole();
 
 		FormatGeneratedFile();
 	}

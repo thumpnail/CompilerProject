@@ -8,9 +8,12 @@ public class StructDeclarationStatement : IStatement {
 	public TypeDeclarationStatement? typeDeclarationStatement;
 	public List<IStatement> statements = new();
 
-	public string GenCS() {
+	public  string GenCS() {
 		return "//TODO: StructDeclarationStatement:\n";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

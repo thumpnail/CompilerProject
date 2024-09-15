@@ -1,6 +1,6 @@
 ﻿namespace NanoScript.Parser.AstNodes;
 
-public struct FloatExpression : INumber {
+public class FloatExpression : INumber {
 	public double double_number;
 	public string RAW;
 	public FloatExpression(string val) {
@@ -8,7 +8,7 @@ public struct FloatExpression : INumber {
 		this.RAW = val;
 	}
 
-	public string GetRawValue() {
+	public  string GetRawValue() {
 		return RAW;
 	}
 }

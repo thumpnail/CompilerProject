@@ -13,9 +13,12 @@ public class EnumValueDeclaration : IStatement {
 	public EnumValueType type;
 	//public List<ParameterDeclaration> parameters;
 
-	public string GenCS() {
+	public  string GenCS() {
 		return $"{identifier?.GenCS()} {(((exp is null? "":"= ")+exp?.GenCS()))},";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

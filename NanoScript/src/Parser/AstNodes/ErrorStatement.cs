@@ -5,9 +5,12 @@
 public class ErrorStatement : IStatement {
 	public IExpression? exp;
 
-	public string GenCS() {
+	public  string GenCS() {
 		return "//TODO: ErrorStatement:\n";
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }

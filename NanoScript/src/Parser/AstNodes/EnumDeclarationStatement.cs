@@ -9,7 +9,7 @@ public class EnumDeclarationStatement : IStatement {
 	// public Expression exp;
 	public bool isPublic;
 
-	public string GenCS() {
+	public  string GenCS() {
 		var res = $"{(isPublic ? "public" : "")} enum {identifier?.GenCS()} {typeDeclarationStatement?.GenCS()} {{\n";
 		foreach (var item in enumValueDeclarations) {
 			res += $"{item.GenCS()}\n";
@@ -17,6 +17,9 @@ public class EnumDeclarationStatement : IStatement {
 		res += "}\n";
 		return res;
 	}
-	public List<int> TranspileToByteCode() {throw new NotImplementedException();}
-	public List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}
+	public  List<string> TranspileToAsm() {throw new NotImplementedException();}
+	public string ToXml() {
+		throw new NotImplementedException();
+	}
 }
