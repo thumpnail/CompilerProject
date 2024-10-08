@@ -1,8 +1,11 @@
 ﻿using System.Xml.Linq;
+
+using NanoScript.Parser.Attributes;
 namespace NanoScript.Parser.AstNodes;
 
 //    //Array Creation Expressions: Expressions for creating new arrays or collections.
 //    | '[' exp (',' exp) ']'
+[AstNode("ArrayCreationExpression","abc")]
 public class ArrayCreationExpression : IExpression {
 	public List<IExpression> expressions = new();
 	public  string  GenCS() {

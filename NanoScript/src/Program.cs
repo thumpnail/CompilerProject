@@ -1,4 +1,4 @@
-﻿
+﻿using NanoScript.Helper;
 
 namespace NanoScript {
 	// Mid Tier Change Comment Yes

@@ -41,9 +41,15 @@ public class ParserContext {
     public void CreateFrame() {
         frameStack.Push(idx);
     }
+    /// <summary>
+    /// If the execution was successfull. Return without reassigning the old value.
+    /// </summary>
     public void ClearFrame() {
         frameStack.Pop();
     }
+    /// <summary>
+    /// If the execution failed. Return with reassigning the old value to the current index.
+    /// </summary>
     public void PopFrame(string reason = "") {
 	    Console.WriteLine($"Frame popped: {reason}");
         idx = frameStack.Pop();
@@ -58,6 +64,7 @@ public class ParserContext {
         if (boundCheck(idx)) {
             return tokens[idx].Value == Value;
         }
+        Console.Error.WriteLine($"Expected {Value}");
         return false;
     }
     public string PeekAtIndex(int i) {
@@ -82,6 +89,7 @@ public class ParserContext {
         if (boundCheck(idx)) {
             return tokens[idx + 1].Value == Value;
         }
+        Console.Error.WriteLine($"Expected {Value}");
         return false;
     }
     public bool PeekRange(params string[] values) {
@@ -127,6 +135,7 @@ public class ParserContext {
             idx++; // Remove the consumed token from the list
             return true;
         }
+        Console.Error.WriteLine($"Expected {value}");
         return false;
     }
     public bool Consume(Token value, out string? value2) {
@@ -135,6 +144,7 @@ public class ParserContext {
 		    value2 = tokens[idx].Value;
 		    return true;
 	    }
+	    Console.Error.WriteLine($"Expected {value}");
 	    value2 = null;
 	    return false;
     }
@@ -169,6 +179,7 @@ public class ParserContext {
         if (boundCheck(idx)) {
             return tokens[idx + 1].token == token;
         }
+        Console.Error.WriteLine($"Expected {token}");
         return false;
     }
     public Token PeekNext_tk(int i) {
@@ -188,6 +199,12 @@ public class ParserContext {
             idx++;
             return true;
         }
+        Console.Error.WriteLine($"Expected {token}");
         return false;
+    }
+    public bool ErrRet(bool suc, string msg, ref IExpression? expr) {
+	    PopFrame(msg);
+	    expr = null;
+	    return suc;
     }
 }

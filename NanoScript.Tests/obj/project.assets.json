@@ -2736,7 +2736,7 @@
       },
       "NanoScript/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
+        "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp": "4.11.0",
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "4.11.0",
@@ -8677,6 +8677,7 @@
       "packagesPath": "C:\\Users\\fried\\.nuget\\packages\\",
       "outputPath": "D:\\fried\\OneDrive\\Dokumente\\Code\\Rider-Projects\\CompilerProject\\NanoScript.Tests\\obj\\",
       "projectStyle": "PackageReference",
+      "centralPackageVersionsManagementEnabled": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
@@ -8704,6 +8705,9 @@
         }
       },
       "warningProperties": {
+        "noWarn": [
+          "NU1507"
+        ],
         "warnAsError": [
           "NU1605"
         ]

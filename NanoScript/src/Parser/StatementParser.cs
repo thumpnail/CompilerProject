@@ -7,27 +7,27 @@ using NanoScript.Lexer;
 namespace NanoScript.Parser;
 
 public partial class Parser {
-    private ModuleStatement ParseModuleStatement() {
-        ctx.CreateFrame();
-        var res = new ModuleStatement();
-        if (ctx.Consume_tk(Token.MOD)) {
-            res.moduleName = ParseIdentifierExpression();
-            res.importStatements = ParseImportStatements();
-            if (ctx.Peek_tk(Token.LEFTBRACE)) {
-                ctx.Consume_tk(Token.LEFTBRACE);
-                res.statements = ParseStatements();
-                ctx.Consume_tk(Token.RIGHTBRACE);
-            } else {
-                res.statements = ParseStatements();
-            }
-        } else {
-            ctx.PopFrame("expected 'mod' keyword");
-            return null;
-        }
-        ctx.ClearFrame();
-        return res;
-    }
-    private List<ModuleStatement> ParseModuleStatements() {
+	private ModuleStatement ParseModuleStatement() {
+		ctx.CreateFrame();
+		var res = new ModuleStatement();
+		if (ctx.Consume_tk(Token.MOD)) {
+			res.moduleName = ParseIdentifierExpression();
+			res.importStatements = ParseImportStatements();
+			if (ctx.Peek_tk(Token.LEFTBRACE)) {
+				ctx.Consume_tk(Token.LEFTBRACE);
+				res.statements = ParseStatements();
+				ctx.Consume_tk(Token.RIGHTBRACE);
+			} else {
+				res.statements = ParseStatements();
+			}
+		} else {
+			ctx.PopFrame("expected 'mod' keyword");
+			return null;
+		}
+		ctx.ClearFrame();
+		return res;
+	}
+	private List<ModuleStatement> ParseModuleStatements() {
         var res = new List<ModuleStatement>();
         ModuleStatement tmp;
         while ((tmp = ParseModuleStatement()) != null) {
@@ -99,37 +99,49 @@ public partial class Parser {
 	                case Token.VAR:
 	                case Token.CONST:
                     case Token.LET:
+	                    throw new NotImplementedException();
                         return ParseVariableDeclarationStatement();
                     case Token.CLASS:
+		                throw new NotImplementedException();
                         return ParseClassDeclarationStatement();
                     case Token.ENUM:
+		                throw new NotImplementedException();
                         return ParseEnumDeclarationStatement();
                     case Token.STRUCT:
+		                throw new NotImplementedException();
                         return ParseStructDeclarationStatement();
                     case Token.INTERFACE:
+		                throw new NotImplementedException();
                         return ParseInterfaceStatement();
                     case Token.UNION:
+		                throw new NotImplementedException();
                         return ParseUnionStatement();
                     case Token.FNC:
+		                throw new NotImplementedException();
                         return ParseFunctionDeclarationStatement();
                     default:
                         Console.WriteLine($"Parser ERROR[0/2]: {ctx.Peek_tk()}:'{ctx.Peek()}', {ctx.PeekNext_tk()}:'{ctx.PeekNext()}'");
                         return null;
                 }
-                break;
             case Token.VAR:
             case Token.CONST:
             case Token.LET:
+	            //throw new NotImplementedException();
                 return ParseVariableDeclarationStatement();
             case Token.CLASS:
+	            throw new NotImplementedException();
                 return ParseClassDeclarationStatement();
             case Token.ENUM:
+	            throw new NotImplementedException();
                 return ParseEnumDeclarationStatement();
             case Token.UNION:
+	            throw new NotImplementedException();
                 return ParseUnionStatement();
             case Token.FNC:
+	            throw new NotImplementedException();
                 return ParseFunctionDeclarationStatement();
             case Token.DOT:
+	            throw new NotImplementedException();
                 switch (ctx.PeekNext_tk()) {
                     case Token.IDENTIFIER:
                         switch (ctx.PeekNext_tk(2)) {
@@ -148,38 +160,52 @@ public partial class Parser {
             case Token.IDENTIFIER:
                 switch (ctx.PeekNext_tk()) {
                     case Token.EQUAL:
+	                    throw new NotImplementedException();
                         return ParseAssignmentStatement();
                     case Token.LEFTPAREN:
-                        return ParseFunctionCallStatement();
+	                    throw new NotImplementedException();
+	                    return ParseFunctionCallStatement();
                     default: 
                         Console.WriteLine($"Parser ERROR[2/2]: {ctx.Peek_tk()}:'{ctx.Peek()}', {ctx.PeekNext_tk()}:'{ctx.PeekNext()}'");
                         return null;
                 }
             case Token.RETURN:
+	            throw new NotImplementedException();
                 return ParseReturnStatement();
             case Token.IF:
-            //case NanoScript.Token.ELSE:
+            case Token.ELSE:
+	            throw new NotImplementedException();
                 return ParseConditionalStatement();
             case Token.FOR:
+	            throw new NotImplementedException();
                 return ParseForStatement();
             case Token.BREAK:
             case Token.CONTINUE:
+	            throw new NotImplementedException();
                 return ParseBreakContinueStatement();
             case Token.DEF:
             case Token.ASSERT:
+	            throw new NotImplementedException();
                 return ParseAssertionStatement();
             case Token.ERROR:
+	            throw new NotImplementedException();
                 return ParseErrorStatement();
             case Token.SWITCH:
+	            throw new NotImplementedException();
                 return ParseSwitchStatement();
             case Token.STRUCT:
+	            throw new NotImplementedException();
                 return ParseStructDeclarationStatement();
             case Token.INTERFACE:
+	            throw new NotImplementedException();
                 return ParseInterfaceStatement();
             case Token.DOUBLEPLUS:
             case Token.DOUBLEMINUS:
+            case Token.RIGHTBRACE:
+	            throw new NotImplementedException();
+	            return null;
             default:
-                Console.WriteLine($"Parser ERROR[3/1]: {ctx.Peek_tk().ToString()}:'{ctx.Peek_tk()}'");
+	            Console.WriteLine($"Parser ERROR[3/1]: {ctx.Peek_tk().ToString()}:'{ctx.Peek_tk()}'");
                 return null;
         }
         return null;

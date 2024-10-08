@@ -7,11 +7,11 @@ public class FunctionCallExpression : IExpression {
 	public IExpression? identifier;
 	public ExpressionList parameters = new();
 	public  string GenCS() {
-		var paras = "";
+		var pList = new List<string>();
 		foreach (var item in parameters.expressions) {
-			paras += $"{item.GenCS()},";
+			pList.Add($"{item.GenCS()}");
 		}
-		paras.Remove(paras.Length-2);
+		var paras = string.Join(", ", pList.ToArray());
 		return $"{FunctionNameResolver.ResolveFunctionName(identifier?.GenCS() ?? throw new())}({paras})";
 	}
 	public  List<int> TranspileToByteCode() {throw new NotImplementedException();}

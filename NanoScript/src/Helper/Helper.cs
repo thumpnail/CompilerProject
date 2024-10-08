@@ -20,7 +20,7 @@ public static class Helper {
     public static void ToFile(this object obj, string filename) {
         using(StreamWriter writer = new StreamWriter(filename, Encoding.Default, new FileStreamOptions() {
 	              Access = FileAccess.Write,
-	              Mode = FileMode.OpenOrCreate
+	              Mode = FileMode.Create
               })) {
             writer.WriteLine(obj);
             writer.Close();

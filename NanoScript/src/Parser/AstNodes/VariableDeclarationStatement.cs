@@ -16,12 +16,20 @@ public class VariableDeclarationStatement : IStatement {
 		var res = new StringBuilder();
 		res.AppendLine("//TODO: VariableDeclarationStatement:");
 		res.Append((isPublic ? "public " : ""));
-		res.Append(prefix switch {
-			"let" => "readonly " + typeDeclarationStatement?.GenCS() + " ",
-			"const" => "const " + typeDeclarationStatement?.GenCS() + " ",
-			"var" => typeDeclarationStatement?.GenCS() + " ",
-			_ => typeDeclarationStatement?.GenCS() + " "
-		});
+		if(typeDeclarationStatement != null)
+			res.Append(prefix switch {
+				"let" => "readonly " + typeDeclarationStatement?.GenCS() + " ",
+				"const" => "const " + typeDeclarationStatement?.GenCS() + " ",
+				"var" => typeDeclarationStatement?.GenCS() + " ",
+				_ => typeDeclarationStatement?.GenCS() + " "
+			});
+		else
+			res.Append(prefix switch {
+				"let" => "readonly object " + typeDeclarationStatement?.GenCS() + " ",
+				"const" => "const object " + typeDeclarationStatement?.GenCS() + " ",
+				"var" => "object "+typeDeclarationStatement?.GenCS() + " ",
+				_ => typeDeclarationStatement?.GenCS() + " "
+			});
 		res.Append(isSelf ? "this." : "");
 		res.Append(Identifier.GenCS());
 		res.Append(isAssign ? " = " + exp?.GenCS() : "");

@@ -1,85 +1,20 @@
 //TODO: Program:
-using "../../../sample/mymodule.nano";
 namespace module_main
 {
-    public static void main()
-    {
-        System.Console.Write("Hello World");
-
-    }
-
-}
-namespace module_myModule
-{
-    public static void main()
-    {
-        if (radius > 10)
-        {
-            System.Console.Write("Radius is greater than 10");
-        }
-        else
-        {
-            System.Console.Write("Radius is less than or equal to 10");
-        }
-        //TODO: SwitchStatement:
-        //TODO: SubSwitchStatement:
-        System.Console.Write("Unknown color");
-
-        //TODO: SubSwitchStatement:
-        System.Console.Write("Color is Red");
-
-        //TODO: SubSwitchStatement:
-
-        //TODO: SubSwitchStatement:
-        System.Console.Write("Color is Green");
-
-        //TODO: SubSwitchStatement:
-
-        //TODO: SubSwitchStatement:
-        System.Console.Write("Color is Blue");
-
-
-        foreach (var i in floats)
-        {
-            System.Console.Write(i); ;
-        }
-        //TODO: VariableDeclarationStatement:
-        readonly float i = 0;
-
-
-    }
+    //TODO: VariableDeclarationStatement:
+    object fTest = test("Hello World", 15);
+    //TODO: VariableDeclarationStatement:
+    object mTest = (2 * (1 / 3 + (15 / (Math.Pow(3, 4)))));
+    //TODO: VariableDeclarationStatement:
+    object lTest = a || b && c || a && b || a && b || c;
+    //TODO: VariableDeclarationStatement:
+    readonly Type tTest = System.Type.TestType;
+    //TODO: VariableDeclarationStatement:
+    const object cTest = "Hello World";
+    //TODO: VariableDeclarationStatement:
+    readonly double l2Test = 3.1415;
+    //TODO: VariableDeclarationStatement:
+    object hTest = 1;
 
 }
-//TODO: SubSwitchStatement:
-System.Console.Write("Color is Blue");
-
-
-foreach (var i in floats)
-{
-    System.Console.Write(i); ;
-}
-//TODO: VariableDeclarationStatement:
-readonly float i = 0;
-
-
-    }
-
-}
-tchStatement:
-System.Console.Write("Color is Blue");
-
-
-foreach (var i in floats)
-{
-    System.Console.Write(i); ;
-}
-//TODO: VariableDeclarationStatement:
-readonly float i = 0;
-
-
-    }
-
-}
-
-
 

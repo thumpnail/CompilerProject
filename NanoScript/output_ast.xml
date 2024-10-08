@@ -6,626 +6,289 @@
       <lastIdentifier></lastIdentifier>
       <isSelf>false</isSelf>
     </moduleName>
-    <importStatements>
+    <isSubModule>false</isSubModule>
+    <statements>
+      <isPublic>false</isPublic>
+      <prefix>var</prefix>
+      <isSelf>false</isSelf>
       <Identifier>
-        <identifier />
+        <identifier>fTest</identifier>
         <isExtension>false</isExtension>
         <lastIdentifier></lastIdentifier>
         <isSelf>false</isSelf>
       </Identifier>
-      <importString>"../../../sample/mymodule.nano"</importString>
-      <isAs>false</isAs>
-      <isFrom>true</isFrom>
-    </importStatements>
-    <isSubModule>false</isSubModule>
-    <statements>
-      <isExport>false</isExport>
-      <isPublic>true</isPublic>
-      <isSelf>false</isSelf>
-      <identifier>
-        <identifier>main</identifier>
-        <isExtension>false</isExtension>
-        <lastIdentifier></lastIdentifier>
-        <isSelf>false</isSelf>
-      </identifier>
-      <parameters />
-      <statements>
+      <typeDeclarationStatement />
+      <isAssign>true</isAssign>
+      <exp>
         <identifier>
-          <identifier>print</identifier>
+          <identifier>test</identifier>
           <isExtension>false</isExtension>
           <lastIdentifier></lastIdentifier>
           <isSelf>false</isSelf>
         </identifier>
         <parameters>
-          <str>"Hello World"</str>
+          <expressions>
+            <str>"Hello World"</str>
+          </expressions>
+          <expressions>
+            <number>
+              <int_number>15</int_number>
+              <RAW>15</RAW>
+            </number>
+          </expressions>
         </parameters>
-      </statements>
-      <returnType />
+      </exp>
     </statements>
-  </moduleStatements>
-  <moduleStatements>
-    <moduleName>
-      <identifier>myModule</identifier>
-      <isExtension>false</isExtension>
-      <lastIdentifier></lastIdentifier>
-      <isSelf>false</isSelf>
-    </moduleName>
-    <isSubModule>false</isSubModule>
     <statements>
-      <isExport>false</isExport>
-      <isPublic>true</isPublic>
+      <isPublic>false</isPublic>
+      <prefix>var</prefix>
       <isSelf>false</isSelf>
-      <identifier>
-        <identifier>main</identifier>
+      <Identifier>
+        <identifier>mTest</identifier>
         <isExtension>false</isExtension>
         <lastIdentifier></lastIdentifier>
         <isSelf>false</isSelf>
-      </identifier>
-      <parameters />
-      <statements>
-        <ifConditionalStatement>
-          <isElse>false</isElse>
-          <isIf>true</isIf>
-          <exp>
-            <left>
-              <identifier>radius</identifier>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
-            </left>
-            <right>
-              <number>
-                <int_number>10</int_number>
-                <RAW>10</RAW>
-              </number>
-            </right>
-            <operatorType>13</operatorType>
-          </exp>
-          <statements>
-            <identifier>
-              <identifier>print</identifier>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
-            </identifier>
-            <parameters>
-              <str>"Radius is greater than 10"</str>
-            </parameters>
-          </statements>
-        </ifConditionalStatement>
-        <elseConditionalStatement>
-          <isElse>true</isElse>
-          <isIf>false</isIf>
-          <exp />
-          <statements>
-            <identifier>
-              <identifier>print</identifier>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
-            </identifier>
-            <parameters>
-              <str>"Radius is less than or equal to 10"</str>
-            </parameters>
-          </statements>
-        </elseConditionalStatement>
-      </statements>
-      <statements>
-        <exp>
-          <identifier>
-            <identifier>Color</identifier>
-            <identifiers>Red</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <expressions>
-            <identifier>case</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </expressions>
-        </exp>
-        <subSwitchStatements>
-          <identifier>
-            <identifier>Color</identifier>
-            <identifiers>Red</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <statements>
-            <identifier>
-              <identifier>print</identifier>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
-            </identifier>
-            <parameters>
-              <str>"Color is Red"</str>
-            </parameters>
-          </statements>
-          <isBreak>true</isBreak>
-          <isDefault>false</isDefault>
-        </subSwitchStatements>
-        <subSwitchStatements>
-          <identifier>
-            <identifier>case</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <isBreak>false</isBreak>
-          <isDefault>false</isDefault>
-        </subSwitchStatements>
-        <subSwitchStatements>
-          <identifier>
-            <identifier>Color</identifier>
-            <identifiers>Green</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <statements>
-            <identifier>
-              <identifier>print</identifier>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
-            </identifier>
-            <parameters>
-              <str>"Color is Green"</str>
-            </parameters>
-          </statements>
-          <isBreak>true</isBreak>
-          <isDefault>false</isDefault>
-        </subSwitchStatements>
-        <subSwitchStatements>
-          <identifier>
-            <identifier>case</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <isBreak>false</isBreak>
-          <isDefault>false</isDefault>
-        </subSwitchStatements>
-        <subSwitchStatements>
-          <identifier>
-            <identifier>Color</identifier>
-            <identifiers>Blue</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <statements>
-            <identifier>
-              <identifier>print</identifier>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
-            </identifier>
-            <parameters>
-              <str>"Color is Blue"</str>
-            </parameters>
-          </statements>
-          <isBreak>true</isBreak>
-          <isDefault>false</isDefault>
-        </subSwitchStatements>
-        <defSubSwitchStatement>
-          <identifier />
-          <statements>
-            <identifier>
-              <identifier>print</identifier>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
-            </identifier>
-            <parameters>
-              <str>"Unknown color"</str>
-            </parameters>
-          </statements>
-          <isBreak>true</isBreak>
-          <isDefault>true</isDefault>
-        </defSubSwitchStatement>
-      </statements>
-      <statements>
-        <elementIdentifier>
-          <identifier>i</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </elementIdentifier>
-        <listIdentifier>
-          <identifier>floats</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </listIdentifier>
-        <type>2</type>
-        <exp_def />
-        <exp_cond />
-        <exp_incr />
-        <statements>
-          <identifier>
-            <identifier>print</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <parameters>
-            <identifier>i</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </parameters>
-        </statements>
-      </statements>
-      <statements>
-        <isPublic>false</isPublic>
-        <prefix>let</prefix>
-        <isSelf>false</isSelf>
-        <Identifier>
-          <identifier>i</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </Identifier>
-        <typeDeclarationStatement>
-          <identifier>
-            <identifier>float</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationType>0</typeDeclarationType>
-          <exp />
-        </typeDeclarationStatement>
-        <isAssign>true</isAssign>
-        <exp>
+      </Identifier>
+      <typeDeclarationStatement />
+      <isAssign>true</isAssign>
+      <exp>
+        <left>
           <number>
-            <int_number>0</int_number>
-            <RAW>0</RAW>
+            <int_number>2</int_number>
+            <RAW>2</RAW>
           </number>
-        </exp>
-      </statements>
-      <returnType />
-    </statements>
-  </moduleStatements>
-</root>
-
-larationType>0</typeDeclarationType>
-            <exp />
-          </typeDeclarationStatement>
-        </parameters>
-        <statements>
-          <isSelf>false</isSelf>
-          <identifier>
-            <identifier></identifier>
-            <identifiers>center</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationStatement />
-          <assignmentType>1</assignmentType>
-          <exp>
-            <identifier>center</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </exp>
-        </statements>
-        <statements>
-          <isSelf>false</isSelf>
-          <identifier>
-            <identifier></identifier>
-            <identifiers>radius</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationStatement />
-          <assignmentType>1</assignmentType>
-          <exp>
-            <identifier>radius</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </exp>
-        </statements>
-        <returnType />
-      </statements>
-      <statements>
-        <isExport>false</isExport>
-        <isPublic>true</isPublic>
-        <isSelf>false</isSelf>
-        <identifier>
-          <identifier></identifier>
-          <identifiers>area</identifiers>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </identifier>
-        <parameters />
-        <statements>
-          <exp>
+        </left>
+        <right>
+          <left>
+            <number>
+              <int_number>1</int_number>
+              <RAW>1</RAW>
+            </number>
+          </left>
+          <right>
             <left>
-              <identifier>math</identifier>
-              <identifiers>PI</identifiers>
-              <isExtension>false</isExtension>
-              <lastIdentifier></lastIdentifier>
-              <isSelf>false</isSelf>
+              <number>
+                <int_number>3</int_number>
+                <RAW>3</RAW>
+              </number>
             </left>
             <right>
               <left>
-                <identifier></identifier>
-                <identifiers>radius</identifiers>
-                <isExtension>false</isExtension>
-                <lastIdentifier></lastIdentifier>
-                <isSelf>false</isSelf>
+                <number>
+                  <int_number>15</int_number>
+                  <RAW>15</RAW>
+                </number>
               </left>
               <right>
-                <identifier></identifier>
-                <identifiers>radius</identifiers>
-                <isExtension>false</isExtension>
-                <lastIdentifier></lastIdentifier>
-                <isSelf>false</isSelf>
+                <left>
+                  <number>
+                    <int_number>3</int_number>
+                    <RAW>3</RAW>
+                  </number>
+                </left>
+                <right>
+                  <number>
+                    <int_number>4</int_number>
+                    <RAW>4</RAW>
+                  </number>
+                </right>
+                <operatorType>5</operatorType>
+                <Precedence>4</Precedence>
               </right>
-              <operatorType>3</operatorType>
+              <operatorType>2</operatorType>
+              <Precedence>3</Precedence>
             </right>
-            <operatorType>3</operatorType>
-          </exp>
-        </statements>
-        <returnType>
-          <identifier>
-            <identifier>float</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationType>0</typeDeclarationType>
-          <exp />
-        </returnType>
-      </statements>
+            <operatorType>0</operatorType>
+            <Precedence>2</Precedence>
+          </right>
+          <operatorType>2</operatorType>
+          <Precedence>3</Precedence>
+        </right>
+        <operatorType>3</operatorType>
+        <Precedence>3</Precedence>
+      </exp>
     </statements>
     <statements>
-      <typeDeclarationStatement />
-      <identifier>
-        <identifier>Color</identifier>
-        <isExtension>false</isExtension>
-        <lastIdentifier></lastIdentifier>
-        <isSelf>false</isSelf>
-      </identifier>
-      <enumValueDeclarations>
-        <identifier>
-          <identifier>Red</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </identifier>
-        <exp />
-        <type>0</type>
-      </enumValueDeclarations>
-      <enumValueDeclarations>
-        <identifier>
-          <identifier>Green</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </identifier>
-        <exp />
-        <type>0</type>
-      </enumValueDeclarations>
-      <enumValueDeclarations>
-        <identifier>
-          <identifier>Blue</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </identifier>
-        <exp />
-        <type>0</type>
-      </enumValueDeclarations>
-      <isPublic>true</isPublic>
-    </statements>
-    <statements>
-      <isExport>false</isExport>
-      <isPublic>true</isPublic>
+      <isPublic>false</isPublic>
+      <prefix>var</prefix>
       <isSelf>false</isSelf>
-      <identifier>
-        <identifier>calculateDistance</identifier>
+      <Identifier>
+        <identifier>lTest</identifier>
         <isExtension>false</isExtension>
         <lastIdentifier></lastIdentifier>
         <isSelf>false</isSelf>
-      </identifier>
-      <parameters>
-        <identifier>
-          <identifier>p1</identifier>
+      </Identifier>
+      <typeDeclarationStatement />
+      <isAssign>true</isAssign>
+      <exp>
+        <left>
+          <identifier>a</identifier>
           <isExtension>false</isExtension>
           <lastIdentifier></lastIdentifier>
           <isSelf>false</isSelf>
-        </identifier>
-        <typeDeclarationStatement>
-          <identifier>
-            <identifier>Point</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationType>0</typeDeclarationType>
-          <exp />
-        </typeDeclarationStatement>
-      </parameters>
-      <parameters>
-        <identifier>
-          <identifier>p2</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </identifier>
-        <typeDeclarationStatement>
-          <identifier>
-            <identifier>Point</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationType>0</typeDeclarationType>
-          <exp />
-        </typeDeclarationStatement>
-      </parameters>
-      <statements>
-        <isPublic>false</isPublic>
-        <prefix>let</prefix>
-        <isSelf>false</isSelf>
-        <Identifier>
-          <identifier>dx</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </Identifier>
-        <typeDeclarationStatement>
-          <identifier>
-            <identifier>float</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationType>0</typeDeclarationType>
-          <exp />
-        </typeDeclarationStatement>
-        <isAssign>true</isAssign>
-        <exp>
+        </left>
+        <right>
           <left>
-            <identifier>p2</identifier>
-            <identifiers>x</identifiers>
+            <identifier>b</identifier>
             <isExtension>false</isExtension>
             <lastIdentifier></lastIdentifier>
             <isSelf>false</isSelf>
           </left>
           <right>
-            <identifier>p1</identifier>
-            <identifiers>x</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </right>
-          <operatorType>1</operatorType>
-        </exp>
-      </statements>
-      <statements>
-        <isPublic>false</isPublic>
-        <prefix>let</prefix>
-        <isSelf>false</isSelf>
-        <Identifier>
-          <identifier>dy</identifier>
-          <isExtension>false</isExtension>
-          <lastIdentifier></lastIdentifier>
-          <isSelf>false</isSelf>
-        </Identifier>
-        <typeDeclarationStatement>
-          <identifier>
-            <identifier>float</identifier>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <typeDeclarationType>0</typeDeclarationType>
-          <exp />
-        </typeDeclarationStatement>
-        <isAssign>true</isAssign>
-        <exp>
-          <left>
-            <identifier>p2</identifier>
-            <identifiers>y</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </left>
-          <right>
-            <identifier>p1</identifier>
-            <identifiers>y</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </right>
-          <operatorType>1</operatorType>
-        </exp>
-      </statements>
-      <statements>
-        <exp>
-          <identifier>
-            <identifier>math</identifier>
-            <identifiers>sqrt</identifiers>
-            <isExtension>false</isExtension>
-            <lastIdentifier></lastIdentifier>
-            <isSelf>false</isSelf>
-          </identifier>
-          <parameters>
-            <expressions>
+            <left>
+              <identifier>c</identifier>
+              <isExtension>false</isExtension>
+              <lastIdentifier></lastIdentifier>
+              <isSelf>false</isSelf>
+            </left>
+            <right>
               <left>
-                <identifier>dx</identifier>
+                <identifier>a</identifier>
                 <isExtension>false</isExtension>
                 <lastIdentifier></lastIdentifier>
                 <isSelf>false</isSelf>
               </left>
               <right>
                 <left>
-                  <identifier>dx</identifier>
+                  <identifier>b</identifier>
                   <isExtension>false</isExtension>
                   <lastIdentifier></lastIdentifier>
                   <isSelf>false</isSelf>
                 </left>
                 <right>
                   <left>
-                    <identifier>dy</identifier>
+                    <identifier>a</identifier>
                     <isExtension>false</isExtension>
                     <lastIdentifier></lastIdentifier>
                     <isSelf>false</isSelf>
                   </left>
                   <right>
-                    <identifier>dy</identifier>
-                    <isExtension>false</isExtension>
-                    <lastIdentifier></lastIdentifier>
-                    <isSelf>false</isSelf>
+                    <left>
+                      <identifier>b</identifier>
+                      <isExtension>false</isExtension>
+                      <lastIdentifier></lastIdentifier>
+                      <isSelf>false</isSelf>
+                    </left>
+                    <right>
+                      <identifier>c</identifier>
+                      <isExtension>false</isExtension>
+                      <lastIdentifier></lastIdentifier>
+                      <isSelf>false</isSelf>
+                    </right>
+                    <operatorType>6</operatorType>
+                    <Precedence>-2</Precedence>
                   </right>
-                  <operatorType>3</operatorType>
+                  <operatorType>7</operatorType>
+                  <Precedence>-1</Precedence>
                 </right>
-                <operatorType>0</operatorType>
+                <operatorType>6</operatorType>
+                <Precedence>-2</Precedence>
               </right>
-              <operatorType>3</operatorType>
-            </expressions>
-          </parameters>
-        </exp>
-      </statements>
-      <returnType>
+              <operatorType>7</operatorType>
+              <Precedence>-1</Precedence>
+            </right>
+            <operatorType>6</operatorType>
+            <Precedence>-2</Precedence>
+          </right>
+          <operatorType>7</operatorType>
+          <Precedence>-1</Precedence>
+        </right>
+        <operatorType>6</operatorType>
+        <Precedence>-2</Precedence>
+      </exp>
+    </statements>
+    <statements>
+      <isPublic>false</isPublic>
+      <prefix>let</prefix>
+      <isSelf>false</isSelf>
+      <Identifier>
+        <identifier>tTest</identifier>
+        <isExtension>false</isExtension>
+        <lastIdentifier></lastIdentifier>
+        <isSelf>false</isSelf>
+      </Identifier>
+      <typeDeclarationStatement>
         <identifier>
-          <identifier>float</identifier>
+          <identifier>Type</identifier>
           <isExtension>false</isExtension>
           <lastIdentifier></lastIdentifier>
           <isSelf>false</isSelf>
         </identifier>
         <typeDeclarationType>0</typeDeclarationType>
         <exp />
-      </returnType>
-    </statements>
-    <statements>
-      <isExport>false</isExport>
-      <isPublic>true</isPublic>
-      <isSelf>false</isSelf>
-      <identifier>
-        <identifier>getPoint</identifier>
+      </typeDeclarationStatement>
+      <isAssign>true</isAssign>
+      <exp>
+        <identifier>System</identifier>
+        <identifiers>Type</identifiers>
+        <identifiers>TestType</identifiers>
         <isExtension>false</isExtension>
         <lastIdentifier></lastIdentifier>
         <isSelf>false</isSelf>
-      </identifier>
-      <parameters />
-      <returnType>
-        <identifier />
+      </exp>
+    </statements>
+    <statements>
+      <isPublic>false</isPublic>
+      <prefix>const</prefix>
+      <isSelf>false</isSelf>
+      <Identifier>
+        <identifier>cTest</identifier>
+        <isExtension>false</isExtension>
+        <lastIdentifier></lastIdentifier>
+        <isSelf>false</isSelf>
+      </Identifier>
+      <typeDeclarationStatement />
+      <isAssign>true</isAssign>
+      <exp>
+        <str>"Hello World"</str>
+      </exp>
+    </statements>
+    <statements>
+      <isPublic>false</isPublic>
+      <prefix>let</prefix>
+      <isSelf>false</isSelf>
+      <Identifier>
+        <identifier>l2Test</identifier>
+        <isExtension>false</isExtension>
+        <lastIdentifier></lastIdentifier>
+        <isSelf>false</isSelf>
+      </Identifier>
+      <typeDeclarationStatement>
+        <identifier>
+          <identifier>double</identifier>
+          <isExtension>false</isExtension>
+          <lastIdentifier></lastIdentifier>
+          <isSelf>false</isSelf>
+        </identifier>
         <typeDeclarationType>0</typeDeclarationType>
         <exp />
-      </returnType>
+      </typeDeclarationStatement>
+      <isAssign>true</isAssign>
+      <exp>
+        <number>
+          <double_number>31415</double_number>
+          <RAW>3.1415</RAW>
+        </number>
+      </exp>
+    </statements>
+    <statements>
+      <isPublic>false</isPublic>
+      <prefix>var</prefix>
+      <isSelf>false</isSelf>
+      <Identifier>
+        <identifier>hTest</identifier>
+        <isExtension>false</isExtension>
+        <lastIdentifier></lastIdentifier>
+        <isSelf>false</isSelf>
+      </Identifier>
+      <typeDeclarationStatement />
+      <isAssign>true</isAssign>
+      <exp>
+        <number>
+          <int_number>1</int_number>
+          <RAW>1</RAW>
+        </number>
+      </exp>
     </statements>
   </moduleStatements>
 </root>

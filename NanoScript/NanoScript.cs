@@ -11,18 +11,6 @@ using Microsoft.CodeAnalysis.Options;
 using NanoScript.Parser.AstNodes;
 namespace NanoScript;
 
-public enum Token {
-	NONE, EOL, IDENTIFIER, STRING, NUMBER, @TRUE, @FALSE,
-	@PUB, @MOD, @RETURN, @ENUM, @ERROR, @GOTO, @DEF, @TYPE, @STRUCT,
-	@CLASS, @INTERFACE, @UNION, @ASSERT, @IMPORT, @AS, @FROM, @LET, @VAR, @CONST, @IF, @ELSE, @SWITCH, @BREAK,
-	@DEFAULT, @CONTINUE, @EXPORT, @FNC, @MATCH, @IS, @SIZE, @STR, @FOR, @IN,
-
-	LEFTBRACE, RIGHTBRACE, DOT, DOUBLELEFT, DOUBLERIGHT, PLUSEQUALS, MINUSEQUALS, TIMESEQUALS, SLASHEQUALS,
-	COLON, EQUAL, SEMICOLON, LEFTPAREN, COMMA, RIGHTPAREN, DOUBLECOLON, GREATER, LEFTBRACKET, RIGHTBRACKET,
-	DOUBLEBRACES, DOUBLEARROWRIGHT, PIPE, AND, PLUS, MINUS, PERCENT, SLASH, DOUBLESTAR, STAR, DOUBLEPIPE, DOUBLEAND, DOUBLEEQUAL,
-	NOTEQUAL, LESSEQUAL, LESS, GREATEREQUALS, DOUBLEDOT, CIRCUMFLEX, TILDE, EXLEMATIONMARK, DOUBLEPLUS, DOUBLEMINUS
-}
-
 public class NanoScript {
 	private readonly string pathref = Directory.GetCurrentDirectory() + "\\..\\..\\..\\";
 	public static readonly string CWD = Directory.GetCurrentDirectory() + "\\";
@@ -56,9 +44,9 @@ public class NanoScript {
 		ParserContext ctx = new ParserContext(lexerResult);
 		ProgramStatement res = new Parser.Parser(ctx).Parse();
 
-		try {
-			var xml = res.ToXml();
-		} catch (Exception e) {e.ToString().ToConsole();}
+		//try {
+		//	var xml = res.ToXml();
+		//} catch (Exception e) {e.ToString().ToConsole();}
 		
 		var json = JsonConvert.SerializeObject(res, Formatting.Indented);
 		json.ToFile($"{pathref}output_ast.json");

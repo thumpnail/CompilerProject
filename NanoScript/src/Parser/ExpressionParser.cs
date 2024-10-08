@@ -1,4 +1,6 @@
-﻿using NanoScript.Parser.AstNodes;
+﻿using System.Globalization;
+
+using NanoScript.Parser.AstNodes;
 using static NanoScript.Token;
 
 namespace NanoScript.Parser;
@@ -411,7 +413,12 @@ public partial class Parser {
         var res = new NumberExpression();
         if (ctx.Peek_tk(Token.NUMBER)) {
             var tmp = ctx.Consume();
-            res.number = tmp.Contains('.') ? new FloatExpression(tmp) : new IntegerExpression(tmp);
+            if (tmp.StartsWith("0x")) {
+	            res.number = new IntegerExpression(Int128.Parse(tmp.Split('x').Last(), NumberStyles.HexNumber).ToString());
+            } else if (tmp.StartsWith("0b")) {
+	            res.number = new IntegerExpression(Int128.Parse(tmp.Split('b').Last(), NumberStyles.BinaryNumber).ToString());
+            } else
+				res.number = tmp.Contains('.') ? new FloatExpression(tmp) : new IntegerExpression(tmp);
         } else {
             ctx.PopFrame();
             return null;

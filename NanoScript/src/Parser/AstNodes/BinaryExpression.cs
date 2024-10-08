@@ -55,13 +55,56 @@ public class BinaryExpression : IExpression {
     public IExpression left;
     public IExpression right;
     public BinaryOperatorType operatorType = BinaryOperatorType.none;
+    public int Precedence { get => GetPredency(operatorType); }
     public BinaryExpression(IExpression left, BinaryOperatorType operatorType, IExpression right) {
         this.left = left;
         this.right = right;
         this.operatorType = operatorType;
     }
     public  string GenCS() {
-        return $"{left.GenCS()} {GetBinOp(operatorType)} {right.GenCS()}";
+	    var res = "";
+	    if (operatorType == BinaryOperatorType.pow) {
+		    res += $"Math.Pow({left.GenCS()}, {right.GenCS()})";
+	    } else
+		    res += $"{left.GenCS()} {GetBinOp(operatorType)} {right.GenCS()}";
+	    switch (Precedence) {
+		    case 4: 
+			case 3: res = "(" + res + ")"; break;
+			case 2:
+			case 1:
+			case 0:
+			case -1:
+            case -2:
+            case -3:
+			default: break;
+	    }
+        return $"{res}";
+    }
+    private int GetPredency(BinaryOperatorType binaryOperatorType) {
+	    return operatorType switch {
+		    BinaryOperatorType.pow => 4,             // Exponentiation has high precedence
+		    BinaryOperatorType.mul => 3,             // Multiplication, Division, Modulus
+		    BinaryOperatorType.div => 3,
+		    BinaryOperatorType.mod => 3,
+		    BinaryOperatorType.add => 2,             // Addition and Subtraction
+		    BinaryOperatorType.sub => 2,
+		    BinaryOperatorType.shl => 1,             // Bitwise shift operators
+		    BinaryOperatorType.shr => 1,
+		    BinaryOperatorType.and => 1,             // Bitwise AND
+		    BinaryOperatorType.or => 1,              // Bitwise OR
+		    BinaryOperatorType.xor => 1,             // Bitwise XOR
+		    BinaryOperatorType.equals => 0,          // Comparison Operators (==, !=, <, >, <=, >=)
+		    BinaryOperatorType.notEquals => 0,
+		    BinaryOperatorType.lessEquals => 0,
+		    BinaryOperatorType.less => 0,
+		    BinaryOperatorType.greaterEquals => 0,
+		    BinaryOperatorType.greater => 0,
+		    BinaryOperatorType.doubleAnd => -1,      // Logical AND (&&)
+		    BinaryOperatorType.doubleOr => -2,       // Logical OR (||)
+		    BinaryOperatorType.not => -3,            // Logical NOT
+		    BinaryOperatorType.none => 0,
+		    _ => throw new ArgumentOutOfRangeException()
+	    };
     }
     public string GetBinOp(BinaryOperatorType type) {
         return type switch {
