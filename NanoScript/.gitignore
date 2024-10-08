@@ -5,7 +5,7 @@ build/
 # MacOS Cache
 .DS_Store
 
-
+*.cache
 
 
 ## Ignore Visual Studio temporary files, build results, and
