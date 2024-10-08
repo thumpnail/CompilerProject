@@ -16,6 +16,1048 @@
           "prefix": "var",
           "isSelf": false,
           "Identifier": {
+            "identifier": "a",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "number": {
+              "int_number": "5",
+              "RAW": "5"
+            }
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "b",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "str": "\"hello\""
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "c",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "value": true
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "e",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "number": {
+                "int_number": "3",
+                "RAW": "3"
+              }
+            },
+            "right": {
+              "number": {
+                "int_number": "2",
+                "RAW": "2"
+              }
+            },
+            "operatorType": 0,
+            "Precedence": 2
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "f",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "a",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "b",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 1,
+            "Precedence": 2
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "g",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "c",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "number": {
+                "int_number": "2",
+                "RAW": "2"
+              }
+            },
+            "operatorType": 2,
+            "Precedence": 3
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "h",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "d",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "number": {
+                "int_number": "4",
+                "RAW": "4"
+              }
+            },
+            "operatorType": 3,
+            "Precedence": 3
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "i",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "a",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "b",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 0,
+            "Precedence": 2
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "j",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "e",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "f",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 6,
+            "Precedence": -2
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "k",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "g",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "h",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 7,
+            "Precedence": -1
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "l",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "i",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "j",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 8,
+            "Precedence": 0
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "m",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "f",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "g",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 9,
+            "Precedence": 0
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "n",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "h",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "e",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 10,
+            "Precedence": 0
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "o",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "i",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "j",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 11,
+            "Precedence": 0
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "p",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "k",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "l",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 12,
+            "Precedence": 0
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "q",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "m",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "n",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 13,
+            "Precedence": 0
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "r",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": {
+              "identifier": "myFunction",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "parameters": {
+              "expressions": [
+                {
+                  "identifier": "a",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                {
+                  "identifier": "b",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                },
+                {
+                  "identifier": "c",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "s",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": {
+              "identifier": "myArray",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "index": {
+              "identifier": "i",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "isRange": false,
+            "range": {
+              "Item1": null,
+              "Item2": null
+            }
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "u",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": "object",
+            "identifiers": [
+              "property"
+            ],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "w",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "e",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "f",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 14,
+            "Precedence": 1
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "x",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "g",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "h",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 15,
+            "Precedence": 1
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "y",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "i",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "identifier": "j",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 5,
+            "Precedence": 4
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "z",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "a",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "number": {
+                "int_number": "2",
+                "RAW": "2"
+              }
+            },
+            "operatorType": 17,
+            "Precedence": 1
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "aa",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "left": {
+              "identifier": "b",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "right": {
+              "number": {
+                "int_number": "1",
+                "RAW": "1"
+              }
+            },
+            "operatorType": 18,
+            "Precedence": 1
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "cc",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "isBefore": true,
+            "exp": {
+              "identifier": "d",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 1
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "ee",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "isBefore": true,
+            "exp": {
+              "identifier": "f",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 2
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "ff",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "isBefore": false,
+            "exp": {
+              "identifier": "g",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 2
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "gg",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "isBefore": true,
+            "exp": {
+              "identifier": "h",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 3
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "hh",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "isBefore": false,
+            "exp": {
+              "identifier": "i",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "operatorType": 3
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "nn",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "expressions": [
+              {
+                "identifier": "a",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              {
+                "identifier": "b",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              {
+                "identifier": "c",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              }
+            ]
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "oo",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": {
+              "identifier": "myArray",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "expressions": [
+              {
+                "identifier": "a",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              {
+                "identifier": "b",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              },
+              {
+                "identifier": "c",
+                "identifiers": [],
+                "isExtension": false,
+                "lastIdentifier": "",
+                "isSelf": false
+              }
+            ]
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "qq",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": {
+              "identifier": "type",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "parameters": {
+              "expressions": [
+                {
+                  "identifier": "a",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "rr",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": {
+              "identifier": "size",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "parameters": {
+              "expressions": [
+                {
+                  "identifier": "myArray",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "ss",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": {
+              "identifier": "str",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "parameters": {
+              "expressions": [
+                {
+                  "identifier": "e",
+                  "identifiers": [],
+                  "isExtension": false,
+                  "lastIdentifier": "",
+                  "isSelf": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
             "identifier": "fTest",
             "identifiers": [],
             "isExtension": false,
@@ -313,6 +1355,88 @@
             "number": {
               "int_number": "1",
               "RAW": "1"
+            }
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "arr",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "expressions": [
+              {
+                "number": {
+                  "int_number": "1",
+                  "RAW": "1"
+                }
+              },
+              {
+                "number": {
+                  "int_number": "2",
+                  "RAW": "2"
+                }
+              },
+              {
+                "number": {
+                  "int_number": "3",
+                  "RAW": "3"
+                }
+              },
+              {
+                "number": {
+                  "int_number": "4",
+                  "RAW": "4"
+                }
+              },
+              {
+                "number": {
+                  "int_number": "5",
+                  "RAW": "5"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "isPublic": false,
+          "prefix": "var",
+          "isSelf": false,
+          "Identifier": {
+            "identifier": "arr2",
+            "identifiers": [],
+            "isExtension": false,
+            "lastIdentifier": "",
+            "isSelf": false
+          },
+          "typeDeclarationStatement": null,
+          "isAssign": true,
+          "exp": {
+            "identifier": {
+              "identifier": "arr",
+              "identifiers": [],
+              "isExtension": false,
+              "lastIdentifier": "",
+              "isSelf": false
+            },
+            "index": {
+              "number": {
+                "int_number": "1",
+                "RAW": "1"
+              }
+            },
+            "isRange": false,
+            "range": {
+              "Item1": null,
+              "Item2": null
             }
           }
         }

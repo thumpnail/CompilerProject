@@ -13,6 +13,7 @@ public class ParserContext {
     public List<TokenElement<Token>> tokens;
     public List<string> importedFiles = new List<string>();
     public Stack<int> frameStack;
+    public Token currentToken { get { return Peek_tk(); } }
 
     public int idx { get; set; }
     //TODO: Fancy Error Handling

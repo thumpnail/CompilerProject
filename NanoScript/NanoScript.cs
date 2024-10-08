@@ -97,7 +97,7 @@ public class NanoScript {
 				.child(Token.ERROR, "error")
 				.child(Token.GOTO, "goto")
 				.child(Token.DEF, "def")
-				.child(Token.TYPE, "type")
+				//.child(Token.TYPE, "type")
 				.child(Token.STRUCT, "struct")
 				.child(Token.CLASS, "class")
 				.child(Token.INTERFACE, "interface")
@@ -121,7 +121,7 @@ public class NanoScript {
 				.child(Token.TRUE, "true")
 				.child(Token.FALSE, "false")
 				.child(Token.IS, "is")
-				.child(Token.SIZE, "size")
+				//.child(Token.SIZE, "size")
 				.child(Token.FOR, "for")
 				.child(Token.IN, "in")
 				// Operators

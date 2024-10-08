@@ -120,7 +120,7 @@ public partial class Parser {
             }
             //identifier
             else {
-                res = ParseIdentifierExpression();
+                res = ParseIdentifierExpression() ?? throw new NullReferenceException();
             }
         } else if (ctx.Peek_tk(NUMBER)) {
             res = ParseNumberExpression() ?? throw new NullReferenceException();
@@ -129,11 +129,13 @@ public partial class Parser {
         } else if (ctx.Peek_tk(TRUE, FALSE)) {
             res = ParseBooleanExpression() ?? throw new NullReferenceException();
         } else if (ctx.Peek_tk(LEFTPAREN)) {
-            //TODO: Implement Expression Grouping
-            ctx.Consume_tk(LEFTPAREN);
-            res = ParseExpression() ?? throw new NullReferenceException();
-            ctx.Consume_tk(RIGHTPAREN);
-        } else {
+	        //TODO: Implement Expression Grouping
+	        ctx.Consume_tk(LEFTPAREN);
+	        res = ParseExpression() ?? throw new NullReferenceException();
+	        ctx.Consume_tk(RIGHTPAREN);
+        } else if(ctx.Peek_tk(LEFTBRACKET)) {
+	        res = ParseArrayCreationExpression() ?? throw new NullReferenceException();
+		} else {
             ctx.PopFrame();
             return null;
         }
@@ -228,15 +230,16 @@ public partial class Parser {
         if (ctx.Peek_tk(LEFTBRACKET)) {
             ctx.Consume_tk(LEFTBRACKET);
             if ((exp = ParseListExpression()) is not null) {
-                res = new ArrayCreationExpression() {
+                res = new ArrayCreationExpression {
                     expressions = ((ExpressionList)exp).expressions
                 };
             }
+            ctx.Consume_tk(RIGHTBRACKET);
         } else if (ctx.Peek_tk(IDENTIFIER) && ctx.PeekNext_tk(LEFTBRACE)) {
             var ident = ParseIdentifierExpression();
             ctx.Consume_tk(LEFTBRACE);
             if ((exp = ParseListExpression()) is not null) {
-                res = new InstanceInitializationExpression() {
+                res = new InstanceInitializationExpression {
                     identifier = ident,
                     expressions = ((ExpressionList)exp).expressions
                 };
