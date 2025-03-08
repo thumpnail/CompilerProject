@@ -1,0 +1,12 @@
+﻿mod main
+import abc
+
+//var ss = (x,y) => {
+//	return x + y
+//}
+
+var pp = fnc(x, y, z) :int { 
+	return x + y * z
+}
+
+let res = pp()

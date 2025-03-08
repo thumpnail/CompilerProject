@@ -1,6 +1,4 @@
-﻿using NanoScript.Helper;
-
-namespace NanoScript {
+﻿namespace NanoScript {
 	// Mid Tier Change Comment Yes
     public static class Program {
         
@@ -11,7 +9,7 @@ namespace NanoScript {
 	        //    "let somenum = 12.21" + Environment.NewLine
 	        //File.ReadAllText("./../../../test.nano")
 	        var ns = new NanoScript();
-	        ns.RunFile(@"D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\expressions.nano");
+	        ns.RunFile(@"D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\fnc_expression.nano");
 	        //ns.RunFile(@"C:\Users\fenex\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\main.nano");
         }
     }

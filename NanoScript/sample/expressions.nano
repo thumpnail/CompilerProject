@@ -1,7 +1,7 @@
 ﻿mod main
 // import "../../../sample/mymodule.nano"
 
-var a = 5
+pub var a = 5
 var b = "hello"
 var c = true
 //var d = &x//no references //TODO
@@ -41,9 +41,13 @@ var hh = i--
 //var ll = l is int
 //var mm = (a, b)
 var nn = [a, b, c]
-var oo = myArray {a, b, c}
-//var pp = fnc(x, y) int { return x + y }
+//var oo = myArray {a, b, c}
+var fd = print("hello world")
+// Should Work Now
+var pp = fnc(x, y) : int { return x + y }
+//todo
 var qq = type(a)
+var qr = assert(a)
 var rr = size(myArray)
 var ss = str(e)
 

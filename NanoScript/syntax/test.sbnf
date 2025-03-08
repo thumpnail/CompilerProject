@@ -1,0 +1,69 @@
+﻿useDecl := 'use' { paramList } block;
+
+funcDecl := 'fnc' Name '(' { paramList } ')' { ':' type } { block };
+
+functionCall := Name '(' {argList} ')';
+
+loop := 'loop' { '(' expr ')' } block 'end';
+
+conditional := 'if' '(' expr ')' block {'elseif' '(' expr ')' block} {'else' block};
+
+assignment := Name ':=' expr;
+
+block := '{' {stat} '}';
+expBlock := '{' exp '}'
+
+paramList := Name ':' type {',' Name ':' type};
+
+argList := expr (',' expr);
+
+expr := expr ( '||' expr )
+    | expr ( '&&' expr )
+    | {'!'} expr
+    | expr ( ('<'|'<='|'>'|'>='|'=='|'!='|'?') expr )
+    | expr ('+'|'-' expr)
+    | expr ('*'|'/'|'%' expr)
+    | '-' expr
+    | '(' expr ')'
+    | Number
+    | String
+    | functionCall
+    | Name;
+
+type := 'number'
+    | 'string'
+    | 'bool'
+    | 'void'
+    | 'any'
+    | Name;
+
+Number := '[0-9]*';
+String := '"' '[.*]?' '"';
+Name := '[A-Z_a-z]' { '[0-9A-Z_a-z]' };
+
+#Test backup
+
+start := { stat };
+stat := data_decl
+    | assign
+    | decl;
+data_decl := 'data' { expr_list } '{' decl '}';
+assign := identifier [ ':' type ] ':=' expr;
+decl := identifier [ ':' type ];
+expr := expr | expr '+' expr | expr '*' expr | expr '++' | expr '--' | number;
+expr_list := expr { ',' expr };
+identifier := letter { letter | digit };
+number := ['-'] { digit };
+digit := '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+letter := 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | '_' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z';
+
+###
+
+literal_test := 'a';
+rule_test := literal_test;
+alt_test := 'a' | 'b';
+group_test := 'a' ( 'b' );
+group_alt_test := 'a' | ('b' | 'c');
+group_alt_test_2 := 'a' | (test_rule | 'c');
+repeat_test := 'a' { 'a' test };
+opt_test := 'a' [ ',' 'b'];

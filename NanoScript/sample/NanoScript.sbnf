@@ -1,0 +1,21 @@
+﻿Program      = { Statement } ;
+
+Statement    = (VarDecl | FunctionDecl | IfStatement | WhileLoop | ReturnStmt | ExpressionStmt) ;
+
+VarDecl      = "let" <IDENTIFIER> [ "=" Expression ] ";" ;
+FunctionDecl = "fn" <IDENTIFIER> "(" [ ParamList ] ")" "{" { Statement } "}" ;
+
+ParamList    = <IDENTIFIER> { "," <IDENTIFIER> } ;
+
+IfStatement  = "if" "(" Expression ")" "{" { Statement } "}" [ "else" "{" { Statement } "}" ] ;
+WhileLoop    = "while" "(" Expression ")" "{" { Statement } "}" ;
+ReturnStmt   = "return" [ Expression ] ";" ;
+
+ExpressionStmt = Expression ";" ;
+Expression     = Term { ("+" | "-") Term } ;
+Term          = Factor { ("*" | "/") Factor } ;
+Factor        = (<NUMBER> | <IDENTIFIER> | "(" Expression ")") ;
+
+!IDENTIFIER  = /[a-zA-Z_][a-zA-Z0-9_]*/ ;
+!NUMBER      = /[0-9]+(\.[0-9]+)?/ ;
+!STRING      = /"[^"]*"/ ;

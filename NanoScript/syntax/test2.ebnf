@@ -1,0 +1,59 @@
+﻿program := { stat };
+
+stat := assignment
+    | funcDecl
+    | functionCall
+    | loop
+    | conditional
+    | dataDecl
+    | useDecl
+	| 'break'
+	| 'continue'
+    | ';';
+
+dataDecl := 'data' Name {':' type} block;
+
+useDecl := 'use' {paramList} block;
+
+funcDecl := 'fnc' Name '(' {paramList} ')' {':' type} {block};
+
+functionCall := Name '(' {argList} ')';
+
+loop := 'loop' { '(' expr ')' } block 'end';
+
+conditional := 'if' '(' expr ')' block {'elseif' '(' expr ')' block} {'else' block};
+
+assignment := Name ':=' expr;
+
+block := '{' { stat } '}';
+
+paramList := Name ':' type {',' Name ':' type};
+
+argList := expr (',' expr);
+
+expr := expr ( '||' expr )
+    | expr ( '&&' expr )
+    | ['!'] expr
+    | expr ( ('<'|'<='|'>'|'>='|'=='|'!='|'?') expr )
+    | expr ('+'|'-' expr)
+    | expr ('*'|'/'|'%' expr)
+    | '-' expr
+    | '(' expr ')'
+    | number
+    | String
+    | functionCall
+    | Name;
+
+type := 'number'
+    | 'string'
+    | 'bool'
+    | 'void'
+    | 'any'
+    | Name;
+
+number := [ '-' ] digit { digit } [ '.' { digit } ];
+digit := '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+String := '"' * '"';
+Name := letter { '_' | letter | digit };
+#char := ( 65 .. 90 ) | ( 97 .. 122 ) | ( 95 );
+letter := 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z';

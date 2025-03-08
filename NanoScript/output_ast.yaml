@@ -1,0 +1,107 @@
+moduleStatements:
+- moduleName:
+    identifier: main
+    identifiers: []
+    isExtension: false
+    lastIdentifier: ''
+    isSelf: false
+  importStatements:
+  - Identifier:
+      identifier: abc
+      identifiers: []
+      isExtension: false
+      lastIdentifier: ''
+      isSelf: false
+    importString: ''
+    isAs: false
+    isFrom: true
+  isSubModule: false
+  statements:
+  - isPublic: false
+    prefix: var
+    isSelf: false
+    Identifier:
+      identifier: pp
+      identifiers: []
+      isExtension: false
+      lastIdentifier: ''
+      isSelf: false
+    typeDeclarationStatement: 
+    isAssign: true
+    exp:
+      parameters:
+      - identifier:
+          identifier: x
+          identifiers: []
+          isExtension: false
+          lastIdentifier: ''
+          isSelf: false
+        typeDeclarationStatement: 
+      - identifier:
+          identifier: y
+          identifiers: []
+          isExtension: false
+          lastIdentifier: ''
+          isSelf: false
+        typeDeclarationStatement: 
+      - identifier:
+          identifier: z
+          identifiers: []
+          isExtension: false
+          lastIdentifier: ''
+          isSelf: false
+        typeDeclarationStatement: 
+      typeDeclarationStatement:
+        identifier:
+          identifier: int
+          identifiers: []
+          isExtension: false
+          lastIdentifier: ''
+          isSelf: false
+        typeDeclarationType: value
+        exp: 
+      statements:
+      - exp:
+          left:
+            identifier: x
+            identifiers: []
+            isExtension: false
+            lastIdentifier: ''
+            isSelf: false
+          right:
+            left:
+              identifier: y
+              identifiers: []
+              isExtension: false
+              lastIdentifier: ''
+              isSelf: false
+            right:
+              identifier: z
+              identifiers: []
+              isExtension: false
+              lastIdentifier: ''
+              isSelf: false
+            operatorType: mul
+            Precedence: 3
+          operatorType: add
+          Precedence: 2
+  - isPublic: false
+    prefix: let
+    isSelf: false
+    Identifier:
+      identifier: res
+      identifiers: []
+      isExtension: false
+      lastIdentifier: ''
+      isSelf: false
+    typeDeclarationStatement: 
+    isAssign: true
+    exp:
+      identifier:
+        identifier: pp
+        identifiers: []
+        isExtension: false
+        lastIdentifier: ''
+        isSelf: false
+      parameters:
+        expressions: []

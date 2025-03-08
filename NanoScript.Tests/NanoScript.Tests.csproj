@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,6 +23,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\NanoScript\NanoScript.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="ParserTests\ParserTests.VariableDecl.cs">
+        <DependentUpon>ParserTests.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
