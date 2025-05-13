@@ -1,3 +1,8 @@
 ﻿*.dll
 *.exe
 **\*.dll
+/.idea
+/.vscode
+/.vs
+/.xmake
+/.qodo
