@@ -1,4 +1,6 @@
-﻿using NanoScript.Helper;
+﻿using BetterConsoleTables;
+
+using NanoScript.Helper;
 using NanoScript.Parser;
 using Newtonsoft.Json;
 using NanoScript.Lexer;
@@ -21,7 +23,13 @@ public class NanoScript {
 	public void RunString(string input) {
 		Lexer<Token> lexer = CreateLexer();
 		LexerResult<Token> lexerResult = lexer.Lex(input);
+		LexerResultToTable(lexerResult);
 		Compile_CS(lexerResult);
+	}
+	private void LexerResultToTable(LexerResult<Token> lexerResult) {
+		var table = new Table("Token","Value","Is Skipable");
+		lexerResult.result.ForEach(element => { table.AddRow(element.token,element.Value,element.isSkipable); });
+		Console.WriteLine(table.ToString());
 	}
 	public void RunDictionary(string path) {
 		Lexer<Token> lexer = CreateLexer();

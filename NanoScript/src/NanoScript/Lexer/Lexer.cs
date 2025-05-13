@@ -25,6 +25,9 @@ public struct TokenElement<T> : IEquatable<TokenElement<T>> where T : Enum {
     public override int GetHashCode() {
 	    return HashCode.Combine(token, Value, prio, index, length);
     }
+    public override string ToString() {
+	    return $"{token}|{Value}|{isSkipable}";
+    }
 }
 
 //Contains token and string/regex for that token
@@ -118,6 +121,12 @@ public class Lexer<T> where T : Enum {
             else
                 return 0;
         });
+        // =
+        // !
+        
+        // =
+        // !
+        // =!
         //Include priority
         _Result = _Result
             .GroupBy(o => o.index)

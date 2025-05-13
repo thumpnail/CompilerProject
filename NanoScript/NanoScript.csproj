@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="BetterConsoleTables" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
         <PackageReference Include="Newtonsoft.Json"/>
@@ -24,6 +25,10 @@
       <Compile Update="src\NanoScript\Parser\Parser.Statement.cs">
         <DependentUpon>Parser.cs</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus\Parseus.csproj" />
     </ItemGroup>
 
 </Project>

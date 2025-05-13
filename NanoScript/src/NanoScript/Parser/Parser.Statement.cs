@@ -7,6 +7,7 @@ using NanoScript.Lexer;
 namespace NanoScript.Parser;
 
 public partial class Parser {
+	// module_statement: 'mod' identifier {import_statement} ['{' {statement} '}']
 	private ModuleStatement ParseModuleStatement() {
 		ctx.CreateFrame();
 		var res = new ModuleStatement();

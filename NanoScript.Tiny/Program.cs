@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-using Parseus.ParserV3;
+using Parseus.Parser.BasicParser.SBNF;
 namespace TinyScript;
 
 class Program {

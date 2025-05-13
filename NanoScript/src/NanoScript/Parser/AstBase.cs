@@ -14,7 +14,6 @@ public interface INode {
     public string ToLua() {
 	    return "";
     }
-    
 }
 
 public interface IStatement : INode {}

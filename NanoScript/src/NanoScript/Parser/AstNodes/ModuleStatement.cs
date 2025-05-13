@@ -7,6 +7,7 @@ public class ModuleStatement : IStatement {
 	public List<ImportStatement> importStatements = new();
 	public bool isSubModule;
 	public List<IStatement> statements = new();
+	public bool hasBody = false;
 	public  string GenCS() {
 		var res = new StringBuilder();
 		foreach (var importStatement in importStatements) {

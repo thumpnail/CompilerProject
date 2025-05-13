@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-using Parseus.ParserV3;
+using Parseus.Parser.BasicParser.SBNF;
 namespace TinyScript;
 
 public class CodeGenerator : SBNFParserGenerator {
