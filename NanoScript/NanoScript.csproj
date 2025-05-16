@@ -31,4 +31,8 @@
       <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus\Parseus.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="src\NanoScript\ParserV2\" />
+    </ItemGroup>
+
 </Project>
