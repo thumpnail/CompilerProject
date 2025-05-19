@@ -1,11 +1,7 @@
 using NanoScript.Parser;
-
 using Parseus.Parser.Implicit;
-
 using NanoScript.Parser.AstNodes;
-
 using static NanoScript.Token;
-
 using Parseus.Parser.ObjectBased;
 
 public class NanoScriptParser : BaseParser {

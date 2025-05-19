@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus.csproj" />
       <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus\Parseus.csproj" />
     </ItemGroup>
 

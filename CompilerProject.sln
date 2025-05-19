@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoScript", "NanoScript\NanoScript.csproj", "{FC0F60FF-A95A-440B-8EDE-199CBC15590D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parseus", "..\..\GitHub\Parseus\Parseus\Parseus.csproj", "{E07E44A3-A9EB-443E-BB60-52BFFE5E4B6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parseus", "..\..\GitHub\Parseus\Parseus.csproj", "{E07E44A3-A9EB-443E-BB60-52BFFE5E4B6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoScript.Tiny", "NanoScript.Tiny\NanoScript.Tiny.csproj", "{201A2231-7BA3-4287-B8E3-D212CDB8B5A7}"
 EndProject

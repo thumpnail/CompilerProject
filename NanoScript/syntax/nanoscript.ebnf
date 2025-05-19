@@ -1,0 +1,125 @@
+program               := { module_statement };
+
+module_statement      := 'mod' identifier { import_statement } [ '{' { statement } '}' ];
+
+import_statement      := 'import' string [ 'as' identifier ]
+                        | 'import' identifier [ 'from' string ];
+
+statement             := variable_declaration
+                        | class_declaration
+                        | struct_declaration
+                        | enum_declaration
+                        | interface_declaration
+                        | union_declaration
+                        | function_declaration
+                        | assignment_statement
+                        | function_call_statement
+                        | return_statement
+                        | conditional_statement
+                        | switch_statement
+                        | break_statement
+                        | continue_statement
+                        | assertion_statement
+                        | error_statement ;
+
+variable_declaration  := [ 'pub' ] ( 'let' | 'var' | 'const' ) [ '.' ] identifier [ type_decl ] [ '=' expression ];
+
+class_declaration     := [ 'pub' ] 'class' identifier '{' { statement } '}';
+
+struct_declaration    := [ 'pub' ] 'struct' identifier [ type_decl ] '{' { statement } '}';
+
+enum_declaration      := [ 'pub' ] 'enum' identifier [ ':' type_decl ] '{' enum_value { ',' enum_value } '}';
+
+enum_value            := identifier [ ':' expression ];
+
+interface_declaration := [ 'pub' ] 'interface' identifier '{' { statement } '}' ;  (* implied from pattern *)
+
+union_declaration     := [ 'pub' ] 'union' identifier '{' { statement } '}' ;      (* implied from pattern *)
+
+function_declaration  := [ 'export' ] [ 'pub' ] 'fnc' identifier '(' [ parameter_list ] ')' [ ':' type_decl ] '{' { statement } '}' ;
+
+parameter_list        := parameter { ',' parameter } ;
+parameter             := identifier [ type_decl ] ;
+
+assignment_statement  := [ '.' ] identifier [ type_decl ] assignment_operator expression ;
+assignment_operator   := '=' | '<<' | '>>' | '+=' | '-=' | '*=' | '/=' ;
+
+function_call_statement := identifier '(' [ expression_list ] ')' ;
+
+expression_list       := expression { ',' expression } ;
+
+return_statement      := 'return' [ expression ] ;
+
+conditional_statement := 'if' expression '{' { statement } '}'
+                          { 'else' 'if' expression '{' { statement } '}' }
+                          [ 'else' '{' { statement } '}' ] ;
+
+switch_statement      := 'switch' expression '{'
+                          { identifier ':' { statement } [ 'break' ] }
+                          [ 'default' ':' { statement } 'break' ]
+                          '}' ;
+
+type_decl             := ':' identifier ;
+
+expression            := ... ;  (* assumed to be implemented elsewhere *)
+
+identifier            := ... ;  (* terminal for identifiers *)
+
+string                := ... ;  (* terminal for string literals *)
+
+
+
+fullExpression := expression
+
+expression := 
+      term { ("+" | "-" | "&&" | "||") term }
+    | "[" list "]"
+    | identifier "{" list "}"
+    | "fnc" "(" parameterList ")" typeDeclaration "{" statements "}"
+
+term := factor { ("*" | "/" | "%" | "==" | "!=" | "" | "" | "=" | "=") factor }
+
+factor := unary { "**" unary }
+
+unary := [ "++" | "--" | "!" ] base [ "++" | "--" ]
+
+base := 
+      literal
+    | identifier
+    | arrayIndexing
+    | functionCall
+    | typeConversion
+    | "(" expression ")"
+    | arrayCreation
+
+literal := number | string | boolean | identifier | functionCall | arrayIndexing
+
+arrayIndexing := identifier "[" expression "]"
+
+functionCall := identifier "(" list ")"
+
+typeConversion := "(" identifier ")" expression
+
+arrayCreation := "[" [ expression { "," expression } ] "]"
+
+list := 
+      expression { "," expression }
+    | literal ":" expression { "," literal ":" expression }
+
+parameterList := [ identifier { "," identifier } ]
+
+typeDeclaration := ":" identifier
+
+statements := { statement }
+
+statement := ...   (* Statement rules assumed to be defined elsewhere *)
+
+number := /0x[0-9A-Fa-f]+/ | /0b[01]+/ | /\d+(\.\d+)?/
+
+string := "\"" { character } "\""
+
+boolean := "true" | "false"
+
+identifier := word [ "." word ]* [ ":" word ]
+
+word := /[a-zA-Z_][a-zA-Z0-9_]*/

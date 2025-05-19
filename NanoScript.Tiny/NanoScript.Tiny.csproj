@@ -10,6 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus.csproj" />
       <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus\Parseus.csproj" />
       <ProjectReference Include="..\NanoScript\NanoScript.csproj" />
     </ItemGroup>

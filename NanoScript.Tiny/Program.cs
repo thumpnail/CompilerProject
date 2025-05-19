@@ -12,9 +12,9 @@ class Program {
 		var parser = new SbnfParser(file);
 		var ast = parser.Parse();
 
-		var code = new CodeGenerator(ast).Build();
+		//var code = new CodeGenerator(ast).Build();
 		
-		File.WriteAllText("D:\\fried\\OneDrive\\Dokumente\\Code\\Rider-Projects\\CompilerProject\\NanoScript\\sample\\NanoScript.csx", code);
+		File.WriteAllText("D:\\fried\\OneDrive\\Dokumente\\Code\\Rider-Projects\\CompilerProject\\NanoScript\\sample\\NanoScript.csx","");
 		
 		// print ast as json
 		Console.WriteLine(JsonConvert.SerializeObject(ast, Formatting.Indented));
