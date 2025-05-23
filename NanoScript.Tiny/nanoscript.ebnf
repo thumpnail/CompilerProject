@@ -1,0 +1,43 @@
+script         := { statement } ;
+
+statement      := definition | function | control_structure | expression | assignment | include | struct | package | error_handling | comment ;
+
+definition     := "def" identifier [ value ] ;
+function       := "fnc" identifier [ parameter_list ] block "ret" [ return_values ] ;
+control_structure := if_statement | while_loop | for_loop ;
+expression     := operation | function_call ;
+assignment     := "let" identifier [ value ] ;
+include        := "inc" file_path [ identifier ] ;
+struct         := "tbl" identifier [ parameter_list ] block ;
+package        := "pck" identifier block ;
+error_handling := "err" error_code [ message ] ;
+comment        := "#" { any_character } ;
+
+if_statement   := "iff" condition block [ "elf" condition block ] [ "els" block ] "ext" ;
+while_loop     := "whl" condition block "ext" ;
+for_loop       := "for" identifier value condition value [ value ] block "ext" ;
+
+block          := ":" { statement } "ext" ;
+parameter_list := identifier { identifier } ;
+return_values  := value { value } ;
+condition      := value logical_operator value ;
+operation      := value operator value ;
+function_call  := "cll" identifier { value } ;
+value          := identifier | number | string | character | array | struct_instance ;
+array          := identifier "[" [ value { "," value } ] "]" ;
+struct_instance := identifier { value } ;
+
+file_path      := string ;
+error_code     := number ;
+message        := string ;
+
+identifier     := letter { letter | digit | "_" } ;
+number         := digit { digit } ;
+string         := '"' { any_character } '"' ;
+character      := "'" any_character "'" ;
+logical_operator := "EQL" | "LES" | "GRT" | "TRU" | "FLS" ;
+operator       := "+" | "-" | "*" | "/" | "%" ;
+
+letter         := "a"..."z" | "A"..."Z" ;
+digit          := "0"..."9" ;
+any_character  := ? any valid character ? ;
