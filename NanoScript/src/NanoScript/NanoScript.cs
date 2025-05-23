@@ -1,5 +1,10 @@
 ﻿using BetterConsoleTables;
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.Options;
+
 using NanoScript.Helper;
 using NanoScript.Parser;
 using Newtonsoft.Json;
@@ -67,22 +72,22 @@ public class NanoScript {
 		FormatGeneratedFile();
 	}
 	private void FormatGeneratedFile() {
-		////format the generated file
-		//string code2;
-		//using (StreamReader sr = new StreamReader($"{pathref}output_bflat.csx")) {
-		//	code2 = sr.ReadToEnd();
-		//}
-		//SyntaxTree tree = CSharpSyntaxTree.ParseText(code2);
-		//SyntaxNode root = tree.GetRoot();
-		//AdhocWorkspace workspace = new AdhocWorkspace();
-		//OptionSet options = workspace.Options;
-		//SyntaxNode formattedRoot = Formatter.Format(root, workspace, options);
-		//using (StreamWriter sw = new StreamWriter($"{pathref}output_bflat.csx", Encoding.Default, new FileStreamOptions() {
-		//	       Access = FileAccess.Write,
-		//	       Mode = FileMode.Create
-		//       })) {
-		//	sw.WriteLine(formattedRoot.ToFullString());
-		//}
+		//format the generated file
+		string code2;
+		using (StreamReader sr = new StreamReader($"{pathref}output_bflat.csx")) {
+			code2 = sr.ReadToEnd();
+		}
+		SyntaxTree tree = CSharpSyntaxTree.ParseText(code2);
+		SyntaxNode root = tree.GetRoot();
+		AdhocWorkspace workspace = new AdhocWorkspace();
+		OptionSet options = workspace.Options;
+		SyntaxNode formattedRoot = Formatter.Format(root, workspace, options);
+		using (StreamWriter sw = new StreamWriter($"{pathref}output_bflat.csx", Encoding.Default, new FileStreamOptions() {
+			       Access = FileAccess.Write,
+			       Mode = FileMode.Create
+		       })) {
+			sw.WriteLine(formattedRoot.ToFullString());
+		}
 	}
 	public static Lexer<Token> CreateLexer() {
 		const string ANY = "[.]";

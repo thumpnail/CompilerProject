@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net9.0</TargetFramework>
@@ -29,7 +28,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus.csproj" />
-      <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus\Parseus.csproj" />
     </ItemGroup>
 
     <ItemGroup>

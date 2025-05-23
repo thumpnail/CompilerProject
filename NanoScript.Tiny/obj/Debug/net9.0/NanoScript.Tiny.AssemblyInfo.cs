@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NanoScript.Tiny")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6205bf09f67f5cb501b26159be0b083b4a3cf88e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14411ff43760bc721e1d1f8a4c73cc7b891a4975")]
 [assembly: System.Reflection.AssemblyProductAttribute("NanoScript.Tiny")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NanoScript.Tiny")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
