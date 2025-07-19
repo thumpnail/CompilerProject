@@ -8,61 +8,50 @@ using static NanoScript.Token;
 
 using Parseus.Parser.ObjectBased;
 
+using YamlDotNet.Core.Tokens;
+
 public class NanoScriptParser : BaseParser {
-	public record NanoProgram {}
-	public record NanoStatement {}
+	public record NanoProgram {
+		public List<NanoInstruction> Instructions = new();
+	}
+
+	public record BaseInstruction;
+
+	public record NanoInstruction {
+		public BaseInstruction BaseInstruction;
+	}
+	public record NanoAssignInstruction: BaseInstruction {
+		public string Identifier;
+		public List<NanoValue> Values;
+	}
+
+	public record BaseValue;
+	public record NanoValue {
+		public BaseValue Value;
+	}
 
 	public override NanoProgram Parse(string src) {
 		return new();
 	}
 	// program         = { statement } ;
-	private static Parser<NanoProgram> nanoProgramParser = new((c, self) => {
-
+	private static Parser<NanoProgram> NanoProgramParser = new((c, self) => {
+		Repeat(c, c => {
+			Node(c, NanoInstructionParser, v => self.Instructions.Add(v));
+		});
 	});
-	// program         = { statement } ;
-
-	// statement       = variable_declaration
-	//                 | constant_declaration
-	//                 | operation
-	//                 | function_definition
-	//                 | function_call
-	//                 | jump_statement
-	//                 | conditional_statement
-	//                 | loop_statement
-	//                 | struct_definition
-	//                 | package_definition
-	//                 | include_statement
-	//                 | destruct_statement
-	//                 | error_statement ;
-	// variable_declaration = "let" identifier value { value } ;
-	// constant_declaration = "cst" identifier value { value } ;
-	// value           = identifier
-	//                 | number
-	//                 | string
-	//                 | character
-	//                 | array_definition ;
-	// array_definition = "[" value { "," value } "]" ;
-	// operation       = identifier identifier operator identifier ;
-	// operator        = "+" | "-" | "*" | "/" ;
-	// function_definition = "fnc" identifier [ parameter_list ] block "ret" [ return_value { return_value } ] ;
-	// parameter_list  = identifier { identifier } ;
-	// return_value    = identifier | value ;
-	// function_call   = "cll" identifier { identifier | value } ;
-	// jump_statement  = "jmp" identifier | ":" identifier ;
-	// conditional_statement = "iff" condition block [ "elf" condition block ] [ "els" block ] "ext" ;
-	// condition       = identifier logical_operator identifier ;
-	// logical_operator = "EQL" | "LES" | "GRT" | "TRU" | "FLS" ;
-	// loop_statement  = "whl" condition block "ext"
-	//                 | "for" identifier value condition value value block "ext"
-	//                 | "for" identifier identifier block "ext" ;
-	// struct_definition = "tbl" identifier [ parameter_list ] block "ext" ;
-	// package_definition = "pck" identifier block "ext" ;
-	// include_statement = "inc" identifier [ identifier ] ;
-	// destruct_statement = "~" identifier ;
-	// error_statement = "err" number [ string ] ;
-	// block           = { statement } ;
-	// identifier      = ? any valid identifier ? ;
-	// number          = ? any valid number ? ;
-	// string          = '"' ? any valid string content ? '"' ;
-	// character       = "'" ? any valid character ? "'" ;
+	private static Parser<NanoInstruction> NanoInstructionParser = new((c, self) => {
+		Alt(c, 
+			c => Node(c, NanoAssignInstructionParser, v => self.BaseInstruction = v)
+		);
+	});
+	private static Parser<NanoAssignInstruction> NanoAssignInstructionParser = new((c, self) => {
+		Literal(c, "let", out _);
+		Token(c, "identifier", out self.Identifier);
+		Repeat(c, c => Node(c, NanoValueParser, v => self.Values.Add(v)));
+	});
+	private static Parser<NanoValue> NanoValueParser = new((c, self) => {
+		Alt(c, c => {
+			
+		});
+	});
 }

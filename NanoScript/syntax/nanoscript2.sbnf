@@ -1,4 +1,4 @@
-exp
+expression :=
    // 'match' '(' exp ')' '{' exp '=>' exp ('|' exp '=>' exp)* '}'
    //Literal Expressions: Constants representing specific values (e.g., numbers, strings, boolean values).
    : identifier

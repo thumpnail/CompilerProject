@@ -1,31 +1,41 @@
 script         := { statement } ;
 
-statement      := definition | function | control_structure | expression | assignment | include | struct | package | error_handling | comment ;
+statement      := definition 
+			    | function 
+			    | control_structure 
+			    | expression 
+			    | assignment 
+			    | include 
+			    | struct 
+			    | package 
+			    | error_handling 
+			    | comment ;
 
 definition     := "def" identifier [ value ] ;
-function       := "fnc" identifier [ parameter_list ] block "ret" [ return_values ] ;
+function       := "fnc" identifier [ parameter_list ] ":" { statement } "ret" [ value_list ] ;
 control_structure := if_statement | while_loop | for_loop ;
-expression     := operation | function_call ;
-assignment     := "let" identifier [ value ] ;
+if_statement   := "iff" condition { statement } [ "elf" condition { statement } ] [ "els" { statement } ] "ext" ;
+while_loop     := "whl" condition { statement } "ext" ;
+for_loop       := "for" identifier value condition value [ value ] { statement } "ext" ;
+assignment     := "let" identifier [ value_list ] ;
 include        := "inc" file_path [ identifier ] ;
-struct         := "tbl" identifier [ parameter_list ] block ;
-package        := "pck" identifier block ;
+struct         := "tbl" identifier [ parameter_list ] { statement } ;
+package        := "pck" identifier { statement } ;
 error_handling := "err" error_code [ message ] ;
-comment        := "#" { any_character } ;
+function_call  := "cll" identifier { value } ;
 
-if_statement   := "iff" condition block [ "elf" condition block ] [ "els" block ] "ext" ;
-while_loop     := "whl" condition block "ext" ;
-for_loop       := "for" identifier value condition value [ value ] block "ext" ;
+expression     := operation | function_call ;
 
-block          := ":" { statement } "ext" ;
 parameter_list := identifier { identifier } ;
-return_values  := value { value } ;
+value_list     := value { value } ;
 condition      := value logical_operator value ;
 operation      := value operator value ;
-function_call  := "cll" identifier { value } ;
 value          := identifier | number | string | character | array | struct_instance ;
 array          := identifier "[" [ value { "," value } ] "]" ;
 struct_instance := identifier { value } ;
+
+comment        := "#" { any_character } ;
+
 
 file_path      := string ;
 error_code     := number ;
@@ -35,6 +45,8 @@ identifier     := letter { letter | digit | "_" } ;
 number         := digit { digit } ;
 string         := '"' { any_character } '"' ;
 character      := "'" any_character "'" ;
+
+
 logical_operator := "EQL" | "LES" | "GRT" | "TRU" | "FLS" ;
 operator       := "+" | "-" | "*" | "/" | "%" ;
 
