@@ -61,14 +61,6 @@ switch_statement      := 'switch' expression '{'
 
 type_decl             := ':' identifier ;
 
-expression            := ... ;  (* assumed to be implemented elsewhere *)
-
-identifier            := ... ;  (* terminal for identifiers *)
-
-string                := ... ;  (* terminal for string literals *)
-
-
-
 fullExpression := expression
 
 expression := 
@@ -111,8 +103,6 @@ parameterList := [ identifier { "," identifier } ]
 typeDeclaration := ":" identifier
 
 statements := { statement }
-
-statement := ...   (* Statement rules assumed to be defined elsewhere *)
 
 number := /0x[0-9A-Fa-f]+/ | /0b[01]+/ | /\d+(\.\d+)?/
 

@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\NanoScript\ParserV2\" />
+      <Folder Include="src\NanoScript\ParserV2\Ast\" />
     </ItemGroup>
 
 </Project>
