@@ -1,0 +1,171 @@
+commit aca699f4ea68799bbba7f85eda70c83cc4c6d785
+Author: Fenex <31255152+thumpnail@users.noreply.github.com>
+Date:   Sat Jul 19 13:44:44 2025 +0200
+
+    Refactor parser structure and clean up EBNF syntax
+    
+    Refactored ParserV2 to introduce interfaces and classes for statements and expressions, and added a stub for statement parsing. Removed commented-out grammar and implementation notes from the original parser. Cleaned up the EBNF syntax file by removing placeholder rules and comments for expression, identifier, and statement, consolidating grammar definitions.
+
+diff --git a/NanoScript/NanoScript.csproj b/NanoScript/NanoScript.csproj
+index 37fae56..f869a65 100644
+--- a/NanoScript/NanoScript.csproj
++++ b/NanoScript/NanoScript.csproj
+@@ -31,7 +31,7 @@
+     </ItemGroup>
+ 
+     <ItemGroup>
+-      <Folder Include="src\NanoScript\ParserV2\" />
++      <Folder Include="src\NanoScript\ParserV2\Ast\" />
+     </ItemGroup>
+ 
+ </Project>
+diff --git a/NanoScript/src/NanoScript/Parser/Parser.cs b/NanoScript/src/NanoScript/Parser/Parser.cs
+index 2a28273..4c91e0a 100644
+--- a/NanoScript/src/NanoScript/Parser/Parser.cs
++++ b/NanoScript/src/NanoScript/Parser/Parser.cs
+@@ -14,86 +14,4 @@ public partial class Parser {
+         res.moduleStatements = ParseModuleStatements();
+         return res;
+     }
+-// module_statement: 'mod' identifier imoport_statements* ( '{' statement* '}' | statement* );
+-// imoport_statements: 'import' string ('as' identifier) | 'import' identifier 'from' string;
+-//
+-// statement
+-
+-
+-//    // Variable Declaration and Assignment: Statements to declare and assign values to variables.
+-//    : 'pub' ('let' | 'var' | 'const') '.' identifier type_decl? ('=' exp)
+-// type_decl: ':' ('[' (identifier|number) ']'|'{}') identifier;
+-// exp
+-    
+-//    //Literal Expressions: Constants representing specific values (e.g., numbers, strings, boolean values).
+-//    : identifier
+-//    | number
+-//    | string
+-//    | ('true'|'false')
+-//    //Variable References: Expressions that refer to variables or memory locations.
+-//    | '&'identifier
+-//    //Arithmetic Expressions: Expressions that perform mathematical operations (e.g., addition, subtraction).
+-//    | exp '+' exp
+-//    | exp '-' exp
+-//    | exp '/' exp
+-//    | exp '*' exp
+-//    //Grouping Expression:
+-//    | '(' exp ')'
+-//    //Logical Expressions: Expressions that involve logical operations (e.g., AND, OR).
+-//    | exp '||' exp
+-//    | exp '&&' exp
+-//    //Comparison Expressions: Expressions that compare values (e.g., greater than, equal to).
+-//    | exp '==' exp
+-//    | exp '!=' exp
+-//    | exp '<=' exp
+-//    | exp '<' exp
+-//    | exp '>=' exp
+-//    | exp '>' exp
+-//    //Function or Method Calls: Expressions that invoke functions or methods.
+-//    | identifier '(' (exp (',' exp)*) ')'
+-//    //Conditional Expressions: Expressions that result in different values based on conditions (e.g., ternary operator).
+-//    //Array and Indexing Expressions: Expressions to access elements in arrays or collections.
+-//    | identifier '[' (exp | exp '..' exp) ']'
+-//    //Member Access Expressions: Expressions to access properties or methods of objects or structures.
+-//    | '.' identifier ('.' identifier)* (':' identifier)
+-//    //Property Access Expressions: Expressions used to access properties of objects or structures.
+-//    //Assignment Expressions: Expressions that assign values to variables or locations.
+-//    //Type Conversion Expressions: Expressions that convert values between different data types.
+-//    | '(' identifier ')' exp
+-//    //Bitwise Expressions: Expressions that manipulate individual bits within values.
+-//    | exp '&' exp
+-//    | exp '|' exp
+-//    | exp '^' exp
+-//    | exp '<<' exp
+-//    | exp '>>' exp
+-//    | exp '~' exp
+-//    //Unary Expressions: Expressions involving a single operand (e.g., negation, logical NOT).
+-//    | '!' exp
+-//    | '-' exp
+-//    | '++' exp
+-//    | exp '++'
+-//    | '--' exp
+-//    | exp'--'
+-//    //Pointer or Reference Expressions: Expressions that deal with memory addresses (in languages like C and C++).
+-//    | '&' exp
+-//    | '*' exp
+-//    //Lambda or Anonymous Function Expressions: Expressions that define inline functions.
+-//    | '(' exp ')' '=>' '{' statement* '}'
+-//    //Regex or String Matching Expressions: Expressions used for pattern matching in strings.
+-//    //Type Check Expressions: Expressions used to check the type of an object.
+-//    | exp 'is' identifier
+-//    //Tuple Creation Expression:
+-//    | '(' exp (',' exp) ')'
+-//    //Array Creation Expressions: Expressions for creating new arrays or collections.
+-//    | '[' exp (',' exp) ']'
+-//    //Array Creation Expression
+-//    | '{' ( identifier type_decl ('=' exp) )* '}'
+-//    //Function Creation Expression
+-//    | 'fnc' '(' (identifier type_decl (',' identifier type_decl )* ) ')' type_decl '{' statement* '}'
+-//    // internal functions
+-//    | 'type' '(' exp ')'
+-//    | 'size' '(' exp ')'
+-//    | 'str' '(' exp ')'
+-//    ;
+-    //identifier: WORD ('.' WORD)* (':' WORD) ('[' (exp | exp '..' exp) ']')?;
+ }
+\ No newline at end of file
+diff --git a/NanoScript/src/NanoScript/ParserV2/Parser.cs b/NanoScript/src/NanoScript/ParserV2/Parser.cs
+index 36659f0..3ab2bad 100644
+--- a/NanoScript/src/NanoScript/ParserV2/Parser.cs
++++ b/NanoScript/src/NanoScript/ParserV2/Parser.cs
+@@ -1,5 +1,22 @@
++using Parseus.Parser.Implicit;
+ namespace NanoScript.ParserV2;
+ 
+-public class Parser {
+-	
++public partial class Parser : BaseParser {
++	interface IStatement;
++	interface IExpression;
++	class Statement {
++		public IStatement internalStatement;
++	}
++	class Expression {
++		public IExpression internalExpression;
++	}
++	class IfStatement : IStatement {
++		public List<(Expression? condition,Statement block)> conditions = new();
++	}
++	private static Parser<Statement> StatementParser = new((c, self) => {
++		
++	});
++	public override object Parse(string src) {
++		throw new NotImplementedException();
++	}
+ }
+\ No newline at end of file
+diff --git a/NanoScript/syntax/nanoscript.ebnf b/NanoScript/syntax/nanoscript.ebnf
+index 0805845..56bf032 100644
+--- a/NanoScript/syntax/nanoscript.ebnf
++++ b/NanoScript/syntax/nanoscript.ebnf
+@@ -61,14 +61,6 @@ switch_statement      := 'switch' expression '{'
+ 
+ type_decl             := ':' identifier ;
+ 
+-expression            := ... ;  (* assumed to be implemented elsewhere *)
+-
+-identifier            := ... ;  (* terminal for identifiers *)
+-
+-string                := ... ;  (* terminal for string literals *)
+-
+-
+-
+ fullExpression := expression
+ 
+ expression := 
+@@ -112,8 +104,6 @@ typeDeclaration := ":" identifier
+ 
+ statements := { statement }
+ 
+-statement := ...   (* Statement rules assumed to be defined elsewhere *)
+-
+ number := /0x[0-9A-Fa-f]+/ | /0b[01]+/ | /\d+(\.\d+)?/
+ 
+ string := "\"" { character } "\""
