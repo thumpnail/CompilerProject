@@ -1,11 +1,11 @@
 ﻿namespace NanoScript.Parser;
 
-public interface INode {
+public abstract class INode {
 	//public string source { get; set; } = "";
 
-    public string GenCS();
-    public List<int> TranspileToByteCode();
-    public List<string> TranspileToAsm();
+	public string GenCS() { return string.Empty;}
+    public List<int> TranspileToByteCode() { return []; }
+    public List<string> TranspileToAsm() { return []; }
     public string NAME  { get=>this.GetType().Name; }
     
     public int[] Compile() {
@@ -16,6 +16,6 @@ public interface INode {
     }
 }
 
-public interface IStatement : INode {}
+public class IStatement : INode {}
 
-public interface IExpression : INode {}
+public class IExpression : INode {}
