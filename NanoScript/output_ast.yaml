@@ -5,6 +5,7 @@ moduleStatements:
     isExtension: false
     lastIdentifier: ''
     isSelf: false
+    NAME: IdentifierExpression
   importStatements: []
   isSubModule: false
   statements:
@@ -17,12 +18,15 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
       number:
         int_number: &o5 {}
         RAW: 5
+      NAME: NumberExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -32,10 +36,13 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
       str: '"hello"'
+      NAME: StringExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -45,10 +52,13 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
       value: true
+      NAME: BooleanExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -58,6 +68,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -65,12 +76,16 @@ moduleStatements:
         number:
           int_number: &o2 {}
           RAW: 3
+        NAME: NumberExpression
       right:
         number:
           int_number: &o0 {}
           RAW: 2
+        NAME: NumberExpression
       operatorType: add
       Precedence: 2
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -80,6 +95,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -89,14 +105,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: b
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: sub
       Precedence: 2
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -106,6 +126,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -115,12 +136,16 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         number:
           int_number: *o0
           RAW: 2
+        NAME: NumberExpression
       operatorType: div
       Precedence: 3
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -130,6 +155,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -139,12 +165,16 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         number:
           int_number: &o4 {}
           RAW: 4
+        NAME: NumberExpression
       operatorType: mul
       Precedence: 3
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -154,6 +184,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -163,14 +194,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: b
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: add
       Precedence: 2
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -180,6 +215,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -189,14 +225,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: f
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: doubleOr
       Precedence: -2
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -206,6 +246,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -215,14 +256,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: h
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: doubleAnd
       Precedence: -1
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -232,6 +277,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -241,14 +287,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: j
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: equals
       Precedence: 0
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -258,6 +308,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -267,14 +318,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: g
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: notEquals
       Precedence: 0
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -284,6 +339,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -293,14 +349,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: e
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: lessEquals
       Precedence: 0
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -310,6 +370,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -319,14 +380,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: j
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: less
       Precedence: 0
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -336,6 +401,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -345,14 +411,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: l
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: greaterEquals
       Precedence: 0
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -362,6 +432,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -371,14 +442,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: n
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: greater
       Precedence: 0
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -388,6 +463,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -397,6 +473,7 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       parameters:
         expressions:
         - identifier: a
@@ -404,16 +481,22 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
         - identifier: b
           identifiers: []
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
         - identifier: c
           identifiers: []
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
+        NAME: ExpressionList
+      NAME: FunctionCallExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -423,6 +506,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -432,16 +516,20 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       index:
         identifier: i
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       isRange: false
       range: &o6
         Item1: 
         Item2: 
+      NAME: ArrayIndexingExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -451,6 +539,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -460,6 +549,8 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -469,6 +560,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -478,14 +570,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: f
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: and
       Precedence: 1
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -495,6 +591,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -504,14 +601,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: h
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: or
       Precedence: 1
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -521,6 +622,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -530,14 +632,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         identifier: j
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: pow
       Precedence: 4
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -547,6 +653,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -556,12 +663,16 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         number:
           int_number: *o0
           RAW: 2
+        NAME: NumberExpression
       operatorType: shl
       Precedence: 1
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -571,6 +682,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -580,12 +692,16 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         number:
           int_number: &o1 {}
           RAW: 1
+        NAME: NumberExpression
       operatorType: shr
       Precedence: 1
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -595,6 +711,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -605,7 +722,10 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: not
+      NAME: UnaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -615,6 +735,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -625,7 +746,10 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: inc
+      NAME: UnaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -635,6 +759,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -645,7 +770,10 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: inc
+      NAME: UnaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -655,6 +783,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -665,7 +794,10 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: dec
+      NAME: UnaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -675,6 +807,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -685,7 +818,10 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       operatorType: dec
+      NAME: UnaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -695,6 +831,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -704,16 +841,21 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       - identifier: b
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       - identifier: c
         identifiers: []
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
+      NAME: ArrayCreationExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -723,6 +865,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -732,9 +875,14 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       parameters:
         expressions:
         - str: '"hello world"'
+          NAME: StringExpression
+        NAME: ExpressionList
+      NAME: FunctionCallExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -744,6 +892,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -754,14 +903,18 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
         typeDeclarationStatement: 
+        NAME: ParameterDeclaration
       - identifier:
           identifier: y
           identifiers: []
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
         typeDeclarationStatement: 
+        NAME: ParameterDeclaration
       typeDeclarationStatement:
         identifier:
           identifier: int
@@ -769,8 +922,10 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
         typeDeclarationType: value
         exp: 
+        NAME: TypeDeclarationStatement
       statements:
       - exp:
           left:
@@ -779,14 +934,20 @@ moduleStatements:
             isExtension: false
             lastIdentifier: ''
             isSelf: false
+            NAME: IdentifierExpression
           right:
             identifier: y
             identifiers: []
             isExtension: false
             lastIdentifier: ''
             isSelf: false
+            NAME: IdentifierExpression
           operatorType: add
           Precedence: 2
+          NAME: BinaryExpression
+        NAME: ReturnStatement
+      NAME: FunctionDeclarationExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -796,6 +957,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -805,6 +967,7 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       parameters:
         expressions:
         - identifier: a
@@ -812,6 +975,10 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
+        NAME: ExpressionList
+      NAME: FunctionCallExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -821,6 +988,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -830,6 +998,7 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       parameters:
         expressions:
         - identifier: a
@@ -837,6 +1006,10 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
+        NAME: ExpressionList
+      NAME: FunctionCallExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -846,6 +1019,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -855,6 +1029,7 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       parameters:
         expressions:
         - identifier: myArray
@@ -862,6 +1037,10 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
+        NAME: ExpressionList
+      NAME: FunctionCallExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -871,6 +1050,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -880,6 +1060,7 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       parameters:
         expressions:
         - identifier: e
@@ -887,6 +1068,10 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
+        NAME: ExpressionList
+      NAME: FunctionCallExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -896,6 +1081,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -905,12 +1091,18 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       parameters:
         expressions:
         - str: '"Hello World"'
+          NAME: StringExpression
         - number:
             int_number: &o3 {}
             RAW: 15
+          NAME: NumberExpression
+        NAME: ExpressionList
+      NAME: FunctionCallExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -920,6 +1112,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -927,40 +1120,52 @@ moduleStatements:
         number:
           int_number: *o0
           RAW: 2
+        NAME: NumberExpression
       right:
         left:
           number:
             int_number: *o1
             RAW: 1
+          NAME: NumberExpression
         right:
           left:
             number:
               int_number: *o2
               RAW: 3
+            NAME: NumberExpression
           right:
             left:
               number:
                 int_number: *o3
                 RAW: 15
+              NAME: NumberExpression
             right:
               left:
                 number:
                   int_number: *o2
                   RAW: 3
+                NAME: NumberExpression
               right:
                 number:
                   int_number: *o4
                   RAW: 4
+                NAME: NumberExpression
               operatorType: pow
               Precedence: 4
+              NAME: BinaryExpression
             operatorType: div
             Precedence: 3
+            NAME: BinaryExpression
           operatorType: add
           Precedence: 2
+          NAME: BinaryExpression
         operatorType: div
         Precedence: 3
+        NAME: BinaryExpression
       operatorType: mul
       Precedence: 3
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -970,6 +1175,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -979,6 +1185,7 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       right:
         left:
           identifier: b
@@ -986,6 +1193,7 @@ moduleStatements:
           isExtension: false
           lastIdentifier: ''
           isSelf: false
+          NAME: IdentifierExpression
         right:
           left:
             identifier: c
@@ -993,6 +1201,7 @@ moduleStatements:
             isExtension: false
             lastIdentifier: ''
             isSelf: false
+            NAME: IdentifierExpression
           right:
             left:
               identifier: a
@@ -1000,6 +1209,7 @@ moduleStatements:
               isExtension: false
               lastIdentifier: ''
               isSelf: false
+              NAME: IdentifierExpression
             right:
               left:
                 identifier: b
@@ -1007,6 +1217,7 @@ moduleStatements:
                 isExtension: false
                 lastIdentifier: ''
                 isSelf: false
+                NAME: IdentifierExpression
               right:
                 left:
                   identifier: a
@@ -1014,6 +1225,7 @@ moduleStatements:
                   isExtension: false
                   lastIdentifier: ''
                   isSelf: false
+                  NAME: IdentifierExpression
                 right:
                   left:
                     identifier: b
@@ -1021,26 +1233,36 @@ moduleStatements:
                     isExtension: false
                     lastIdentifier: ''
                     isSelf: false
+                    NAME: IdentifierExpression
                   right:
                     identifier: c
                     identifiers: []
                     isExtension: false
                     lastIdentifier: ''
                     isSelf: false
+                    NAME: IdentifierExpression
                   operatorType: doubleOr
                   Precedence: -2
+                  NAME: BinaryExpression
                 operatorType: doubleAnd
                 Precedence: -1
+                NAME: BinaryExpression
               operatorType: doubleOr
               Precedence: -2
+              NAME: BinaryExpression
             operatorType: doubleAnd
             Precedence: -1
+            NAME: BinaryExpression
           operatorType: doubleOr
           Precedence: -2
+          NAME: BinaryExpression
         operatorType: doubleAnd
         Precedence: -1
+        NAME: BinaryExpression
       operatorType: doubleOr
       Precedence: -2
+      NAME: BinaryExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: let
     isSelf: false
@@ -1050,6 +1272,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement:
       identifier:
         identifier: Type
@@ -1057,8 +1280,10 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       typeDeclarationType: value
       exp: 
+      NAME: TypeDeclarationStatement
     isAssign: true
     exp:
       identifier: System
@@ -1068,6 +1293,8 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: const
     isSelf: false
@@ -1077,10 +1304,13 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
       str: '"Hello World"'
+      NAME: StringExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: let
     isSelf: false
@@ -1090,6 +1320,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement:
       identifier:
         identifier: double
@@ -1097,13 +1328,17 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       typeDeclarationType: value
       exp: 
+      NAME: TypeDeclarationStatement
     isAssign: true
     exp:
       number:
         double_number: 3.1415
         RAW: 3.1415
+      NAME: NumberExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -1113,12 +1348,15 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
       number:
         int_number: *o1
         RAW: 1
+      NAME: NumberExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -1128,6 +1366,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -1135,18 +1374,25 @@ moduleStatements:
       - number:
           int_number: *o1
           RAW: 1
+        NAME: NumberExpression
       - number:
           int_number: *o0
           RAW: 2
+        NAME: NumberExpression
       - number:
           int_number: *o2
           RAW: 3
+        NAME: NumberExpression
       - number:
           int_number: *o4
           RAW: 4
+        NAME: NumberExpression
       - number:
           int_number: *o5
           RAW: 5
+        NAME: NumberExpression
+      NAME: ArrayCreationExpression
+    NAME: VariableDeclarationStatement
   - isPublic: false
     prefix: var
     isSelf: false
@@ -1156,6 +1402,7 @@ moduleStatements:
       isExtension: false
       lastIdentifier: ''
       isSelf: false
+      NAME: IdentifierExpression
     typeDeclarationStatement: 
     isAssign: true
     exp:
@@ -1165,10 +1412,16 @@ moduleStatements:
         isExtension: false
         lastIdentifier: ''
         isSelf: false
+        NAME: IdentifierExpression
       index:
         number:
           int_number: *o1
           RAW: 1
+        NAME: NumberExpression
       isRange: false
       range: *o6
+      NAME: ArrayIndexingExpression
+    NAME: VariableDeclarationStatement
   hasBody: false
+  NAME: ModuleStatement
+NAME: ProgramStatement

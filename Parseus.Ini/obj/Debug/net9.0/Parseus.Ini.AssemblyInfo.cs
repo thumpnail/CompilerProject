@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Parseus.Ini")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2219361287a19f213e62e84a50e2b203a8507624")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36b69266a260b3f810b87802a4944fc9bf40b27e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Parseus.Ini")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Parseus.Ini")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,6 @@
+C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\Parseus.Sbnf\obj\Debug\net9.0\Parseus.Sbnf.csproj.AssemblyReference.cache
+C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\Parseus.Sbnf\obj\Debug\net9.0\Parseus.Sbnf.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\Parseus.Sbnf\obj\Debug\net9.0\Parseus.Sbnf.AssemblyInfoInputs.cache
+C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\Parseus.Sbnf\obj\Debug\net9.0\Parseus.Sbnf.AssemblyInfo.cs
+C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\Parseus.Sbnf\obj\Debug\net9.0\Parseus.Sbnf.csproj.CoreCompileInputs.cache
+C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\Parseus.Sbnf\obj\Debug\net9.0\Parseus.Sbnf.sourcelink.json

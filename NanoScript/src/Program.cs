@@ -1,4 +1,11 @@
-﻿namespace NanoScript {
+﻿using System.Xml;
+using System.Xml.Serialization;
+
+using NanoScript.Parser;
+using NanoScript.Parser.AstNodes;
+
+using YamlDotNet;
+namespace NanoScript {
 	// Mid Tier Change Comment Yes
     public static class Program {
         
@@ -10,7 +17,14 @@
 	        //File.ReadAllText("./../../../test.nano")
 	        var ns = new NanoScript();
 	        //ns.RunFile(@"D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\fnc_expression.nano");
-	        ns.RunFile(@"D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\expressions.nano");
-        }
+	        //ns.RunFile(@"D:\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\expressions.nano");
+			
+			
+			var newParser = new NanoScriptParser();
+			var res = newParser.Parse(File.ReadAllText(@"C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\test2.nano"));
+			
+			Console.WriteLine(new YamlDotNet.Serialization.Serializer().Serialize(res));
+			Console.WriteLine(res.GenCS());
+		}
     }
 }

@@ -1,8 +1,9 @@
 ﻿mod main
+mod test
 // import "../../../sample/mymodule.nano"
 
-pub var a = 5
-var b = "hello"
+var a = 5
+//var b = "hello"
 var c = true
 //var d = &x//no references //TODO
 var e = 3 + 2

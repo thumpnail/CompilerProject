@@ -6,15 +6,18 @@ public class ImportStatement : IStatement {
 	public string importString = "";
 	public bool isAs;
 
-	public bool isFrom
-	{
-		get { return !isAs; }
-		set { isAs = !value; }
-	}
+	public bool isFrom;
 
 	public  string GenCS() {
 		var res = new StringBuilder();
 		if (isAs) {
+			if (importString.EndsWith(".nano")) {
+				//TODO: Namepace Magic
+			} else {
+				//Guessing that it is a c# namepace
+				res.Append($"using {Identifier.GenCS()} = {importString.Substring(1, importString.Length - 2)};");
+			}
+		} else if (isFrom) {
 			if (importString.EndsWith(".nano")) {
 				//TODO: Namepace Magic
 			} else {

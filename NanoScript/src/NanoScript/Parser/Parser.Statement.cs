@@ -335,9 +335,9 @@ public partial class Parser {
         if (ctx.Peek_tk(IDENTIFIER)) {
             res.identifier = ParseIdentifierExpression();
             ctx.Consume_tk(LEFTPAREN);
-            IExpression exp;
+            ExpressionList exp;
             if ((exp = ParseListExpression()) is not null) {
-                res.parameters = ((ExpressionList)exp).expressions;
+                res.parameters = exp;
             }
             ctx.Consume_tk(RIGHTPAREN);
         } else {
@@ -480,7 +480,7 @@ public partial class Parser {
         var res = new SwitchStatement();
         if (ctx.Peek_tk(SWITCH)) {
             ctx.Consume_tk(SWITCH);
-            res.exp = ParseExpression();
+            res.Expression = ParseExpression();
             ctx.Consume_tk(LEFTBRACE);
             res.subSwitchStatements = ParseSubSwitchStatements();
             if (ctx.Peek_tk(DEFAULT)) {

@@ -3,7 +3,7 @@
 //TODO: Switch identifier with expression
 //    | 'switch' exp '{' (identifier ':' statement* 'break'?)* 'default' ':' statement* 'break' '}'
 public class SwitchStatement : IStatement {
-	public IExpression? exp;
+	public IExpression? Expression;
 	public List<SubSwitchStatement> subSwitchStatements = new();
 	//default
 	public SubSwitchStatement? defSubSwitchStatement;

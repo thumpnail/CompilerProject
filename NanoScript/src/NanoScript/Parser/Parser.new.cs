@@ -4,19 +4,20 @@ using NanoScript.Parser.AstNodes;
 
 using Parseus.Parser.Implicit;
 using Parseus.Parser.Common;
+// ReSharper disable VariableHidesOuterVariable
 namespace NanoScript.Parser;
 
 // Token-Konstanten für alle Token-Namen
 public static class Tokens {
 	public const string NONE = "NONE";
-	public const string PUB = "PUB"; 
-	public const string MOD = "MOD"; 
-	public const string RETURN = "RETURN"; 
-	public const string ENUM = "ENUM"; 
-	public const string GOTO = "GOTO"; 
-	public const string DEF = "DEF"; 
-	public const string STRUCT = "STRUCT"; 
-	public const string CLASS = "CLASS"; 
+	public const string PUB = "PUB";
+	public const string MOD = "MOD";
+	public const string RETURN = "RETURN";
+	public const string ENUM = "ENUM";
+	public const string GOTO = "GOTO";
+	public const string DEF = "DEF";
+	public const string STRUCT = "STRUCT";
+	public const string CLASS = "CLASS";
 	public const string INTERFACE = "INTERFACE";
 	public const string IMPORT = "IMPORT";
 	public const string AS = "AS";
@@ -86,6 +87,7 @@ public static class Tokens {
 	public const string STRING = "STRING";
 	//public const string STRING = "STRING";
 	public const string NUMBER = "NUMBER";
+	public const string NULL = "NULL";
 }
 
 public class NanoScriptParser : BaseParser {
@@ -189,39 +191,39 @@ public class NanoScriptParser : BaseParser {
 	}
 
 	private static readonly Parser<ProgramStatement> ProgramParser = new((c, self) => {
-		Repeat(c, c => {
-			Node(c, ModuleStatementParser, v => self.moduleStatements.Add(v));
-		});
+		Node(c, ModuleStatementParser, v => self.moduleStatements.Add(v));
 	});
 
 	private static readonly Parser<ModuleStatement> ModuleStatementParser = new((c, self) => {
 		Token(c, Tokens.MOD, out _);
 		Node(c, IdentifierParser, v => self.moduleName = v);
-		Repeat(c, c => {
+		RepeatOpt(c, c => {
 			Node(c, ImportStatementParser, v => self.importStatements.Add(v));
 		});
 		Opt(c, c => {
-			Literal(c, "{", out _);
-			Repeat(c, c => {
-				Node(c, StatementParser, v => self.statements.Add(v));
-			});
-			Literal(c, "}", out _);
+			Literal(c, "{", out self.hasBody);
 		});
+		RepeatOpt(c, c => {
+			Node(c, StatementParser, v => self.statements.Add(v));
+		});
+		if (self.hasBody) {
+			Literal(c, "}", out _);
+		}
 	});
 
 	private static readonly Parser<ImportStatement> ImportStatementParser = new((c, self) => {
 		Token(c, Tokens.IMPORT, out _);
+		//TODO: Alt broken? seems like it only tries the first option
 		Alt(c, c => {
 			Token(c, Tokens.STRING, out self.importString);
 			Opt(c, c => {
-				Token(c, Tokens.AS, out _);
-				self.isAs = true;
+				Literal(c, Tokens.AS, out self.isAs);
 				Node(c, IdentifierParser, v => self.Identifier = v);
 			});
 		}, c => {
 			Node(c, IdentifierParser, v => self.Identifier = v);
 			Opt(c, c => {
-				Token(c, Tokens.FROM, out _);
+				Literal(c, Tokens.FROM, out self.isFrom);
 				Token(c, Tokens.STRING, out self.importString);
 			});
 		});
@@ -238,10 +240,6 @@ public class NanoScriptParser : BaseParser {
 			Node(c, BreakStatementParser, v => self = v);
 		}, c => {
 			Node(c, ContinueStatementParser, v => self = v);
-		}, c => {
-			Node(c, AssertionStatementParser, v => self = v);
-		}, c => {
-			Node(c, ErrorStatementParser, v => self = v);
 		}, c => {
 			Node(c, ClassDeclarationParser, v => self = v);
 		}, c => {
@@ -261,8 +259,8 @@ public class NanoScriptParser : BaseParser {
 			self.isPublic = true;
 		});
 		Alt(c, c => Token(c, Tokens.LET, out self.prefix),
-		c => Token(c, Tokens.VAR, out self.prefix),
-		c => Token(c, Tokens.CONST, out self.prefix)
+			c => Token(c, Tokens.VAR, out self.prefix),
+			c => Token(c, Tokens.CONST, out self.prefix)
 		);
 		Node(c, IdentifierParser, v => self.Identifier = v);
 		Opt(c, c => {
@@ -276,9 +274,11 @@ public class NanoScriptParser : BaseParser {
 	});
 
 	private static readonly Parser<FunctionDeclarationStatement> FunctionDeclarationParser = new((c, self) => {
-		Opt(c, c => self.isExport = Token(c, Tokens.EXPORT));
-		Opt(c, c => self.isPublic = Token(c, Tokens.PUB));
-		Token(c, Tokens.FNC, out _);
+		Opt(c, c => {
+			Literal(c, Tokens.EXPORT, out self.isExport);
+		});
+		Opt(c, c => Literal(c, Tokens.PUB, out self.isPublic));
+		Literal(c, Tokens.FNC, out _);
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Literal(c, "(", out _);
 		Opt(c, c => {
@@ -289,7 +289,7 @@ public class NanoScriptParser : BaseParser {
 		});
 		Literal(c, ")", out _);
 		Opt(c, c => {
-			Token(c, Tokens.COLON, out _);
+			Literal(c, Tokens.COLON, out _);
 			Node(c, TypeDeclarationParser, v => self.returnType = v);
 		});
 		Literal(c, "{", out _);
@@ -300,17 +300,17 @@ public class NanoScriptParser : BaseParser {
 	});
 
 	private static readonly Parser<AssignmentStatement> AssignmentStatementParser = new((c, self) => {
-		Opt(c, c => self.isSelf = Token(c, Tokens.DOT));
+		Opt(c, c => Literal(c, Tokens.DOT, out self.isSelf));
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Opt(c, c => Node(c, TypeDeclarationParser, v => self.typeDeclarationStatement = v));
 		Alt(c, c => Token(c, Tokens.EQUAL, (s => self.assignmentType = AssignmentType.equal)),
-		c => Token(c, Tokens.PLUSEQUALS, (s => self.assignmentType = AssignmentType.add)),
-		c => Token(c, Tokens.DOUBLERIGHT, (s => self.assignmentType = AssignmentType.pop)),
-		c => Token(c, Tokens.DOUBLELEFT, (s => self.assignmentType = AssignmentType.push)),
-		c => Token(c, Tokens.PLUSEQUALS, (s => self.assignmentType = AssignmentType.add)),
-		c => Token(c, Tokens.MINUSEQUALS, (s => self.assignmentType = AssignmentType.sub)),
-		c => Token(c, Tokens.TIMESEQUALS, (s => self.assignmentType = AssignmentType.mul)),
-		c => Token(c, Tokens.SLASHEQUALS, (s => self.assignmentType = AssignmentType.div)));
+			c => Token(c, Tokens.PLUSEQUALS, (s => self.assignmentType = AssignmentType.add)),
+			c => Token(c, Tokens.DOUBLERIGHT, (s => self.assignmentType = AssignmentType.pop)),
+			c => Token(c, Tokens.DOUBLELEFT, (s => self.assignmentType = AssignmentType.push)),
+			c => Token(c, Tokens.PLUSEQUALS, (s => self.assignmentType = AssignmentType.add)),
+			c => Token(c, Tokens.MINUSEQUALS, (s => self.assignmentType = AssignmentType.sub)),
+			c => Token(c, Tokens.TIMESEQUALS, (s => self.assignmentType = AssignmentType.mul)),
+			c => Token(c, Tokens.SLASHEQUALS, (s => self.assignmentType = AssignmentType.div)));
 		Node(c, ExpressionParser, v => self.exp = v);
 	});
 
@@ -323,45 +323,55 @@ public class NanoScriptParser : BaseParser {
 		Token(c, Tokens.IF, out _);
 		Node(c, SubConditionalStatementParser, v => self.ifConditionalStatement = v);
 		Literal(c, "{", out _);
-		Repeat(c, c => Node(c, StatementParser, v => self..Add(v)));
+		Repeat(c, c => Node(c, StatementParser, v => self.ifConditionalStatement.statements.Add(v)));
 		Literal(c, "}", out _);
 		Repeat(c, c => {
-			Token(c, Tokens.Else, out _);
-			Opt(c, c => {
-				Token(c, Tokens.If, out _);
-				Node(c, ExpressionParser, v => self.elseIfConditions.Add(v));
+			Alt(c, c => {
+				Opt(c, c => {
+					Token(c, Tokens.ELSE, out _);
+					Token(c, Tokens.IF, out _);
+					Node(c, SubConditionalStatementParser, v => self.elseIfConditionalStatements.Add(v));
+					Literal(c, "{", out _);
+					Repeat(c, c => {
+						Node(c, StatementParser, v => {
+							if (self.elseIfConditionalStatements is null) {
+								self.elseIfConditionalStatements = new List<SubConditionalStatement>();
+							}
+							self.elseIfConditionalStatements.Add(new());
+							self.elseIfConditionalStatements.Last().statements.Add(v);
+						});
+					});
+					Literal(c, "}", out _);
+				});
+			}, c => {
+				Token(c, Tokens.ELSE, out _);
 				Literal(c, "{", out _);
-				Repeat(c, c => Node(c, StatementParser, v => self.elseIfStatements.Add(v)));
+				Repeat(c, c => Node(c, StatementParser, v => self.elseConditionalStatement.statements.Add(v)));
 				Literal(c, "}", out _);
 			});
 		});
-		Opt(c, c => {
-			Token(c, Tokens.Else, out _);
-			Literal(c, "{", out _);
-			Repeat(c, c => Node(c, StatementParser, v => self.elseStatements.Add(v)));
-			Literal(c, "}", out _);
-		});
 	});
 
+	// TODO: Fix this parser to match the SubConditionalStatement structure
 	private static Parser<SubConditionalStatement> SubConditionalStatementParser = new((c, self) => {
 		Node(c, ExpressionParser, v => self.exp = v);
-		Opt(c, c => {
+		/*Opt(c, c => {
 			Token(c, Tokens.IS, out _);
-			Node(c, IdentifierParser, v => self.isTypeCheck = v);
-		});
+			Node(c, IdentifierParser, v => self.exp = v);
+		});*/
 	});
 
 	private static readonly Parser<SwitchStatement> SwitchStatementParser = new((c, self) => {
-		Token(c, Tokens.Switch, out _);
-		Node(c, ExpressionParser, v => self.expression = v);
+		Token(c, Tokens.SWITCH, out _);
+		Node(c, ExpressionParser, v => self.Expression = v);
 		Literal(c, "{", out _);
 		Repeat(c, c => {
-			Node(c, SubSwitchStatementParser, v => self.cases.Add(v));
+			Node(c, SubSwitchStatementParser, v => self.subSwitchStatements.Add(v));
 		});
 		Opt(c, c => {
-			Token(c, Tokens.Default, out _);
+			Token(c, Tokens.DEFAULT, out _);
 			Literal(c, ":", out _);
-			Repeat(c, c => Node(c, StatementParser, v => self.defaultStatements.Add(v)));
+			Repeat(c, c => Node(c, StatementParser, v => self.defSubSwitchStatement = (SubSwitchStatement?)v));
 		});
 		Literal(c, "}", out _);
 	});
@@ -370,37 +380,55 @@ public class NanoScriptParser : BaseParser {
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Literal(c, ":", out _);
 		Repeat(c, c => Node(c, StatementParser, v => self.statements.Add(v)));
-		Opt(c, c => Token(c, Tokens.Break, out self.isBreak));
+		Opt(c, c => Literal(c, Tokens.BREAK, out self.isBreak));
 	});
 
 	private static readonly Parser<IdentifierExpression> IdentifierParser = new((c, self) => {
-		Token(c, Tokens.Identifier, out self.name);
+		Token(c, Tokens.IDENTIFIER, out self.identifier);
 	});
 
 	private static readonly Parser<TypeDeclarationStatement> TypeDeclarationParser = new((c, self) => {
-		Token(c, Tokens.Identifier, out self.typeName);
+		Node(c, IdentifierParser, v => self.identifier = v);
 	});
 
 	private static readonly Parser<IExpression> ExpressionParser = new((c, self) => {
 		Alt(c, c => {
 			Node(c, TermParser, v => self = v);
 			Repeat(c, c => {
-				Alt(c, c => Token(c, Tokens.Plus, out _), c => Token(c, Tokens.Minus, out _), c => Token(c, Tokens.DoubleAnd, out _), c => Token(c, Tokens.DoubleOr, out _));
-				Node(c, TermParser, v => self = new BinaryExpression(self, v));
+				BinaryOperatorType op = BinaryOperatorType.none;
+				Alt(c,
+					c => {
+						Token(c, Tokens.PLUS, out _);
+						op = BinaryOperatorType.add;
+					},
+					c => {
+						Token(c, Tokens.MINUS, out _);
+						op = BinaryOperatorType.sub;
+					},
+					c => {
+						Token(c, Tokens.DOUBLEAND, out _);
+						op = BinaryOperatorType.and;
+					},
+					c => {
+						Token(c, Tokens.DOUBLEPIPE, out _);
+						op = BinaryOperatorType.or;
+					});
+				Node(c, TermParser, v => self = new BinaryExpression(self, op, v));
 			});
 		}, c => {
 			Literal(c, "[", out _);
 			Node(c, ListExpressionParser, v => self = new ArrayCreationExpression { expressions = v });
 			Literal(c, "]", out _);
 		}, c => {
+			throw new NotImplementedException();
 			Node(c, IdentifierParser, v => self = v);
 			Literal(c, "{", out _);
-			Node(c, ListExpressionParser, v => self = new InstanceInitializationExpression { identifier = self, expressions = v });
+			//Node(c, ListExpressionParser, v => self = new InstanceInitializationExpression { identifier = self, expressions = v });
 			Literal(c, "}", out _);
 		}, c => {
-			Token(c, Tokens.Fnc, out _);
+			Token(c, Tokens.FNC, out _);
 			Literal(c, "(", out _);
-			Node(c, ParameterListParser, v => self = new FunctionDeclarationExpression { parameters = v });
+			Node(c, ParameterDeclListParser, v => self = new FunctionDeclarationExpression { parameters = v });
 			Literal(c, ")", out _);
 			Node(c, TypeDeclarationParser, v => ((FunctionDeclarationExpression)self).typeDeclarationStatement = v);
 			Literal(c, "{", out _);
@@ -412,27 +440,71 @@ public class NanoScriptParser : BaseParser {
 	private static readonly Parser<IExpression> TermParser = new((c, self) => {
 		Node(c, FactorParser, v => self = v);
 		Repeat(c, c => {
-			Alt(c, c => Token(c, Tokens.Star, out _), c => Token(c, Tokens.Slash, out _), c => Token(c, Tokens.Percent, out _), c => Token(c, Tokens.DoubleEquals, out _), c => Token(c, Tokens.NotEquals, out _), c => Token(c, Tokens.Less, out _),
-			c => Token(c, Tokens.Greater, out _), c => Token(c, Tokens.LessEqual, out _), c => Token(c, Tokens.GreaterEqual, out _));
-			Node(c, FactorParser, v => self = new BinaryExpression(self, v));
+			BinaryOperatorType op = BinaryOperatorType.none;
+			Alt(c,
+				c => {
+					Token(c, Tokens.STAR, out _);
+					op = BinaryOperatorType.mul;
+				},
+				c => {
+					Token(c, Tokens.SLASH, out _);
+					op = BinaryOperatorType.div;
+				},
+				c => {
+					Token(c, Tokens.PERCENT, out _);
+					op = BinaryOperatorType.mod;
+				},
+				c => {
+					Token(c, Tokens.DOUBLEEQUAL, out _);
+					op = BinaryOperatorType.equals;
+				},
+				c => {
+					Token(c, Tokens.NOTEQUAL, out _);
+					op = BinaryOperatorType.notEquals;
+				},
+				c => {
+					Token(c, Tokens.LESS, out _);
+					op = BinaryOperatorType.less;
+				},
+				c => {
+					Token(c, Tokens.GREATER, out _);
+					op = BinaryOperatorType.greater;
+				},
+				c => {
+					Token(c, Tokens.LESSEQUAL, out _);
+					op = BinaryOperatorType.lessEquals;
+				},
+				c => {
+					Token(c, Tokens.GREATEREQUALS, out _);
+					op = BinaryOperatorType.greaterEquals;
+				}
+			);
+			Node(c, FactorParser, v => self = new BinaryExpression(self, op, v));
 		});
 	});
 
 	private static readonly Parser<IExpression> FactorParser = new((c, self) => {
 		Node(c, UnaryParser, v => self = v);
 		Repeat(c, c => {
-			Token(c, Tokens.DoubleStar, out _);
-			Node(c, UnaryParser, v => self = new BinaryExpression(self, v));
+			Token(c, Tokens.DOUBLESTAR, out _);
+			Node(c, UnaryParser, v => self = new BinaryExpression(self, BinaryOperatorType.pow, v));
 		});
 	});
 
 	private static readonly Parser<IExpression> UnaryParser = new((c, self) => {
 		Opt(c, c => {
-			Alt(c, c => Token(c, Tokens.DoublePlus, out _), c => Token(c, Tokens.DoubleMinus, out _), c => Token(c, Tokens.ExclamationMark, out _));
+			Alt(c,
+				c => Token(c, Tokens.DOUBLEPLUS, out _),
+				c => Token(c, Tokens.DOUBLEMINUS, out _),
+				c => Token(c, Tokens.EXLEMATIONMARK, out _)
+			);
 		});
 		Node(c, BaseParser, v => self = v);
 		Opt(c, c => {
-			Alt(c, c => Token(c, Tokens.DoublePlus, out _), c => Token(c, Tokens.DoubleMinus, out _));
+			Alt(c,
+				c => Token(c, Tokens.DOUBLEPLUS, out _),
+				c => Token(c, Tokens.DOUBLEMINUS, out _)
+			);
 		});
 	});
 
@@ -458,17 +530,24 @@ public class NanoScriptParser : BaseParser {
 
 	private static readonly Parser<IExpression> LiteralParser = new((c, self) => {
 		Alt(c, c => {
-			Token(c, Tokens.Number, out var value);
-			self = new NumberExpression { Value = value };
+			Token(c, Tokens.NUMBER, out var value);
+			self = new NumberExpression {
+				number = new Func<INumber>(() => {
+					if (value.Contains('.')) {
+						return new FloatExpression(value);
+					}
+					return new IntegerExpression(value);
+				}).Invoke()
+			};
 		}, c => {
-			Token(c, Tokens.String, out var value);
-			self = new StringExpression { Value = value };
+			Token(c, Tokens.STRING, out var value);
+			self = new StringExpression { str = value };
 		}, c => {
-			Token(c, Tokens.True, out _);
-			self = new BooleanExpression { Value = true };
+			Token(c, Tokens.TRUE, out _);
+			self = new BooleanExpression { value = true };
 		}, c => {
-			Token(c, Tokens.False, out _);
-			self = new BooleanExpression { Value = false };
+			Token(c, Tokens.FALSE, out _);
+			self = new BooleanExpression { value = false };
 		});
 	});
 
@@ -490,9 +569,10 @@ public class NanoScriptParser : BaseParser {
 
 	private static readonly Parser<IExpression> TypeConversionParser = new((c, self) => {
 		Literal(c, "(", out _);
-		Node(c, IdentifierParser, v => self = v);
+		var typeId = null as IdentifierExpression;
+		Node(c, IdentifierParser, v => typeId = v);
 		Literal(c, ")", out _);
-		Node(c, ExpressionParser, v => self = new TypeConversionExpression { identifier = self, expression = v });
+		Node(c, ExpressionParser, v => self = new TypeConversionExpression { identifier = typeId, exp = v });
 	});
 
 	private static readonly Parser<IExpression> ArrayCreationParser = new((c, self) => {
@@ -511,28 +591,32 @@ public class NanoScriptParser : BaseParser {
 	});
 
 	private static readonly Parser<IStatement> BreakStatementParser = new((c, self) => {
-		Token(c, Tokens.Break, out _);
-		self = new BreakStatement();
+		Token(c, Tokens.BREAK, out _);
+		self = new BreakContinueStatement() {
+			ControlFlowModifierType = ControlFlowModifierType.@break
+		};
 	});
 
 	private static readonly Parser<IStatement> ContinueStatementParser = new((c, self) => {
-		Token(c, Tokens.Continue, out _);
-		self = new ContinueStatement();
+		Token(c, Tokens.CONTINUE, out _);
+		self = new BreakContinueStatement() {
+			ControlFlowModifierType = ControlFlowModifierType.@continue
+		};
 	});
 
-	private static readonly Parser<IStatement> AssertionStatementParser = new((c, self) => {
-		Token(c, Tokens.Assert, out _);
-		Node(c, ExpressionParser, v => self = new AssertionStatement { Expression = v });
-	});
+	// private static readonly Parser<IStatement> AssertionStatementParser = new((c, self) => {
+	// 	Token(c, Tokens.AS, out _);
+	// 	Node(c, ExpressionParser, v => self = new AssertionStatement { Expression = v });
+	// });
 
-	private static readonly Parser<IStatement> ErrorStatementParser = new((c, self) => {
-		Token(c, Tokens.Error, out _);
-		Node(c, ExpressionParser, v => self = new ErrorStatement { Expression = v });
-	});
+	// private static readonly Parser<IStatement> ErrorStatementParser = new((c, self) => {
+	// 	Token(c, Tokens.Error, out _);
+	// 	Node(c, ExpressionParser, v => self = new ErrorStatement { Expression = v });
+	// });
 
 	private static readonly Parser<ClassDeclarationStatement> ClassDeclarationParser = new((c, self) => {
-		Opt(c, c => Token(c, Tokens.Pub, out self.isPublic));
-		Token(c, Tokens.Class, out _);
+		Opt(c, c => Literal(c, Tokens.PUB, out self.isPublic));
+		Token(c, Tokens.CLASS, out _);
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Literal(c, "{", out _);
 		Repeat(c, c => {
@@ -542,10 +626,10 @@ public class NanoScriptParser : BaseParser {
 	});
 
 	private static readonly Parser<StructDeclarationStatement> StructDeclarationParser = new((c, self) => {
-		Opt(c, c => Token(c, Tokens.Pub, out self.isPublic));
-		Token(c, Tokens.Struct, out _);
+		Opt(c, c => Literal(c, Tokens.PUB, out self.isPublic));
+		Token(c, Tokens.STRUCT, out _);
 		Node(c, IdentifierParser, v => self.identifier = v);
-		Opt(c, c => Node(c, TypeDeclarationParser, v => self.type = v));
+		Opt(c, c => Node(c, TypeDeclarationParser, v => self.typeDeclarationStatement = v));
 		Literal(c, "{", out _);
 		Repeat(c, c => {
 			Node(c, StatementParser, v => self.statements.Add(v));
@@ -554,32 +638,33 @@ public class NanoScriptParser : BaseParser {
 	});
 
 	private static readonly Parser<EnumDeclarationStatement> EnumDeclarationParser = new((c, self) => {
-		Opt(c, c => Token(c, Tokens.Pub, out self.isPublic));
-		Token(c, Tokens.Enum, out _);
+		Opt(c, c => Literal(c, Tokens.PUB, out self.isPublic));
+		Token(c, Tokens.ENUM, out _);
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Opt(c, c => {
-			Token(c, Tokens.Colon, out _);
-			Node(c, TypeDeclarationParser, v => self.type = v);
+			Token(c, Tokens.COLON, out _);
+			Node(c, TypeDeclarationParser, v => self.typeDeclarationStatement = v);
 		});
 		Literal(c, "{", out _);
 		Repeat(c, c => {
-			Node(c, EnumValueParser, v => self.enumValues.Add(v));
-			Opt(c, c => Token(c, Tokens.Comma, out _));
+			Node(c, EnumValueParser, v => self.enumValueDeclarations.Add(v));
+			Opt(c, c => Token(c, Tokens.COMMA, out _));
 		});
 		Literal(c, "}", out _);
 	});
 
-	private static readonly Parser<EnumValue> EnumValueParser = new((c, self) => {
+	private static readonly Parser<EnumValueDeclaration> EnumValueParser = new((c, self) => {
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Opt(c, c => {
-			Token(c, Tokens.Colon, out _);
-			Node(c, ExpressionParser, v => self.value = v);
+			Token(c, Tokens.COLON, out _);
+			Node(c, ExpressionParser, v => self.exp = v);
+			self.type = EnumValueType.none;
 		});
 	});
 
 	private static readonly Parser<InterfaceStatement> InterfaceDeclarationParser = new((c, self) => {
-		Opt(c, c => Token(c, Tokens.Pub, out self.isPublic));
-		Token(c, Tokens.Interface, out _);
+		//Opt(c, c => Token(c, Tokens.PUB, out _));
+		Token(c, Tokens.INTERFACE, out _);
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Literal(c, "{", out _);
 		Repeat(c, c => {
@@ -589,8 +674,8 @@ public class NanoScriptParser : BaseParser {
 	});
 
 	private static readonly Parser<UnionStatement> UnionDeclarationParser = new((c, self) => {
-		Opt(c, c => Token(c, Tokens.Pub, out self.isPublic));
-		Token(c, Tokens.Union, out _);
+		//Opt(c, c => Token(c, Tokens.PUB, out _));
+		Token(c, Tokens.NULL, out _);
 		Node(c, IdentifierParser, v => self.identifier = v);
 		Literal(c, "{", out _);
 		Repeat(c, c => {
@@ -599,16 +684,22 @@ public class NanoScriptParser : BaseParser {
 		Literal(c, "}", out _);
 	});
 
+	private static readonly Parser<List<ParameterDeclaration>> ParameterDeclListParser = new((c, self) => {
+		Repeat(c, c => {
+			Node(c, ParameterParser, v => self.Add(v));
+			Opt(c, c => Token(c, Tokens.COMMA, out _));
+		});
+	});
 	private static readonly Parser<ExpressionList> ParameterListParser = new((c, self) => {
 		Repeat(c, c => {
-			Node(c, ParameterParser, v => self.parameters.Add(v));
-			Opt(c, c => Token(c, Tokens.Comma, out _));
+			Node(c, ParameterParser, v => self.expressions.Add(v));
+			Opt(c, c => Token(c, Tokens.COMMA, out _));
 		});
 	});
 
-	private static readonly Parser<Parameter> ParameterParser = new((c, self) => {
+	private static readonly Parser<ParameterDeclaration> ParameterParser = new((c, self) => {
 		Node(c, IdentifierParser, v => self.identifier = v);
-		Opt(c, c => Node(c, TypeDeclarationParser, v => self.type = v));
+		Opt(c, c => Node(c, TypeDeclarationParser, v => self.typeDeclarationStatement = v));
 	});
 
 	private static readonly Parser<FunctionCallStatement> FunctionCallStatementParser = new((c, self) => {
@@ -621,7 +712,7 @@ public class NanoScriptParser : BaseParser {
 	private static readonly Parser<ExpressionList> ExpressionListParser = new((c, self) => {
 		Repeat(c, c => {
 			Node(c, ExpressionParser, v => self.expressions.Add(v));
-			Opt(c, c => Token(c, Tokens.Comma, out _));
+			Opt(c, c => Token(c, Tokens.COMMA, out _));
 		});
 	});
 }

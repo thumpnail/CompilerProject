@@ -3,7 +3,7 @@
 // program: module_statement*;
 public class ProgramStatement : IStatement {
     public List<ModuleStatement> moduleStatements = new();
-    public  string GenCS() {
+    public string GenCS() {
         var res = new StringBuilder();
         res.AppendLine("//TODO: Program:");
         foreach (var item in moduleStatements) {

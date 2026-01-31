@@ -1,6 +1,6 @@
 ﻿namespace NanoScript.Parser.AstNodes;
 
-public class ParameterDeclaration : IStatement {
+public class ParameterDeclaration : IExpression {
 	public IdentifierExpression? identifier;
 	public TypeDeclarationStatement? typeDeclarationStatement;
 
