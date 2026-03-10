@@ -1,5 +1,3 @@
 mod main
-import Console from "System"
-import "System.Text" as System.Text
 
-var a = 5
+let a = 1

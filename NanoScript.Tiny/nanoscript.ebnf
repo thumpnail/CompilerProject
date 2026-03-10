@@ -26,11 +26,11 @@ function_call  := "cll" identifier { value } ;
 
 expression     := operation | function_call ;
 
-parameter_list := identifier { identifier } ;
+value          := identifier | number | string | character | array | struct_instance ;
 value_list     := value { value } ;
+parameter_list := identifier { identifier } ;
 condition      := value logical_operator value ;
 operation      := value operator value ;
-value          := identifier | number | string | character | array | struct_instance ;
 array          := identifier "[" [ value { "," value } ] "]" ;
 struct_instance := identifier { value } ;
 

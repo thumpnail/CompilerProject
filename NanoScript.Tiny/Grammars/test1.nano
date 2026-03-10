@@ -1,0 +1,5 @@
+set a b
+fnc add a b:
+	set a 12
+	def a 12
+	ret

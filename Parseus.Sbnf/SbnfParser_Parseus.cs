@@ -212,7 +212,7 @@ public class SbnfParser_Parseus : BaseParser {
         var lexerResult = LexerResult(src);
         var parserContext = new BasicAParserContext(lexerResult);
         var state = new CancellationState();
-        var result = ParseSbnfDocument.Parse<SbnfDocument>(new BaseParserContext(parserContext,state));
+        var result = ParseSbnfDocument.Parse(new BaseParserContext(parserContext,state));
         if (state.Ok) {
             return result;
         }

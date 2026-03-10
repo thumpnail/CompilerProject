@@ -1,4 +1,6 @@
-﻿using BetterConsoleTables;
+﻿using BetterConsoles.Tables;
+
+using BetterConsoles;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -49,8 +51,10 @@ public class NanoScript {
 			writer.Close();
 		}
 
-		ParserContext ctx = new ParserContext(lexerResult);
-		ProgramStatement res = new Parser.Parser(ctx).Parse();
+		//ParserContext ctx = new ParserContext(lexerResult);
+		//ProgramStatement res = new Parser.Parser(ctx).Parse();
+		
+		var res = new NanoScriptParser().Parse(lexerResult.source);
 
 		//try {
 		//	var xml = res.ToXml();

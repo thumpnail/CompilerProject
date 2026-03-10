@@ -187,7 +187,7 @@ public class NanoScriptParser : BaseParser {
 		var lexResult = lexer.Lex(src);
 		var context = new BasicAParserContext(lexResult.result.ToArray());
 		var state = new CancellationState();
-		return ProgramParser.Parse<ProgramStatement>(new BaseParserContext(context, state));
+		return ProgramParser.Parse(new BaseParserContext(context, state));
 	}
 
 	private static readonly Parser<ProgramStatement> ProgramParser = new((c, self) => {
@@ -255,10 +255,10 @@ public class NanoScriptParser : BaseParser {
 
 	private static readonly Parser<VariableDeclarationStatement> VariableDeclarationParser = new((c, self) => {
 		Opt(c, c => {
-			Token(c, Tokens.PUB, out _);
-			self.isPublic = true;
+			Literal(c, Tokens.PUB, out self.isPublic);
 		});
-		Alt(c, c => Token(c, Tokens.LET, out self.prefix),
+		Alt(c, 
+			c => Token(c, Tokens.LET, out self.prefix),
 			c => Token(c, Tokens.VAR, out self.prefix),
 			c => Token(c, Tokens.CONST, out self.prefix)
 		);
@@ -419,12 +419,11 @@ public class NanoScriptParser : BaseParser {
 			Literal(c, "[", out _);
 			Node(c, ListExpressionParser, v => self = new ArrayCreationExpression { expressions = v });
 			Literal(c, "]", out _);
-		}, c => {
-			throw new NotImplementedException();
-			Node(c, IdentifierParser, v => self = v);
-			Literal(c, "{", out _);
-			//Node(c, ListExpressionParser, v => self = new InstanceInitializationExpression { identifier = self, expressions = v });
-			Literal(c, "}", out _);
+		//}, c => {
+		//	Node(c, IdentifierParser, v => self = v);
+		//	Literal(c, "{", out _);
+		//	Node(c, ListExpressionParser, v => self = new InstanceInitializationExpression { identifier = self, expressions = v });
+		//	Literal(c, "}", out _);
 		}, c => {
 			Token(c, Tokens.FNC, out _);
 			Literal(c, "(", out _);

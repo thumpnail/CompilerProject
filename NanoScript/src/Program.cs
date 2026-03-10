@@ -21,7 +21,9 @@ namespace NanoScript {
 			
 			
 			var newParser = new NanoScriptParser();
-			var res = newParser.Parse(File.ReadAllText(@"C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\test2.nano"));
+			var res = 
+				//newParser.Parse(File.ReadAllText(@"C:\Users\fried\OneDrive\Dokumente\Code\Rider-Projects\CompilerProject\NanoScript\sample\test2.nano"));
+				newParser.Parse(File.ReadAllText(@"/home/fenex/RiderProjects/CompilerProject/NanoScript/sample/test2.nano"));
 			
 			Console.WriteLine(new YamlDotNet.Serialization.Serializer().Serialize(res));
 			Console.WriteLine(res.GenCS());

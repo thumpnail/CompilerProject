@@ -10,11 +10,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="BetterConsoleTables" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
-        <PackageReference Include="Newtonsoft.Json"/>
-        <PackageReference Include="YamlDotNet" />
+        <PackageReference Include="BetterConsoleTables" Version="2.0.5-rc1"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1"/>
+        <PackageReference Include="YamlDotNet" Version="16.3.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -27,11 +27,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus.csproj" />
+      <Folder Include="src\NanoScript\ParserV2\Ast\" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\NanoScript\ParserV2\Ast\" />
+      <ProjectReference Include="..\Parseus\Parseus.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,3 @@
+[submodule "Parseus"]
+	path = Parseus
+	url = https://github.com/thumpnail/Parseus.git
