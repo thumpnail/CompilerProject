@@ -80,25 +80,25 @@ public partial class TinyScriptParser : BaseParser {
 		.Child(Tokens.SET, "set")
 
 		// Operators
-		.Child(Tokens.COLON, ":")
-		.Child(Tokens.EQL, "==")
-		.Child(Tokens.NEQ, "!=")
-		.Child(Tokens.LSS, "<")
-		.Child(Tokens.GTR, ">")
-		.Child(Tokens.LEQ, "<=")
-		.Child(Tokens.GEQ, ">=")
-		.Child(Tokens.MOD, "%")
+		.Child(Tokens.COLON, "\\:")
+		.Child(Tokens.EQL, "\\=\\=")
+		.Child(Tokens.NEQ, "\\!\\=")
+		.Child(Tokens.LSS, "\\<")
+		.Child(Tokens.GTR, "\\>")
+		.Child(Tokens.LEQ, "\\<\\=")
+		.Child(Tokens.GEQ, "\\>\\=")
+		.Child(Tokens.MOD, "\\%")
 		.Child(Tokens.POW, "\\*\\*")
 		.Child(Tokens.AND, "AND")
 		.Child(Tokens.OR, "OR")
-		.Child(Tokens.XOR, "^^")
-		.Child(Tokens.NOT, "!")
-		.Child(Tokens.SHL, "<<")
-		.Child(Tokens.SHR, ">>")
+		.Child(Tokens.XOR, "\\^\\^")
+		.Child(Tokens.NOT, "\\!")
+		.Child(Tokens.SHL, "\\<\\<")
+		.Child(Tokens.SHR, "\\>\\>")
 		.Child(Tokens.PLUS, "\\+")
-		.Child(Tokens.MINUS, "-")
+		.Child(Tokens.MINUS, "\\-")
 		.Child(Tokens.STAR, "\\*")
-		.Child(Tokens.SLASH, "/")
+		.Child(Tokens.SLASH, "\\/")
 		//Literals
 		.Child(Tokens.NULL, "null")
 		.Child(Tokens.TRUE, "true")
@@ -106,7 +106,7 @@ public partial class TinyScriptParser : BaseParser {
 
 		// regex
 		.Skippable(Tokens.NONE, @"\s+")
-		.Skippable(Tokens.NONE, @"#.*")
+		.Skippable(Tokens.NONE, "#.*")
 		.Skippable(Tokens.EOL, Environment.NewLine)
 		.Child(Tokens.IDENTIFIER, IDENTIFIER)
 		.Child(Tokens.STRING, "\"" + @"(\\.|[^" + "\"" + @"\\])*" + "\"")
@@ -148,23 +148,25 @@ public partial class TinyScriptParser : BaseParser {
 			c => Node(c, DefinitionParser, d => { self.Statement = d; }),
 			c => Node(c, VariableDefinitionParser, v => { self.Statement = v; }),
 			c => Node(c, FunctionDefinitionParser, f => { self.Statement = f; }),
-			c => Node(c, SetStatementParser, s => { self.Statement = s; })
+			c => Node(c, SetStatementParser, s => { self.Statement = s; }),
+			c => Node(c, CallStatementParser, s => { self.Statement = s; }),
+			c => Node(c, WhileStatementParser, s => { self.Statement = s; })
 		);
 	});
 
 	public class DefinitionStatement() : IStatement {
 		public string? Identifier;
-		public LiteralExpression? Value;
+		public CExpression? Value;
 		public string print() {
-			return $"def {Identifier} {(Value != null ? $"= {Value.print()}" : "")}";
+			return $"def {Identifier} {(Value != null ? $"= {Value.Expression.print()}" : "")}";
 		}
 	}
 
 	private static readonly Parser<DefinitionStatement> DefinitionParser = new((c, self) => {
-		Token(c, Tokens.DEF, out _);
-		Token(c, Tokens.IDENTIFIER, out self.Identifier);
+		Token(c, Tokens.DEF);
+		Token(c, Tokens.IDENTIFIER, t => { self.Identifier = t; });
 		Opt(c, c => {
-			Node(c, LiteralParser, out self.Value);
+			Node(c, LogicalExpressionParser, l => { self.Value = l; });
 		});
 	});
 
@@ -177,8 +179,8 @@ public partial class TinyScriptParser : BaseParser {
 	}
 
 	private static readonly Parser<VariableDefinitionStatement> VariableDefinitionParser = new((c, self) => {
-		Token(c, Tokens.LET, out _);
-		Token(c, Tokens.IDENTIFIER, out self.Identifier);
+		Token(c, Tokens.LET);
+		Token(c, Tokens.IDENTIFIER, t => { self.Identifier = t; });
 		Opt(c, c => {
 			Node(c, LogicalExpressionParser, e => { self.Value = e; });
 		});
@@ -186,47 +188,84 @@ public partial class TinyScriptParser : BaseParser {
 
 	public class SetStatement() : IStatement {
 		public string? Identifier;
-		public LiteralExpression? Value;
+		public CExpression? Value;
 		public string print() {
-			return $"set {Identifier} {(Value != null ? $"= {Value.print()}" : "")}";
+			return $"set {Identifier} {(Value != null ? $"= {Value.Expression.print()}" : "")}";
 		}
 	}
 
 	private static readonly Parser<SetStatement> SetStatementParser = new((c, self) => {
-		Token(c, Tokens.SET, out _);
-		Token(c, Tokens.IDENTIFIER, out self.Identifier);
-		Node(c, LiteralParser, out self.Value);
+		Token(c, Tokens.SET);
+		Token(c, Tokens.IDENTIFIER, t => { self.Identifier = t; });
+		Node(c, LogicalExpressionParser, t => { self.Value = t; });
+	});
+
+	public class CallStatement() : IStatement {
+		public string? Identifier;
+		public List<CExpression> Parameters = new();
+
+		// public CExpression? Value;
+		public string print() {
+			return $"call {Identifier} ({string.Join(",", Parameters.Select(p => p.Expression.print()))})";
+		}
+	}
+
+	private static readonly Parser<CallStatement> CallStatementParser = new((c, self) => {
+		Token(c, Tokens.CLL);
+		Token(c, Tokens.IDENTIFIER, t => { self.Identifier = t; });
+		RepeatOpt(c, c => {
+			Node(c, LogicalExpressionParser, t => { self.Parameters.Add(t); });
+		});
 	});
 
 	public class FunctionDefinitionStatement() : IStatement {
 		public string? Identifier;
 		public List<string> Parameters = new();
 		public List<CStatement> Body = new();
+		public CExpression? ReturnExpression;
 		public string print() {
 			return $"fnc {Identifier}({string.Join(", ", Parameters)}) {{\n{string.Join("\n", Body.Select(s => s.Statement.print()))}\n}}";
 		}
 	}
 
 	private static readonly Parser<FunctionDefinitionStatement> FunctionDefinitionParser = new((c, self) => {
-		Token(c, Tokens.FNC, out _);
-		Token(c, Tokens.IDENTIFIER, out self.Identifier);
+		Token(c, Tokens.FNC);
+		Token(c, Tokens.IDENTIFIER, t => { self.Identifier = t; });
 		RepeatOpt(c, c => {
 			Token(c, Tokens.IDENTIFIER, p => {
 				self.Parameters.Add(p);
 			});
 		});
-		Token(c, Tokens.COLON, out _);
+		Token(c, Tokens.COLON);
 		//body
 		RepeatOpt(c, c => {
 			Node(c, StatementParser, s => {
 				self.Body.Add(s);
 			});
 		});
-		Token(c, Tokens.RET, out _);
+		Token(c, Tokens.RET);
+		Opt(c, c => {
+			Node(c, LogicalExpressionParser, r => self.ReturnExpression = r);
+		});
 	});
 
-	// Logical
+	public class WhileStatement() : IStatement {
+		public CExpression? Condition;
+		public List<CStatement> Body = new();
 
-	// arithmetic
+		// public CExpression? Value;
+		public string print() {
+			return $"while ({Condition?.Expression.print() ?? "null"}) {{\n{string.Join("\n", Body.Select(s => s.Statement.print()))}\n}}";
+		}
+	}
 
+	private static readonly Parser<WhileStatement> WhileStatementParser = new((c, self) => {
+		Token(c, Tokens.WHL);
+		Node(c, LogicalExpressionParser, t => { self.Condition = t; });
+		Token(c, Tokens.COLON);
+		RepeatOpt(c, c => {
+			Node(c, StatementParser, t => { self.Body.Add(t); });
+		});
+		Token(c, Tokens.EXT);
+	});
 }

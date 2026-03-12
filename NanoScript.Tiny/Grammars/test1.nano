@@ -1,6 +1,3 @@
-let a bool1 AND bool2 OR bool3
-
-fnc add a b:
-	let res a
-	ret
-	
+whl 1:
+	cll print "Hello, World!"
+	ext

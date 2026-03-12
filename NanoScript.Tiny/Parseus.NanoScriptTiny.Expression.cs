@@ -1,4 +1,5 @@
 public partial class TinyScriptParser {
+	// recursive descent parser for expressions, following operator precedence and associativity rules through recursion.
 	public interface IExpression {
 		string print();
 	}
@@ -51,179 +52,98 @@ public partial class TinyScriptParser {
 	});
 	
 	private static readonly Parser<BinaryExpression> LogicalOrExpressionParser = new((c, self) => {
-		IExpression acc = null;
-		Node(c, LogicalAndExpressionParser, l => { acc = l; });
+		//Node(c, LogicalAndExpressionParser, l => { self.Left = l; });
+		Node(c, LogicalAndExpressionParser, l => { self.Left = l; });
 		RepeatOpt(c, c => {
-			string op = null!;
-			Token(c, Tokens.OR, out op);
-			Node(c, LogicalAndExpressionParser, r => {
-				var node = new BinaryExpression();
-				node.Left = acc;
-				node.Operator = op;
-				node.Right = r;
-				acc = node;
-			});
+			Token(c, Tokens.OR, t => { self.Operator = t; });
+			//Node(c, LogicalAndExpressionParser, r => { self.Right = r; });
+			Node(c, LogicalOrExpressionParser, r => { self.Right = r; });
 		});
-		// copy acc into self
-		if (acc is BinaryExpression be) {
-			self.Left = be.Left;
-			self.Operator = be.Operator;
-			self.Right = be.Right;
-		} else {
-			self.Left = acc;
-			self.Operator = null;
-			self.Right = null;
-		}
 	});
 	private static readonly Parser<BinaryExpression> LogicalAndExpressionParser = new((c, self) => {
-		IExpression acc = null;
-		Node(c, LogicalEqualExpressionParser, l => { acc = l; });
+		//Node(c, LogicalEqualExpressionParser, out var m);
+		Node(c, LogicalEqualExpressionParser, l => { self.Left = l; });
 		RepeatOpt(c, c => {
-			string op = null!;
-			Token(c, Tokens.AND, out op);
-			Node(c, LogicalEqualExpressionParser, r => {
-				var node = new BinaryExpression();
-				node.Left = acc;
-				node.Operator = op;
-				node.Right = r;
-				acc = node;
-			});
+			Token(c, Tokens.AND, t => { self.Operator = t; });
+			Node(c, LogicalAndExpressionParser, r => { self.Right = r; });
+			//Node(c, LogicalEqualExpressionParser, a => {  });
+			Console.Write("");
 		});
-		if (acc is BinaryExpression be) {
-			self.Left = be.Left;
-			self.Operator = be.Operator;
-			self.Right = be.Right;
-		} else {
-			self.Left = acc;
-			self.Operator = null;
-			self.Right = null;
-		}
 	});
 	private static readonly Parser<BinaryExpression> LogicalEqualExpressionParser = new((c, self) => {
-		IExpression acc = null;
-		Node(c, LogicalComparisionExpressionParser, l => { acc = l; });
+		Node(c, LogicalComparisionExpressionParser, l => { self.Left = l; });
 		RepeatOpt(c, c => {
-			string op = null!;
-			Token(c, Tokens.EQL, out op);
-			Node(c, LogicalComparisionExpressionParser, r => {
-				var node = new BinaryExpression();
-				node.Left = acc;
-				node.Operator = op;
-				node.Right = r;
-				acc = node;
-			});
+			Token(c, Tokens.EQL, t => { self.Operator = t; });
+			Node(c, LogicalEqualExpressionParser, r => { self.Right = r; });
 		});
-		if (acc is BinaryExpression be) {
-			self.Left = be.Left;
-			self.Operator = be.Operator;
-			self.Right = be.Right;
-		} else {
-			self.Left = acc;
-			self.Operator = null;
-			self.Right = null;
-		}
 	});
 	private static readonly Parser<BinaryExpression> LogicalComparisionExpressionParser = new((c, self) => {
-		IExpression acc = null;
-		Node(c, AdditionExpressionParser, l => { acc = l; });
+		Node(c, AdditionExpressionParser, l => { self.Left = l; });
 		RepeatOpt(c, c => {
-			string op = null!;
 			Alt(c,
-				c => { Token(c, Tokens.LEQ, out op); }, 
-				c => { Token(c, Tokens.LSS, out op); }, 
-				c => { Token(c, Tokens.GTR, out op); }, 
-				c => { Token(c, Tokens.GEQ, out op); }, 
-				c => { Token(c, Tokens.NEQ, out op); }, 
-				c => { Token(c, Tokens.EQL, out op); }
+				c => { Token(c, Tokens.LEQ, t => { self.Operator = t; } ); },
+				c => { Token(c, Tokens.LSS, t => { self.Operator = t; } ); },
+				c => { Token(c, Tokens.GTR, t => { self.Operator = t; } ); },
+				c => { Token(c, Tokens.GEQ, t => { self.Operator = t; } ); },
+				c => { Token(c, Tokens.NEQ, t => { self.Operator = t; } ); },
+				c => { Token(c, Tokens.EQL, t => { self.Operator = t; } ); }
 			);
-			Node(c, LogicalComparisionExpressionParser, r => {
-				var node = new BinaryExpression();
-				node.Left = acc;
-				node.Operator = op;
-				node.Right = r;
-				acc = node;
-			});
+			//Node(c, LogicalComparisionExpressionParser, r => {});
+			Node(c, LogicalComparisionExpressionParser, r => { self.Right = r; });
 		});
-		if (acc is BinaryExpression be) {
-			self.Left = be.Left;
-			self.Operator = be.Operator;
-			self.Right = be.Right;
-		} else {
-			self.Left = acc;
-			self.Operator = null;
-			self.Right = null;
-		}
 	});
 
 	private static readonly Parser<BinaryExpression> AdditionExpressionParser = new((c, self) => {
-		IExpression acc = null;
-		Node(c, MultiplicationExpressionParser, l => { acc = l; });
+		Node(c, MultiplicationExpressionParser, l => { self.Left = l; });
 		RepeatOpt(c, c => {
-			string op = null!;
-			Alt(c, c => { Token(c, Tokens.PLUS, out op); }, c => { Token(c, Tokens.MINUS, out op); });
-			Node(c, AdditionExpressionParser, r => {
-				var node = new BinaryExpression();
-				node.Left = acc;
-				node.Operator = op;
-				node.Right = r;
-				acc = node;
+			Alt(c, c => {
+				Token(c, Tokens.PLUS, t => { self.Operator = t; });
+			}, c => {
+				Token(c, Tokens.MINUS, t => { self.Operator = t; });
 			});
+			Node(c, AdditionExpressionParser, r => { self.Right = r; });
 		});
-		if (acc is BinaryExpression be) {
-			self.Left = be.Left;
-			self.Operator = be.Operator;
-			self.Right = be.Right;
-		} else {
-			self.Left = acc;
-			self.Operator = null;
-			self.Right = null;
-		}
 	});
 	private static readonly Parser<BinaryExpression> MultiplicationExpressionParser = new((c, self) => {
-		IExpression acc = null;
-		Node(c, UnaryExpressionParser, l => { acc = l; });
+		Node(c, ExponentialExpressionParser, l => { self.Left = l; });
 		RepeatOpt(c, c => {
-			string op = null!;
-			Alt(c, c => { Token(c, Tokens.STAR, out op); }, c => { Token(c, Tokens.SLASH, out op); });
-			Node(c, MultiplicationExpressionParser, r => {
-				var node = new BinaryExpression();
-				node.Left = acc;
-				node.Operator = op;
-				node.Right = r;
-				acc = node;
+			Alt(c, c => {
+				Token(c, Tokens.STAR, t => { self.Operator = t; });
+			}, c => {
+				Token(c, Tokens.SLASH, t => { self.Operator = t; });
 			});
+			Node(c, MultiplicationExpressionParser, r => { self.Right = r; });
 		});
-		if (acc is BinaryExpression be) {
-			self.Left = be.Left;
-			self.Operator = be.Operator;
-			self.Right = be.Right;
-		} else {
-			self.Left = acc;
-			self.Operator = null;
-			self.Right = null;
-		}
+	});
+	
+	private static readonly Parser<BinaryExpression> ExponentialExpressionParser = new((c, self) => {
+		Node(c, UnaryExpressionParser, l => { self.Left = l; });
+		RepeatOpt(c, c => {
+			Token(c, Tokens.POW, t => { self.Operator = t; });
+			Node(c, ExponentialExpressionParser, r => { self.Right = r; });
+		});
 	});
 
 	private static readonly Parser<UnaryExpression> UnaryExpressionParser = new((c, self) => {
 		Opt(c, c => {
-			Token(c, Tokens.NOT, out self.Operator);
+			Token(c, Tokens.NOT, t => { self.Operator = t; });
 		});
 		Node(c, LiteralParser, l => { self.Operand = l; });
 	});
 
 	private static readonly Parser<LiteralExpression> LiteralParser = new((c, self) => {
 		Alt(c, c => {
-			Literal(c, Tokens.NULL, out self.IsNull);
+			Literal(c, Tokens.NULL, t => { self.IsNull = t; });
 		}, c => {
-			Token(c, Tokens.TRUE, out self.BoolValue);
+			Token(c, Tokens.TRUE, t => { self.BoolValue = t; });
 		}, c => {
-			Token(c, Tokens.FALSE, out self.BoolValue);
+			Token(c, Tokens.FALSE, t => { self.BoolValue = t; });
 		}, c => {
-			Token(c, Tokens.NUMBER, out self.NumberValue);
+			Token(c, Tokens.NUMBER, t => { self.NumberValue = t; });
 		}, c => {
-			Token(c, Tokens.STRING, out self.StringValue);
+			Token(c, Tokens.STRING, t => { self.StringValue = t; });
 		}, c => {
-			Token(c, Tokens.IDENTIFIER, out self.IdentifierValue);
+			Token(c, Tokens.IDENTIFIER, t => { self.IdentifierValue = t; });
 		});
 	});
 }

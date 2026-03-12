@@ -141,17 +141,17 @@ public class SbnfParser_Parseus : BaseParser {
     });
     // rule = identifier ':=' alternation ;
     private static Parser<SbnfRule> SbnfRuleParser = new((c, self) => {
-        Token(c, "identifier", out self.Identifier);
-        Token(c, "assign", out _);
+        Token(c, "identifier", t => self.Identifier = t);
+        Token(c, "assign");
         Node(c, SbnfAlternationParser, v => self.Alternation = v);
-        Token(c, "semicolon", out _);
+        Token(c, "semicolon");
     });
     // alternation = concatenation { '|' concatenation } ;
     private static Parser<SbnfAlternation> SbnfAlternationParser = new((c, self) => {
         Node(c, SbnfConcatenationParser, v => self.Concatenations.Add(v));
         Opt(c, c => {
             Repeat(c, c => {
-                Token(c, "bitwise_or", out _);
+                Token(c, "bitwise_or");
                 Node(c, SbnfConcatenationParser, v => self.Concatenations.Add(v));
             });
         });
@@ -165,7 +165,7 @@ public class SbnfParser_Parseus : BaseParser {
 
     // factor = term '?' | term '*' | term '+' | term ;
     private static Parser<SbnfFactor> SbnfFactorParser = new((c, self) => {
-        Node(c, SbnfTermParser, out self.Term);
+        Node(c, SbnfTermParser, t => self.Term = t);
     });
 
     // term = '(' alternation ')' 
@@ -175,26 +175,26 @@ public class SbnfParser_Parseus : BaseParser {
     // 	 | identifier ;
     private static Parser<SbnfTerm> SbnfTermParser = new((c, self) => {
         Alt(c, c => {
-            Token(c, "lparen", out _);
+            Token(c, "lparen");
             Node(c, SbnfAlternationParser, v => {
                 self.Alternation = v;
                 self.Type = "group";
             });
-            Token(c, "rparen", out _);
+            Token(c, "rparen");
         }, c => {
-            Token(c, "lbracket", out _);
+            Token(c, "lbracket");
             Node(c, SbnfAlternationParser, v => {
                 self.Alternation = v;
                 self.Type = "optional";
             });
-            Token(c, "rbracket", out _);
+            Token(c, "rbracket");
         }, c => {
-            Token(c, "lbrace", out _);
+            Token(c, "lbrace");
             Node(c, SbnfAlternationParser, v => {
                 self.Alternation = v;
                 self.Type = "repeat";
             });
-            Token(c, "rbrace", out _);
+            Token(c, "rbrace");
         }, c => {
             Token(c, "string", v => {
                 self.Value = v;

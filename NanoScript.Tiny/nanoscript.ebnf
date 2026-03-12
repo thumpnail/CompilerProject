@@ -11,18 +11,20 @@ statement      := definition
 			    | error_handling 
 			    | comment ;
 
+assignment     := "let" IDENTIFIER [ value_list ] ;
 definition     := "def" IDENTIFIER [ value ] ;
+set     	   := "set" IDENTIFIER [ value ] ;
 function       := "fnc" IDENTIFIER [ parameter_list ] ":" { statement } "ret" [ value_list ] ;
+function_call  := "cll" IDENTIFIER { value } ;
+while_loop     := "whl" condition { statement } "ext" ;
+
+for_loop       := "for" IDENTIFIER value condition value [ value ] { statement } "ext" ;
 control_structure := if_statement | while_loop | for_loop ;
 if_statement   := "iff" condition { statement } [ "elf" condition { statement } ] [ "els" { statement } ] "ext" ;
-while_loop     := "whl" condition { statement } "ext" ;
-for_loop       := "for" IDENTIFIER value condition value [ value ] { statement } "ext" ;
-assignment     := "let" IDENTIFIER [ value_list ] ;
 include        := "inc" file_path [ IDENTIFIER ] ;
 struct         := "tbl" IDENTIFIER [ parameter_list ] { statement } ;
 package        := "pck" IDENTIFIER { statement } ;
 error_handling := "err" error_code [ message ] ;
-function_call  := "cll" IDENTIFIER { value } ;
 
 expression     := operation | function_call ;
 
