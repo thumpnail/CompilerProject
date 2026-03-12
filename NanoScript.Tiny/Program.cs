@@ -10,6 +10,7 @@ class Program {
 		var path = "/home/fenex/RiderProjects/CompilerProject/NanoScript.Tiny/Grammars/test1.nano";
 		
 		var file = File.ReadAllText(path);
+		Console.WriteLine("Source:\n"+file);
 		
 		var parser = new TinyScriptParser();
 		var ast = parser.Parse(file);
