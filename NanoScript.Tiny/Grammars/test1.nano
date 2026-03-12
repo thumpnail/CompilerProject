@@ -1,5 +1,6 @@
-set a b
+let a bool1 AND bool2 OR bool3
+
 fnc add a b:
-	set a 12
-	def a 12
+	let res a
 	ret
+	

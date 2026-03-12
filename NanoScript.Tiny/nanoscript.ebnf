@@ -11,45 +11,51 @@ statement      := definition
 			    | error_handling 
 			    | comment ;
 
-definition     := "def" identifier [ value ] ;
-function       := "fnc" identifier [ parameter_list ] ":" { statement } "ret" [ value_list ] ;
+definition     := "def" IDENTIFIER [ value ] ;
+function       := "fnc" IDENTIFIER [ parameter_list ] ":" { statement } "ret" [ value_list ] ;
 control_structure := if_statement | while_loop | for_loop ;
 if_statement   := "iff" condition { statement } [ "elf" condition { statement } ] [ "els" { statement } ] "ext" ;
 while_loop     := "whl" condition { statement } "ext" ;
-for_loop       := "for" identifier value condition value [ value ] { statement } "ext" ;
-assignment     := "let" identifier [ value_list ] ;
-include        := "inc" file_path [ identifier ] ;
-struct         := "tbl" identifier [ parameter_list ] { statement } ;
-package        := "pck" identifier { statement } ;
+for_loop       := "for" IDENTIFIER value condition value [ value ] { statement } "ext" ;
+assignment     := "let" IDENTIFIER [ value_list ] ;
+include        := "inc" file_path [ IDENTIFIER ] ;
+struct         := "tbl" IDENTIFIER [ parameter_list ] { statement } ;
+package        := "pck" IDENTIFIER { statement } ;
 error_handling := "err" error_code [ message ] ;
-function_call  := "cll" identifier { value } ;
+function_call  := "cll" IDENTIFIER { value } ;
 
 expression     := operation | function_call ;
 
-value          := identifier | number | string | character | array | struct_instance ;
+value          := IDENTIFIER | NUMBER | STRING | character | array | struct_instance ;
 value_list     := value { value } ;
-parameter_list := identifier { identifier } ;
-condition      := value logical_operator value ;
+parameter_list := IDENTIFIER { IDENTIFIER } ;
+condition      := expression;
 operation      := value operator value ;
-array          := identifier "[" [ value { "," value } ] "]" ;
-struct_instance := identifier { value } ;
+array          := IDENTIFIER "[" [ value { "," value } ] "]" ;
+struct_instance := IDENTIFIER { value } ;
 
 comment        := "#" { any_character } ;
 
 
-file_path      := string ;
-error_code     := number ;
-message        := string ;
+file_path      := STRING ;
+error_code     := NUMBER ;
+message        := STRING ;
 
-identifier     := letter { letter | digit | "_" } ;
-number         := digit { digit } ;
-string         := '"' { any_character } '"' ;
-character      := "'" any_character "'" ;
+expression 	   := literal
+               | unary
+               | binary
+               | grouping;
 
+literal        := NUMBER | STRING | "true" | "false" | "nil" ;
+grouping       := "(" expression ")" ;
+unary          := ( "-" | "!" ) expression;
+binary         := expression operator expression;
+operator       := "==" | "!=" | "<" | "<=" | ">" | ">="
+               | "+"  | "-"  | "*" | "/";
 
 logical_operator := "EQL" | "LES" | "GRT" | "TRU" | "FLS" ;
-operator       := "+" | "-" | "*" | "/" | "%" ;
 
-letter         := "a"..."z" | "A"..."Z" ;
-digit          := "0"..."9" ;
-any_character  := ? any valid character ? ;
+IDENTIFIER     := "[\\.]?{WORD}([\\.]{WORD})*([\\:]{WORD})?";
+NUMBER         := "-?(0[xX][0-9a-fA-F]+|\d*[.]\d+([eE][+-]?\d+)?|\d+([.]\d*)?([eE][+-]?\d+)?)";
+STRING         := "'(\\.|[^'\\])*'" ;
+character      := ".*" ;

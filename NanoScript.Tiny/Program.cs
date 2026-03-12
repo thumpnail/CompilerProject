@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 
 using Parseus.Parser.BasicParser.SBNF;
+
+using YamlDotNet.Serialization;
 namespace TinyScript;
 
 class Program {
@@ -17,6 +19,13 @@ class Program {
 		//File.WriteAllText("D:\\fried\\OneDrive\\Dokumente\\Code\\Rider-Projects\\CompilerProject\\NanoScript\\sample\\NanoScript.csx","");
 		
 		// print ast as json
-		Console.WriteLine(new YamlDotNet.Serialization.Serializer().Serialize(ast));
+		var yaml = new SerializerBuilder()
+			.ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
+			.Build();
+		Console.WriteLine(yaml.Serialize(ast));
+		Console.WriteLine();
+		Console.WriteLine(
+			ParenthesesUtils.StringParenthesesResolver(string.Join("\n", ast.statements.Select(s => s.Statement.print())))
+		);
 	}
 }

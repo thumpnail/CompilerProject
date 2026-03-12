@@ -1,20 +1,9 @@
-using NanoScript.Parser;
-
 using Parseus.Parser.Implicit;
-
-using NanoScript.Parser.AstNodes;
-
 using Parseus.Parser.Common;
-
-using static NanoScript.Token;
-
-using Parseus.Parser.ObjectBased;
-
-using YamlDotNet.Core.Tokens;
 
 public static class Tokens {
 	public const string NONE = "NONE";
-	
+
 	public const string DEF = "DEF";
 	public const string FNC = "FNC";
 	public const string RET = "RET";
@@ -31,7 +20,7 @@ public static class Tokens {
 	public const string ERR = "ERR";
 	public const string CLL = "CLL";
 	public const string SET = "SET";
-	
+
 	public const string EQL = "EQL";
 	public const string NEQ = "NEQ";
 	public const string LSS = "LSS";
@@ -46,14 +35,14 @@ public static class Tokens {
 	public const string NOT = "NOT";
 	public const string SHL = "SHL";
 	public const string SHR = "SHR";
-	
+
 	public const string PLUS = "PLUS";
 	public const string MINUS = "MINUS";
 	public const string STAR = "STAR";
 	public const string SLASH = "SLASH";
 	public const string PERCENT = "PERCENT";
 	public const string COLON = "COLON";
-	
+
 	public const string NULL = "NULL";
 	public const string TRUE = "TRUE";
 	public const string FALSE = "FALSE";
@@ -63,7 +52,7 @@ public static class Tokens {
 	public const string EOL = "EOL";
 }
 
-public class TinyScriptParser : BaseParser {
+public partial class TinyScriptParser : BaseParser {
 	const string ANY = "[.]";
 	const string STRING = $"\"{ANY}\"";
 	const string WORD = "[a-zA-Z_][a-zA-Z0-9_]*";
@@ -89,7 +78,7 @@ public class TinyScriptParser : BaseParser {
 		.Child(Tokens.ERR, "err")
 		.Child(Tokens.CLL, "cll")
 		.Child(Tokens.SET, "set")
-		
+
 		// Operators
 		.Child(Tokens.COLON, ":")
 		.Child(Tokens.EQL, "==")
@@ -100,8 +89,8 @@ public class TinyScriptParser : BaseParser {
 		.Child(Tokens.GEQ, ">=")
 		.Child(Tokens.MOD, "%")
 		.Child(Tokens.POW, "\\*\\*")
-		.Child(Tokens.AND, "\\&\\&")
-		.Child(Tokens.OR, "\\|\\|")
+		.Child(Tokens.AND, "AND")
+		.Child(Tokens.OR, "OR")
 		.Child(Tokens.XOR, "^^")
 		.Child(Tokens.NOT, "!")
 		.Child(Tokens.SHL, "<<")
@@ -114,7 +103,7 @@ public class TinyScriptParser : BaseParser {
 		.Child(Tokens.NULL, "null")
 		.Child(Tokens.TRUE, "true")
 		.Child(Tokens.FALSE, "false")
-		
+
 		// regex
 		.Skippable(Tokens.NONE, @"\s+")
 		.Skippable(Tokens.NONE, @"#.*")
@@ -126,6 +115,9 @@ public class TinyScriptParser : BaseParser {
 
 	public override Script Parse(string src) {
 		var lexResult = lexer.Lex(src);
+		lexResult.result.ForEach(t => {
+			Console.WriteLine($"{t.Token} - {t.Value}");
+		});
 		var context = new BasicAParserContext(lexResult.result.ToArray());
 		var state = new CancellationState();
 		return ScriptParser.Parse(new BaseParserContext(context, state));
@@ -134,6 +126,7 @@ public class TinyScriptParser : BaseParser {
 	public class Script() {
 		public List<CStatement> statements = new();
 	}
+
 	private static readonly Parser<Script> ScriptParser = new((c, self) => {
 		Repeat(c, c => {
 			Node(c, StatementParser, s => {
@@ -142,74 +135,78 @@ public class TinyScriptParser : BaseParser {
 		});
 	});
 
-	public interface IStatement;
+	public interface IStatement {
+		public string print();
+	}
+
 	public class CStatement {
 		public IStatement Statement;
 	}
+
 	private static readonly Parser<CStatement> StatementParser = new((c, self) => {
 		Alt(c,
-			c => {
-				Node(c, DefinitionParser, d => {
-					self.Statement = d;
-				});
-			},
-			c => {
-				Node(c, VariableDefinitionParser, v => {
-					self.Statement = v;
-				});
-			},
-			c => {
-				Node(c, FunctionDefinitionParser, f => {
-					self.Statement = f;
-				});
-			},
-			c => {
-				Node(c, SetStatementParser, s => {
-					self.Statement = s;
-				});
-			}
+			c => Node(c, DefinitionParser, d => { self.Statement = d; }),
+			c => Node(c, VariableDefinitionParser, v => { self.Statement = v; }),
+			c => Node(c, FunctionDefinitionParser, f => { self.Statement = f; }),
+			c => Node(c, SetStatementParser, s => { self.Statement = s; })
 		);
 	});
 
 	public class DefinitionStatement() : IStatement {
 		public string? Identifier;
-		public Literal? Value;
+		public LiteralExpression? Value;
+		public string print() {
+			return $"def {Identifier} {(Value != null ? $"= {Value.print()}" : "")}";
+		}
 	}
+
 	private static readonly Parser<DefinitionStatement> DefinitionParser = new((c, self) => {
 		Token(c, Tokens.DEF, out _);
 		Token(c, Tokens.IDENTIFIER, out self.Identifier);
 		Opt(c, c => {
-			Node(c, ValueParser, out self.Value);
+			Node(c, LiteralParser, out self.Value);
 		});
 	});
-	
+
 	public class VariableDefinitionStatement() : IStatement {
 		public string? Identifier;
-		public Literal? Value;
+		public CExpression? Value;
+		public string print() {
+			return $"let {Identifier} {(Value != null ? $"= {Value.Expression.print()}" : "")}";
+		}
 	}
+
 	private static readonly Parser<VariableDefinitionStatement> VariableDefinitionParser = new((c, self) => {
 		Token(c, Tokens.LET, out _);
 		Token(c, Tokens.IDENTIFIER, out self.Identifier);
 		Opt(c, c => {
-			Node(c, ValueParser, out self.Value);
+			Node(c, LogicalExpressionParser, e => { self.Value = e; });
 		});
 	});
-	
+
 	public class SetStatement() : IStatement {
 		public string? Identifier;
-		public Literal? Value;
+		public LiteralExpression? Value;
+		public string print() {
+			return $"set {Identifier} {(Value != null ? $"= {Value.print()}" : "")}";
+		}
 	}
+
 	private static readonly Parser<SetStatement> SetStatementParser = new((c, self) => {
 		Token(c, Tokens.SET, out _);
 		Token(c, Tokens.IDENTIFIER, out self.Identifier);
-		Node(c, ValueParser, out self.Value);
+		Node(c, LiteralParser, out self.Value);
 	});
-	
+
 	public class FunctionDefinitionStatement() : IStatement {
 		public string? Identifier;
 		public List<string> Parameters = new();
 		public List<CStatement> Body = new();
+		public string print() {
+			return $"fnc {Identifier}({string.Join(", ", Parameters)}) {{\n{string.Join("\n", Body.Select(s => s.Statement.print()))}\n}}";
+		}
 	}
+
 	private static readonly Parser<FunctionDefinitionStatement> FunctionDefinitionParser = new((c, self) => {
 		Token(c, Tokens.FNC, out _);
 		Token(c, Tokens.IDENTIFIER, out self.Identifier);
@@ -226,36 +223,10 @@ public class TinyScriptParser : BaseParser {
 			});
 		});
 		Token(c, Tokens.RET, out _);
-		RepeatOpt(c, c => {
-			
-		});
 	});
 
-	public interface IExpression;
-	public class CExpression() {
-		public IExpression Expression;
-	}
+	// Logical
 
-	public class Literal {
-		public bool IsNull;
-		public string? BoolValue;
-		public string? NumberValue;
-		public string? StringValue;
-		public string? IdentifierValue;
-	}
-	private static readonly Parser<Literal> ValueParser = new((c, self) => {
-		Alt(c, c => {
-			Literal(c, Tokens.NULL, out self.IsNull);
-		}, c => {
-			Token(c, Tokens.TRUE, out self.BoolValue);
-		}, c => {
-			Token(c, Tokens.FALSE, out self.BoolValue);
-		}, c => {
-			Token(c, Tokens.NUMBER, out self.NumberValue);
-		}, c => {
-			Token(c, Tokens.STRING, out self.StringValue);
-		}, c => {
-			Token(c, Tokens.IDENTIFIER, out self.IdentifierValue);
-		});
-	});
+	// arithmetic
+
 }
