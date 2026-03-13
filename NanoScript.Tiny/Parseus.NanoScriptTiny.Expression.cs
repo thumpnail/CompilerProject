@@ -27,18 +27,21 @@ public partial class TinyScriptParser {
 		}
 	}
 
-	public class LiteralExpression : IExpression {
+	public class AtomExpression : IExpression {
 		public bool IsNull;
 		public string BoolValue;
 		public string NumberValue;
 		public string StringValue;
 		public string IdentifierValue;
+		public CExpression GroupingExpr;
+
 		public string print() {
 			return IsNull ? "null" :
 				BoolValue != null ? BoolValue :
 				NumberValue != null ? NumberValue :
 				StringValue != null ? $"\"{StringValue}\"" :
 				IdentifierValue != null ? IdentifierValue :
+				GroupingExpr != null ? $"({GroupingExpr.Expression.print()})" :
 				"";
 		}
 	}
@@ -128,10 +131,10 @@ public partial class TinyScriptParser {
 		Opt(c, c => {
 			Token(c, Tokens.NOT, t => { self.Operator = t; });
 		});
-		Node(c, LiteralParser, l => { self.Operand = l; });
+		Node(c, AtomParser, l => { self.Operand = l; });
 	});
 
-	private static readonly Parser<LiteralExpression> LiteralParser = new((c, self) => {
+	private static readonly Parser<AtomExpression> AtomParser = new((c, self) => {
 		Alt(c, c => {
 			Literal(c, Tokens.NULL, t => { self.IsNull = t; });
 		}, c => {
@@ -144,6 +147,18 @@ public partial class TinyScriptParser {
 			Token(c, Tokens.STRING, t => { self.StringValue = t; });
 		}, c => {
 			Token(c, Tokens.IDENTIFIER, t => { self.IdentifierValue = t; });
-		});
+		}, c => {
+			// ... '(' LogicalExpression ')' ...
+			Token(c, Tokens.OPENPAREN);
+			Node(c, LogicalExpressionParser, e => { self.GroupingExpr = e; });
+			Token(c, Tokens.CLOSEPAREN);
+		}/*, c => {
+			// ... '{' 
+			// SET
+		}*/);
 	});
+
+	// math set
+	public class MathSetExpression;
+	private static readonly Parser<MathSetExpression> MathSetExpressionParser = new((c, self) => { });
 }

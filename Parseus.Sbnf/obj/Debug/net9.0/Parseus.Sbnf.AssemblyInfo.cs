@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Parseus.Sbnf")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5db09b759245282f7682bb5d475592e4c2f27c63")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7205e3102cea4cdd32c7097a8ab60b5717defdf2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Parseus.Sbnf")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Parseus.Sbnf")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

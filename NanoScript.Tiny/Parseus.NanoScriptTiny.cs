@@ -1,3 +1,5 @@
+using System.Text;
+
 using Parseus.Parser.Implicit;
 using Parseus.Parser.Common;
 
@@ -50,6 +52,10 @@ public static class Tokens {
 	public const string STRING = "STRING";
 	public const string NUMBER = "NUMBER";
 	public const string EOL = "EOL";
+	public const string OPENPAREN = "OPENPAREN";
+	public const string CLOSEPAREN = "CLOSEPAREN";
+	public const string OPENBRACK = "OPENBRACK";
+	public const string CLOSEBRACK = "CLOSEBRACK";
 }
 
 public partial class TinyScriptParser : BaseParser {
@@ -99,6 +105,10 @@ public partial class TinyScriptParser : BaseParser {
 		.Child(Tokens.MINUS, "\\-")
 		.Child(Tokens.STAR, "\\*")
 		.Child(Tokens.SLASH, "\\/")
+		.Child(Tokens.OPENPAREN, "\\(")
+		.Child(Tokens.CLOSEPAREN, "\\)")
+		.Child(Tokens.OPENPAREN, "\\{")
+		.Child(Tokens.CLOSEPAREN, "\\}")
 		//Literals
 		.Child(Tokens.NULL, "null")
 		.Child(Tokens.TRUE, "true")
@@ -150,7 +160,9 @@ public partial class TinyScriptParser : BaseParser {
 			c => Node(c, FunctionDefinitionParser, f => { self.Statement = f; }),
 			c => Node(c, SetStatementParser, s => { self.Statement = s; }),
 			c => Node(c, CallStatementParser, s => { self.Statement = s; }),
-			c => Node(c, WhileStatementParser, s => { self.Statement = s; })
+			c => Node(c, WhileStatementParser, s => { self.Statement = s; }),
+			c => Node(c, IfStatementParser, s => { self.Statement = s; }),
+			c => Node(c, IncludeStatementParser, s => { self.Statement = s; })
 		);
 	});
 
@@ -172,17 +184,19 @@ public partial class TinyScriptParser : BaseParser {
 
 	public class VariableDefinitionStatement() : IStatement {
 		public string? Identifier;
-		public CExpression? Value;
+		public List<CExpression>? Values = [];
+		public bool isArray => Values.Count > 1;
 		public string print() {
-			return $"let {Identifier} {(Value != null ? $"= {Value.Expression.print()}" : "")}";
+			var values = string.Join(", ", Values.Select(v => v.Expression.print()));
+			return $"let {Identifier} {(Values != null ? $"= {(isArray?"[":"")}{values}{(isArray?"]":"")}" : "")}";
 		}
 	}
 
 	private static readonly Parser<VariableDefinitionStatement> VariableDefinitionParser = new((c, self) => {
 		Token(c, Tokens.LET);
 		Token(c, Tokens.IDENTIFIER, t => { self.Identifier = t; });
-		Opt(c, c => {
-			Node(c, LogicalExpressionParser, e => { self.Value = e; });
+		RepeatOpt(c, c => {
+			Node(c, LogicalExpressionParser, e => { self.Values?.Add(e); });
 		});
 	});
 
@@ -236,7 +250,7 @@ public partial class TinyScriptParser : BaseParser {
 				self.Parameters.Add(p);
 			});
 		});
-		Token(c, Tokens.COLON);
+		//Token(c, Tokens.COLON);
 		//body
 		RepeatOpt(c, c => {
 			Node(c, StatementParser, s => {
@@ -249,7 +263,7 @@ public partial class TinyScriptParser : BaseParser {
 		});
 	});
 
-	public class WhileStatement() : IStatement {
+	public class WhileStatement : IStatement {
 		public CExpression? Condition;
 		public List<CStatement> Body = new();
 
@@ -267,5 +281,79 @@ public partial class TinyScriptParser : BaseParser {
 			Node(c, StatementParser, t => { self.Body.Add(t); });
 		});
 		Token(c, Tokens.EXT);
+	});
+	
+	public class IfStatement() : IStatement {
+		// Has one less then bodies
+		public List<CExpression> Conditions = [];
+		public List<List<CStatement>> Bodys = [];
+
+		// public CExpression? Value;
+		public string print() {
+			var sb = new StringBuilder();
+			for (int i = 0; i < Conditions.Count; i++) {
+				var cond = Conditions[i];
+				var body = Bodys[i];
+				if (i == 0) {
+					sb.Append($"if ({cond.Expression.print()}) {{\n");
+				} else {
+					sb.Append($"else if ({cond.Expression.print()}) {{\n");
+				}
+				sb.Append(string.Join("\n", body.Select(s => s.Statement.print())));
+				sb.Append("\n}");
+			}
+			if (Bodys.Count > Conditions.Count) {
+				var elseBody = Bodys.Last();
+				sb.Append("else {\n");
+				sb.Append(string.Join("\n", elseBody.Select(s => s.Statement.print())));
+				sb.Append("\n}");
+			}
+			return sb.ToString();
+		}
+	}
+
+	private static readonly Parser<IfStatement> IfStatementParser = new((c, self) => {
+		Token(c, Tokens.IFF);
+		Node(c, LogicalExpressionParser, t => { self.Conditions.Add(t); });
+		Opt(c, c => {
+			self.Bodys.Add([]);
+			Repeat(c, c => {
+				Node(c, StatementParser, t => { self.Bodys.Last().Add(t); });
+			});
+		});
+		Opt(c, c => {
+			Token(c, Tokens.ELF);
+			Node(c, LogicalExpressionParser, t => { self.Conditions.Add(t); });
+			Opt(c, c => {
+				self.Bodys.Add([]);
+				Repeat(c, c => {
+					Node(c, StatementParser, t => { self.Bodys.Last().Add(t); });
+				});
+			});
+		});
+		Opt(c, c => {
+			Token(c, Tokens.ELS);
+			Opt(c, c => {
+				self.Bodys.Add([]);
+				Repeat(c, c => {
+					Node(c, StatementParser, t => { self.Bodys.Last().Add(t); });
+				});
+			});
+		});
+		Token(c, Tokens.EXT);
+	});
+	
+	public class IncludeStatement : IStatement {
+		public AtomExpression Atom = new();
+
+		// public CExpression? Value;
+		public string print() {
+			return $"include {Atom.print()}";
+		}
+	}
+
+	private static readonly Parser<IncludeStatement> IncludeStatementParser = new((c, self) => {
+		Token(c, Tokens.INC);
+		Node(c, AtomParser, c => { self.Atom = c; });
 	});
 }

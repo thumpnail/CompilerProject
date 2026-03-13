@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ParseTester")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bad25ff866f6708160deffd3f8d59a69f51bdc47")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7205e3102cea4cdd32c7097a8ab60b5717defdf2")]
 [assembly: System.Reflection.AssemblyProductAttribute("ParseTester")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ParseTester")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
