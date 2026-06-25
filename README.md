@@ -1,4 +1,4 @@
-# CompilerProject
+# CompilerProject (AI Gen Readme)
 
 A compiler and language toolchain written in C# (.NET 9), consisting of the NanoScript programming language, its compiler pipeline, and the Parseus parser framework that powers it.
 
