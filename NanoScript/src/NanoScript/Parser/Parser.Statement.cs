@@ -11,13 +11,13 @@ public partial class Parser {
 	private ModuleStatement ParseModuleStatement() {
 		ctx.CreateFrame();
 		var res = new ModuleStatement();
-		if (ctx.Consume_tk(MOD)) {
+		if (ctx.Consume_tk(Token.MOD)) {
 			res.moduleName = ParseIdentifierExpression();
 			res.importStatements = ParseImportStatements();
-			if (ctx.Peek_tk(LEFTBRACE)) {
-				ctx.Consume_tk(LEFTBRACE);
+			if (ctx.Peek_tk(Token.LEFTBRACE)) {
+				ctx.Consume_tk(Token.LEFTBRACE);
 				res.statements = ParseStatements();
-				ctx.Consume_tk(RIGHTBRACE);
+				ctx.Consume_tk(Token.RIGHTBRACE);
 			} else {
 				res.statements = ParseStatements();
 			}

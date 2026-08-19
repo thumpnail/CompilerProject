@@ -1,3 +1,15 @@
 mod main
 
-let a = 1
+inc grid
+
+def a 10 + 10
+
+fnc add a b:
+	let a 10
+	ret
+
+let a 10
+
+whl a:
+	set a 10
+	ext
