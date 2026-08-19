@@ -1,0 +1,3 @@
+mod main
+
+let a = 1

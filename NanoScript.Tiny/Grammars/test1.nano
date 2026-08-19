@@ -1,0 +1,11 @@
+inc "stdlib.nano"
+
+
+# variable declaration
+let a 12
+# Array declaration
+let arr 12 13 14
+
+fnc main args
+	cll print "Hello World!"
+ret

@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>13</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishAot>true</PublishAot>
+        <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BetterConsoleTables" Version="2.0.5-rc1"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1"/>
+        <PackageReference Include="YamlDotNet" Version="16.3.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="src\NanoScript\Parser\Parser.Expression.cs">
+        <DependentUpon>Parser.cs</DependentUpon>
+      </Compile>
+      <Compile Update="src\NanoScript\Parser\Parser.Statement.cs">
+        <DependentUpon>Parser.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="src\NanoScript\ParserV2\Ast\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Parseus\Parseus.csproj" />
+    </ItemGroup>
+
+</Project>
