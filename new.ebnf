@@ -1,0 +1,14 @@
+root = { statement };
+statement =	function | while | if | definition | expression;
+function = 'fnc', IDENTIFIER, '(', { IDENTIFIER }, ')', ( IDENTIFIER | 'void' ), block;
+while = 'while', '(', expression, ')', block;
+if = if, '(', expression, ')', block, [ 'else', 'if', '(', expression, ')', block ], [ 'else', block ];
+definition = 'let', IDENTIFIER, ':', ( IDENTIFIER | 'void' | 'fnc' ), '=', ( block | expression );
+block = '{', { statement }, '}';
+expression = "recursive expression tree definition";
+
+(* Expressions *)
+
+
+(* Lexer *)
+IDENTIFIER = '[a-zA-Z_]*[a-zA-Z_0-9]*';
