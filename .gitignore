@@ -6,13 +6,5 @@
 /.vs
 /.xmake
 /.qodo
-/bin
-/obj
-*.xml
-*.pdb
-*.cache
-*.json
-*.props
-*.info
-Parseus/obj/Debug/net9.0/Parseus.AssemblyInfo.cs
-CompilerProject.sln.DotSettings.user
+**/bin
+**/obj

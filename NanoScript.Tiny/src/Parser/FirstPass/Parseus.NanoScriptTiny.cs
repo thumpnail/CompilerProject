@@ -152,6 +152,16 @@ public partial class TinyScriptParser : BaseParser {
 		// first-class Statements inside module
 		public List<CStatement> Statements = new();
 		public List<ImportStatement> Imports = new();
+		
+		public string print() {
+			var sb = new StringBuilder();
+			sb.AppendLine($"Module: {name}");
+			sb.AppendLine($"Definitions: {Definitions.Count}");
+			sb.AppendLine($"Functions: {Functions.Count}");
+			sb.AppendLine($"Statements: {Statements.Count}");
+			sb.AppendLine($"Imports: {Imports.Count}");
+			return sb.ToString();
+		}
 	}
 
 	public static readonly Parser<ModuleDeclaration> ModuleDeclarationParser = new((c, self) => {
