@@ -1,11 +1,9 @@
-<<<<<<< Updated upstream
-﻿using BetterConsoles.Tables;
+using BetterConsoleTables;
 
-using BetterConsoles;
-=======
+
 ﻿using System.Runtime.Serialization;
 using System.Xml;
->>>>>>> Stashed changes
+using BetterConsoles;
 
 //using BetterConsoles;
 
@@ -61,15 +59,8 @@ public class NanoScript {
 			writer.Close();
 		}
 
-<<<<<<< Updated upstream
-		//ParserContext ctx = new ParserContext(lexerResult);
-		//ProgramStatement res = new Parser.Parser(ctx).Parse();
-		
-		var res = new NanoScriptParser().Parse(lexerResult.source);
-=======
-		ParserContext ctx = new(lexerResult);
+		ParserContext ctx = new ParserContext(lexerResult);
 		ProgramStatement res = new Parser.Parser(ctx).Parse();
->>>>>>> Stashed changes
 
 		//try {
 		//	var xml = res.ToXml();

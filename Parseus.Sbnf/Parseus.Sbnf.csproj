@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\GitHub\Parseus\Parseus.csproj" />
+      <ProjectReference Include="..\Parseus\Parseus.csproj" />
     </ItemGroup>
 
 </Project>
