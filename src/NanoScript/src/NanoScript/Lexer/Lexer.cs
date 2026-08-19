@@ -2,26 +2,31 @@
 
 namespace NanoScript.Lexer;
 // Extreme Lexer Change Yes
-public struct TokenElement<T>(T token, string value, int index, int length, int prio = -1) : IEquatable<TokenElement<T>> where T : Enum {
-    public T token = token;
-    public string Value = value;
-    public int prio = prio;
-    public int index = index;
-    public int length = length;
-    public bool IsSkipable { get { return prio < 0; } }
-
-
-    public readonly bool Equals(TokenElement<T> other) {
+public struct TokenElement<T> : IEquatable<TokenElement<T>> where T : Enum {
+    public T token;
+    public string Value;
+    public int prio;
+    public int index;
+    public int length;
+    public bool isSkipable { get { return prio < 0; } }
+    public TokenElement(T token, string value, int index, int length, int prio = -1) {
+        this.token = token;
+        this.Value = value;
+        this.index = index;
+        this.length = length;
+        this.prio = prio;
+    }
+    public bool Equals(TokenElement<T> other) {
 	    return EqualityComparer<T>.Default.Equals(token, other.token) && Value == other.Value && prio == other.prio && index == other.index && length == other.length;
     }
-    public override readonly bool Equals(object? obj) {
+    public override bool Equals(object? obj) {
 	    return obj is TokenElement<T> other && Equals(other);
     }
-    public override readonly int GetHashCode() {
+    public override int GetHashCode() {
 	    return HashCode.Combine(token, Value, prio, index, length);
     }
     public override string ToString() {
-	    return $"{token}|{Value}|{IsSkipable}";
+	    return $"{token}|{Value}|{isSkipable}";
     }
 }
 
@@ -181,7 +186,7 @@ public class Lexer<T> where T : Enum {
 	    var rmlist = new List<TokenElement<T>>();
 	    foreach (var item1 in _Result) {
 		    int eidx = item1.index + item1.length;
-		    foreach (var item2 in _Result.Where(x => (x.index < eidx && x.index > item1.index) || x.IsSkipable)) {
+		    foreach (var item2 in _Result.Where(x => (x.index < eidx && x.index > item1.index) || x.isSkipable)) {
 			    rmlist.Add(item2);
 		    }
 	    }

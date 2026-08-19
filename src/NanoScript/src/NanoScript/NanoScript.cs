@@ -1,11 +1,5 @@
-<<<<<<< Updated upstream
-﻿using BetterConsoles.Tables;
-
-using BetterConsoles;
-=======
 ﻿using System.Runtime.Serialization;
 using System.Xml;
->>>>>>> Stashed changes
 
 //using BetterConsoles;
 
@@ -43,10 +37,9 @@ public class NanoScript {
 		Compile_CS(lexerResult);
 	}
 	private void LexerResultToTable(LexerResult<Token> lexerResult) {
-		var table = new Table("Token","Value","Is Skipable");
-		lexerResult.result.ForEach(element => { table.AddRow(element.token,element.Value,element.IsSkipable); });
-		Console.WriteLine(table.ToString());
-
+		//var table = new Table("Token","Value","Is Skipable");
+		//lexerResult.result.ForEach(element => { table.AddRow(element.token,element.Value,element.isSkipable); });
+		//Console.WriteLine(table.ToString());
 	}
 	public void RunDictionary(string path) {
 		Lexer<Token> lexer = CreateLexer();
@@ -61,15 +54,10 @@ public class NanoScript {
 			writer.Close();
 		}
 
-<<<<<<< Updated upstream
 		//ParserContext ctx = new ParserContext(lexerResult);
 		//ProgramStatement res = new Parser.Parser(ctx).Parse();
 		
 		var res = new NanoScriptParser().Parse(lexerResult.source);
-=======
-		ParserContext ctx = new(lexerResult);
-		ProgramStatement res = new Parser.Parser(ctx).Parse();
->>>>>>> Stashed changes
 
 		//try {
 		//	var xml = res.ToXml();

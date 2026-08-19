@@ -10,7 +10,7 @@ public partial class Parser {
     // program: module_statement+;
     public ProgramStatement Parse() {
         var res = new ProgramStatement();
-        //TODO: Some initialization
+        //TODO: Some initioalization
         res.moduleStatements = ParseModuleStatements();
         return res;
     }

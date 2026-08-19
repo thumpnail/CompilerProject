@@ -156,12 +156,6 @@ public class ParserContext {
         }
         return Token.NONE;
     }
-    public bool Peek_tk(Token token) {
-	    if (boundCheck(idx)) {
-		    if (token == tokens[idx].token) return true;
-	    }
-	    return false;
-    }
     public bool Peek_tk(params Token[] token) {
         if (boundCheck(idx)) {
             foreach (var item in token) {

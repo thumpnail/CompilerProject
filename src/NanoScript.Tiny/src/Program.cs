@@ -7,7 +7,7 @@ namespace TinyScript;
 
 class Program {
 	static void Main(string[] args) {
-		var path = "/home/fenex/RiderProjects/CompilerProject/NanoScript.Tiny/Grammars/test1.nano";
+		var path = "../../../../../CompilerProject/NanoScript/sample/test2.nano";
 		
 		var file = File.ReadAllText(path);
 		Console.WriteLine("Source:\n"+file);
@@ -25,8 +25,8 @@ class Program {
 			.Build();
 		Console.WriteLine(yaml.Serialize(ast));
 		Console.WriteLine();
-		Console.WriteLine(
-			ParenthesesUtils.StringParenthesesResolver(string.Join("\n", ast.statements.Select(s => s.Statement.print())))
-		);
+		var res = string.Join("\n", ast.modules.Select(m => m.print()));
+		res = ParenthesesUtils.StringParenthesesResolver(res);
+		Console.WriteLine(res);
 	}
 }
