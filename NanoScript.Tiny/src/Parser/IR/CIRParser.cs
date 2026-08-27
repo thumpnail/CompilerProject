@@ -1,5 +1,5 @@
 namespace TinyScript.Parser.IR;
 
-public class IRParser {
+public class CIRParser {
 	
 }

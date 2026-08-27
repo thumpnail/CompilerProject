@@ -1,0 +1,4 @@
+﻿program := { script };
+script := { module };
+
+module := "mod" IDENTIFIER [ "from" expression ];

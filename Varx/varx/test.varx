@@ -1,0 +1,30 @@
+﻿mod main
+import core
+
+local type Point record {
+	x: i32
+	y: i32
+	z: i32
+}
+
+local fnc Point:Add(point: Point) : Point
+	return Point {.x + point.x, .y + point.y, .z + point.z }
+end
+
+fnc Main(args:[]str)
+	println("Hello World!")
+	
+	// simple if statements
+	if true
+		println("Hello World!")
+	else if true
+		println("Hello World!")
+	else
+		println("Hello World!")
+	end
+	
+	// go like for loop
+	for {
+		println("sucks!")
+	}
+end

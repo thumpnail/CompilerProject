@@ -1,0 +1,7 @@
+﻿services:
+  varx:
+    image: varx
+    build:
+      context: .
+      dockerfile: Varx/Dockerfile
+

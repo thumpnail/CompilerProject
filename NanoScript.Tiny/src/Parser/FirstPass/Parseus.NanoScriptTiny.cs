@@ -1,6 +1,7 @@
 using System.Text;
 
 using Parseus.Lexer;
+using Parseus.Lexer.RegExBased;
 using Parseus.Parser.Implicit;
 using Parseus.Parser.Common;
 
@@ -59,8 +60,12 @@ public static class Tokens {
 	public const string CLOSEBRACK = "CLOSEBRACK";
 }
 
+public interface IPrintable {
+	string Print();
+}
+
 public partial class TinyScriptParser : BaseParser {
-	private static readonly Lexer lexer = new Lexer()
+	private static readonly Lexer Lexer = new Lexer()
 		.Skippable(Tokens.NONE, @"//(.*?)\r?\n")
 		//Keywords
 		.Child(Tokens.MOD, "mod")
@@ -124,8 +129,7 @@ public partial class TinyScriptParser : BaseParser {
 	}
 
 	public override Script Parse(string src) {
-		var lexResult = lexer.Lex(src);
-		//lexResult.result.ForEach(t => Console.WriteLine($"{t.Token} - {t.Value}"));
+		var lexResult = Lexer.Lex(src);
 		var context = new TinyScriptContext(lexResult);
 		var state = new CancellationState();
 		return ScriptParser.Parse(new BaseParserContext(context, state));
@@ -140,7 +144,7 @@ public partial class TinyScriptParser : BaseParser {
 		Console.WriteLine($"Modules: {self.modules.Count}");
 	});
 
-	public class ModuleDeclaration() : IStatement {
+	public class ModuleDeclaration() : IStatement, IPrintable {
 		public string name;
 
 		// definitions inside module
@@ -152,14 +156,31 @@ public partial class TinyScriptParser : BaseParser {
 		// first-class Statements inside module
 		public List<CStatement> Statements = new();
 		public List<ImportStatement> Imports = new();
-		
-		public string print() {
+
+		public string Print() {
 			var sb = new StringBuilder();
 			sb.AppendLine($"Module: {name}");
-			sb.AppendLine($"Definitions: {Definitions.Count}");
-			sb.AppendLine($"Functions: {Functions.Count}");
-			sb.AppendLine($"Statements: {Statements.Count}");
-			sb.AppendLine($"Imports: {Imports.Count}");
+
+			sb.AppendLine("# Imports");
+			foreach (var import in Imports) {
+				sb.AppendLine(import.Print());
+			}
+
+			sb.AppendLine("# Definitions");
+			foreach (var def in Definitions) {
+				sb.AppendLine(def.Print());
+			}
+
+			sb.AppendLine("# Imports");
+			foreach (var func in Functions) {
+				sb.AppendLine(func.Print());
+			}
+
+			sb.AppendLine("# Statements");
+			foreach (var statement in Statements) {
+				sb.AppendLine(statement.Statement.Print());
+			}
+
 			return sb.ToString();
 		}
 	}
@@ -169,17 +190,18 @@ public partial class TinyScriptParser : BaseParser {
 		Token(c, Tokens.IDENTIFIER, t => self.name = t);
 		// statements
 		RepeatOpt(c, c => {
-			Alt(c,
+			Alt(c, [
 				c => Node(c, DefinitionParser, d => self.Definitions.Add(d)),
 				c => Node(c, ImportStatementParser, i => { self.Imports.Add(i); }),
 				c => Node(c, FunctionDefinitionParser, f => self.Functions.Add(f)),
 				c => Node(c, StatementParser, s => self.Statements.Add(s))
-			);
+			], errorCallback: r => {
+				Console.WriteLine("only 'def', 'inc', 'fnc', 'let', 'set', 'call', 'whl', 'if' and 'ret' allowed inside bodies.");
+			});
 		});
 	});
 
-	public interface IStatement {
-	}
+	public interface IStatement : IPrintable;
 
 	public class CStatement {
 		public IStatement Statement;
@@ -187,7 +209,7 @@ public partial class TinyScriptParser : BaseParser {
 
 	private static readonly Parser<CStatement> StatementParser = new((c, self) => {
 		if ((c.Context is TinyScriptContext { BodyDepth: > 0 }))
-			Alt(c,
+			Alt(c, [
 				//c => Node(c, DefinitionParser, d => { self.Statement = d; }),
 				//c => Node(c, ImportStatementParser, s => { self.Statement = s; }),
 				//c => Node(c, FunctionDefinitionParser, f => { self.Statement = f; }),
@@ -198,19 +220,32 @@ public partial class TinyScriptParser : BaseParser {
 				c => Node(c, IfStatementParser, s => { self.Statement = s; }),
 				//c => Node(c, ImportStatementParser, s => { self.Statement = s; }),
 				c => Node(c, ReturnStatmentParser, s => { self.Statement = s; })
-			);
+			], errorCallback: r => {
+				Console.WriteLine(
+					"only 'def', 'inc', 'fnc', 'let', 'set', 'call', 'whl', 'if' and 'ret' allowed inside bodies.");
+			});
 		else
-			Alt(c,
+			Alt(c, [
 				c => Node(c, VariableDefinitionParser, v => { self.Statement = v; }),
 				c => Node(c, SetStatementParser, s => { self.Statement = s; }),
 				c => Node(c, CallStatementParser, s => { self.Statement = s; }),
 				c => Node(c, WhileStatementParser, s => { self.Statement = s; }),
 				c => Node(c, IfStatementParser, s => { self.Statement = s; })
-			);
+			], errorCallback: r => {
+				var tok = c.Context.PeekToken();
+				Console.WriteLine($"{tok.Index}:{tok.Length}");
+				Console.WriteLine("only 'fnc', 'def', 'let', 'set', 'call', 'whl' and 'if' allowed inside the module.");
+			});
 	});
 
-	public class ReturnStatement : IStatement {
+	public class ReturnStatement : IStatement, IPrintable {
 		public CExpression? Value;
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.AppendLine($"(return {Value.Expression.Print()})");
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<ReturnStatement> ReturnStatmentParser = new((c, self) => {
@@ -220,9 +255,15 @@ public partial class TinyScriptParser : BaseParser {
 		});
 	});
 
-	public class DefinitionStatement() : IStatement {
+	public class DefinitionStatement() : IStatement, IPrintable {
 		public string? Identifier;
 		public CExpression? Value;
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.AppendLine($"(def {Identifier} {Value.Expression.Print()})");
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<DefinitionStatement> DefinitionParser = new((c, self) => {
@@ -233,10 +274,16 @@ public partial class TinyScriptParser : BaseParser {
 		});
 	});
 
-	public class VariableDefinitionStatement() : IStatement {
+	public class VariableDefinitionStatement() : IStatement, IPrintable {
 		public string? Identifier;
 		public List<CExpression>? Values = [];
 		public bool isArray => Values.Count > 1;
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.Append($"(let {Identifier} ({string.Join(',', Values.Select(x => x.Expression.Print()))}))");
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<VariableDefinitionStatement> VariableDefinitionParser = new((c, self) => {
@@ -247,9 +294,15 @@ public partial class TinyScriptParser : BaseParser {
 		});
 	});
 
-	public class SetStatement() : IStatement {
+	public class SetStatement() : IStatement, IPrintable {
 		public string? Identifier;
 		public CExpression? Value;
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.AppendLine($"(set {Identifier} {Value.Expression.Print()})");
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<SetStatement> SetStatementParser = new((c, self) => {
@@ -258,9 +311,15 @@ public partial class TinyScriptParser : BaseParser {
 		Opt(c, c => Node(c, LogicalExpressionParser, t => { self.Value = t; }));
 	});
 
-	public class CallStatement() : IStatement {
+	public class CallStatement() : IStatement, IPrintable {
 		public string? Identifier;
 		public List<CExpression> Parameters = new();
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.Append($"(let {Identifier} ({string.Join(',', Parameters.Select(x => x.Expression.Print()))}))");
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<CallStatement> CallStatementParser = new((c, self) => {
@@ -271,10 +330,25 @@ public partial class TinyScriptParser : BaseParser {
 		});
 	});
 
-	public class FunctionDefinitionStatement() : IStatement {
+	public class FunctionDefinitionStatement() : IStatement, IPrintable {
 		public string? FuncName;
 		public List<string> Parameters = new();
 		public List<CStatement> Body = new();
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.Append($"(func {FuncName}");
+			foreach (var item in Parameters) {
+				sb.Append($"(param {item})");
+			}
+
+			sb.AppendLine("");
+			foreach (var item in Body) {
+				sb.AppendLine($"{item.Statement.Print()}");
+			}
+
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<FunctionDefinitionStatement> FunctionDefinitionParser = new((c, self) => {
@@ -297,9 +371,15 @@ public partial class TinyScriptParser : BaseParser {
 		((c.Context as TinyScriptContext)!).BodyDepth--;
 	});
 
-	public class WhileStatement : IStatement {
+	public class WhileStatement : IStatement, IPrintable {
 		public CExpression? Condition;
 		public List<CStatement> Body = new();
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.Append($"(loop {Condition} {string.Join(',', Body.Select(x => x.Statement.Print()))})");
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<WhileStatement> WhileStatementParser = new((c, self) => {
@@ -314,10 +394,24 @@ public partial class TinyScriptParser : BaseParser {
 		((c.Context as TinyScriptContext)!).BodyDepth--;
 	});
 
-	public class IfStatement() : IStatement {
-		// Has one less then bodies
+	public class IfStatement : IStatement, IPrintable {
+		// Has one less than bodies
 		public List<CExpression> Conditions = [];
 		public List<List<CStatement>> Bodys = [];
+
+		public string Print() {
+			var sb = new StringBuilder();
+			for (int i = 0; i < Conditions.Count; i++) {
+				sb.Append(
+					$"(${(i == 0 ? "if" : "elseif")} {Conditions[i].Expression.Print()} {string.Join(',', Bodys[i].Select(x => x.Statement.Print()))})");
+			}
+
+			if (Conditions.Count < Bodys.Count) {
+				sb.Append($"(else {string.Join(',', Bodys.Last().Select(x => x.Statement.Print()))})");
+			}
+
+			return sb.ToString();
+		}
 	}
 
 	// "iff" condition ":" { statement } [ "elf" condition ":" { statement } ] [ "els" ":" { statement } ] "ext"
@@ -355,12 +449,18 @@ public partial class TinyScriptParser : BaseParser {
 		Token(c, Tokens.EXT);
 	});
 
-	public class ImportStatement : IStatement {
+	public class ImportStatement : IStatement, IPrintable {
 		public AtomExpression Atom = new();
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.AppendLine($"(import {Atom.Print()})");
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<ImportStatement> ImportStatementParser = new((c, self) => {
 		Token(c, Tokens.INC);
-		Node(c, AtomParser, c => { self.Atom = c; });
+		Token(c, Tokens.IDENTIFIER, r => self.Atom = new AtomExpression { IdentifierValue = r });
 	});
 }

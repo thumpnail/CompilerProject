@@ -1,15 +1,9 @@
 mod main
 
-inc grid
+inc core
 
-def a 10 + 10
+def a 12
 
-fnc add a b:
-	let a 10
-	ret
-
-let a 10
-
-whl a:
-	set a 10
+fnc main:
+	set a 12
 	ext

@@ -1,0 +1,47 @@
+﻿(module 
+	(import "core.cir") 
+	(export "main") 
+	(func $main 
+		(param $p0 i32)
+		(result i32)
+		(blocks 
+			(block
+				(block (call $print "hello world"))
+				(block (i32.const 0) (return))
+			)
+		)
+	)
+	(func $add
+		(param $p0 i32)
+		(param $p1 i32)
+		(result i32)
+		(blocks
+			(block
+				($x0 = (i32.add $p0 $p1))
+				(elevate $x0 $b0)
+			)
+			(block (return $b0))
+		)
+	)
+	(func $fib
+		(param $p0 i32
+		(result i32)
+		(blocks
+			(block 
+				(if (i32.eq $p0 (i32.const 0))
+                	(block (i32.const 0) (return))
+                )
+            )
+			(block 
+				(if (i32.eq $p0 (i32.const 1))
+            		(block (i32.const 1) (return))
+				)
+			)
+			(block
+				($x0 = (call $fib (i32.sub $p0 (i32.const 1))))
+				(elevate $x0 $b0)
+			)
+			(block (return $b0))
+		)
+	)
+)
