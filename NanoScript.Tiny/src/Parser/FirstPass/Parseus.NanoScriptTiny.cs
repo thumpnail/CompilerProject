@@ -130,13 +130,24 @@ public partial class TinyScriptParser : BaseParser {
 
 	public override Script Parse(string src) {
 		var lexResult = Lexer.Lex(src);
-		var context = new TinyScriptContext(lexResult);
+		var context = new TinyScriptContext(lexResult) {SourceCode = src};
 		var state = new CancellationState();
 		return ScriptParser.Parse(new BaseParserContext(context, state));
 	}
 
-	public class Script() {
+	public class Script() : IPrintable {
 		public List<ModuleDeclaration> modules = new();
+
+		public string Print() {
+			var sb = new StringBuilder();
+			sb.AppendLine($"Mod Count: {modules.Count}");
+			sb.AppendLine("Modules:");
+			foreach (var item in modules) {
+				sb.AppendLine(item.Print());
+			}
+
+			return sb.ToString();
+		}
 	}
 
 	private static readonly Parser<Script> ScriptParser = new((c, self) => {
@@ -171,7 +182,7 @@ public partial class TinyScriptParser : BaseParser {
 				sb.AppendLine(def.Print());
 			}
 
-			sb.AppendLine("# Imports");
+			sb.AppendLine("# Functions");
 			foreach (var func in Functions) {
 				sb.AppendLine(func.Print());
 			}
@@ -196,7 +207,8 @@ public partial class TinyScriptParser : BaseParser {
 				c => Node(c, FunctionDefinitionParser, f => self.Functions.Add(f)),
 				c => Node(c, StatementParser, s => self.Statements.Add(s))
 			], errorCallback: r => {
-				Console.WriteLine("only 'def', 'inc', 'fnc', 'let', 'set', 'call', 'whl', 'if' and 'ret' allowed inside bodies.");
+				var diagPack = GetLineNumberFromContinuosString(c.Context.SourceCode, c.Context.PeekToken());
+				Console.WriteLine($"{CreateReportLine(c, diagPack, "only 'def', 'inc', 'fnc', 'let', 'set', 'call', 'whl', 'if' and 'ret' allowed inside bodies.")}");
 			});
 		});
 	});
@@ -221,8 +233,8 @@ public partial class TinyScriptParser : BaseParser {
 				//c => Node(c, ImportStatementParser, s => { self.Statement = s; }),
 				c => Node(c, ReturnStatmentParser, s => { self.Statement = s; })
 			], errorCallback: r => {
-				Console.WriteLine(
-					"only 'def', 'inc', 'fnc', 'let', 'set', 'call', 'whl', 'if' and 'ret' allowed inside bodies.");
+				var diagPack = GetLineNumberFromContinuosString(c.Context.SourceCode, c.Context.PeekToken());
+				Console.WriteLine($"{CreateReportLine(c, diagPack, "only 'def', 'inc', 'fnc', 'let', 'set', 'call', 'whl', 'if' and 'ret' allowed inside bodies.")}");
 			});
 		else
 			Alt(c, [
@@ -232,9 +244,8 @@ public partial class TinyScriptParser : BaseParser {
 				c => Node(c, WhileStatementParser, s => { self.Statement = s; }),
 				c => Node(c, IfStatementParser, s => { self.Statement = s; })
 			], errorCallback: r => {
-				var tok = c.Context.PeekToken();
-				Console.WriteLine($"{tok.Index}:{tok.Length}");
-				Console.WriteLine("only 'fnc', 'def', 'let', 'set', 'call', 'whl' and 'if' allowed inside the module.");
+				var diagPack = GetLineNumberFromContinuosString(c.Context.SourceCode, c.Context.PeekToken());
+				Console.WriteLine(CreateReportLine(c, diagPack, $"only 'fnc', 'def', 'let', 'set', 'call', 'whl' and 'if' allowed inside the module."));
 			});
 	});
 
@@ -344,9 +355,10 @@ public partial class TinyScriptParser : BaseParser {
 
 			sb.AppendLine("");
 			foreach (var item in Body) {
-				sb.AppendLine($"{item.Statement.Print()}");
+				sb.Append($"\t{item.Statement.Print()}");
 			}
 
+			sb.AppendLine(")");
 			return sb.ToString();
 		}
 	}
@@ -363,9 +375,13 @@ public partial class TinyScriptParser : BaseParser {
 		//body
 		((c.Context as TinyScriptContext)!).BodyDepth++;
 		RepeatOpt(c, c => {
-			Node(c, StatementParser, s => {
-				self.Body.Add(s);
-			});
+			if (!c.Context.PeekToken().Value.Equals("ext")) {
+				Node(c, StatementParser, s => {
+					self.Body.Add(s);
+				});
+			} else {
+				c.State.Flag("found ext");
+			}
 		});
 		Token(c, Tokens.EXT);
 		((c.Context as TinyScriptContext)!).BodyDepth--;

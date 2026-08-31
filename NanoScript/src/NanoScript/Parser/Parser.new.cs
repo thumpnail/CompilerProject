@@ -191,7 +191,7 @@ public class NanoScriptParser : BaseParser {
 
 	public override ProgramStatement Parse(string src) {
 		var lexResult = lexer.Lex(src);
-		var context = new BasicAParserContext(lexResult.result.ToArray());
+		var context = new BasicAParserContext(lexResult.result.ToArray()) {SourceCode = src};
 		var state = new CancellationState();
 		return ProgramParser.Parse(new BaseParserContext(context, state));
 	}

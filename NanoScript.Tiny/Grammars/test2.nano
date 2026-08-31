@@ -6,4 +6,6 @@ def a 12
 
 fnc main:
 	set a 12
-	ext
+	ret a
+	extd
+set cd 12

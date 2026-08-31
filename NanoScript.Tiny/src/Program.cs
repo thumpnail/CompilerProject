@@ -21,10 +21,10 @@ class Program {
 		var yaml = new SerializerBuilder()
 			.ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
 			.Build();
-		Console.WriteLine(yaml.Serialize(ast));
-		Console.WriteLine();
-		var res = string.Join("\n", ast.modules.Select(m => m.Print()));
-		res = ParenthesesUtils.StringParenthesesResolver(res);
+		//Console.WriteLine(yaml.Serialize(ast));
+		//Console.WriteLine();
+		var res = string.Join("\n", ast.Print());
+		//res = ParenthesesUtils.StringParenthesesResolver(res);
 		Console.WriteLine(res);
 	}
 }
